@@ -42,5 +42,5 @@ public class Article {
     @Column
     private boolean stick;         // 文章置顶
     @Column
-    private int hot; // 是否热门推荐。0：默认，1：热门
+    private int hot;               // 是否热门推荐。0：默认，1：热门
 }

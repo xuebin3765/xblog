@@ -1,5 +1,7 @@
 package com.xblog.entity.blog;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 /**
@@ -8,27 +10,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table
-public class Label {
+@Data
+public class Tag {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column
     private String name;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -1,5 +1,7 @@
 package com.xblog.entity.sys;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 /**
@@ -8,6 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table
+@Data
 public class Users {
 
     private static final int STATUS = 0;
@@ -31,72 +34,4 @@ public class Users {
     @Column
     private String description;
 
-    public Users() {
-    }
-
-    public Users(String username, String password, String nickname) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.status = STATUS;
-        this.description = DESCRIPTION;
-        this.pic = PIC;
-
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

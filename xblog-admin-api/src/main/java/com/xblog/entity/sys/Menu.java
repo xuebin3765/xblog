@@ -1,8 +1,8 @@
 package com.xblog.entity.sys;
 
-import com.commons.validator.annotation.Max;
-import com.commons.validator.annotation.Min;
-import com.commons.validator.annotation.NotNull;
+import com.xblog.commons.validator.annotation.Max;
+import com.xblog.commons.validator.annotation.Min;
+import com.xblog.commons.validator.annotation.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
