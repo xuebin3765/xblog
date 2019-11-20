@@ -1,7 +1,6 @@
 package com.xblog.repository.sys;
 
-
-import com.xblog.open.entity.sys.Users;
+import com.xblog.entity.sys.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

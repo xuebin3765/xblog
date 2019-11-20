@@ -1,13 +1,11 @@
-package com.xblog.common.utils;
+package com.xblog.commons.utils;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.xblog.open.common.base.BaseLogs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JsonUtil extends BaseLogs {
+public class JsonUtil {
 
     private static Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
@@ -16,8 +14,8 @@ public class JsonUtil extends BaseLogs {
      * @param object 源对象
      * @return 目标对象
      */
-    public static String toStringNoRelation(Object object){
-        return JSON.toJSONString(object, SerializerFeature.DisableCircularReferenceDetect);
+    public static String toString(Object object){
+        return JSONObject.toJSONString(object, SerializerFeature.DisableCircularReferenceDetect);
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.xblog.service;
 
-import com.xblog.open.entity.sys.Menu;
+import com.xblog.entity.sys.Menu;
 
 import java.util.List;
 
@@ -23,17 +23,4 @@ public interface MenuService {
     Menu findById(int id);
 
     List<Menu> findAllMenu(Integer parentId);
-//
-//    /**
-//     * 获取当前菜单的所有子菜单
-//     * @param parentId
-//     * @return
-//     */
-//    public List<Menu> findAllByParent(int parentId);
-//
-//    public List<Menu> findAll();
-//
-//    public List<Menu> findTopMenu();
-//
-//    public List<Menu> findAllPublic();
 }

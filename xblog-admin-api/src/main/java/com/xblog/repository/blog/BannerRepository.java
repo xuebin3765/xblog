@@ -1,7 +1,7 @@
 package com.xblog.repository.blog;
 
 
-import com.xblog.open.entity.blog.Banner;
+import com.xblog.entity.blog.Banner;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

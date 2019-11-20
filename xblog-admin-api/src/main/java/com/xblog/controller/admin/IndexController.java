@@ -1,10 +1,10 @@
 package com.xblog.controller.admin;
 
-import com.xblog.open.common.base.BaseController;
-import com.xblog.open.entity.sys.Menu;
-import com.xblog.open.service.MenuService;
+import com.xblog.commons.controller.BaseController;
+import com.xblog.commons.response.RespEntity;
+import com.xblog.entity.sys.Menu;
+import com.xblog.service.MenuService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -13,8 +13,8 @@ import java.util.List;
 
 /**
  * 首页入口
- * @Author guodandan
- * @Date 2018/9/10 22:18
+ * Author guodandan
+ * Date 2018/9/10 22:18
  */
 @Controller
 @RequestMapping("/admin/index")
@@ -24,11 +24,9 @@ public class IndexController extends BaseController {
     private MenuService menuService;
 
     @RequestMapping(value = "/" , method = RequestMethod.GET)
-    public String index(Model model){
-        String successView = "admin/home";
+    public RespEntity index(){
         List<Menu> menuList = menuService.findAllMenu(-1);
-        setDataToModelView(model, menuList);
-        return successView;
+        return RespEntity.success(menuList);
     }
 
     @RequestMapping(value = "/home" , method = RequestMethod.GET)

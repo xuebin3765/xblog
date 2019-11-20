@@ -39,7 +39,7 @@ public class DaoHelperRepository {
      * @param sql 查询sql sql中的参数用:name格式
      * @param params 查询参数map格式，key对应参数中的:name
      * @param clazz 实体类型为空则直接转换为map格式
-     * @return
+     * @return list
      */
     @SuppressWarnings("unchecked")
     public List<?> queryListEntity(String sql,Map<String, Object> params, Class<?> clazz){
@@ -53,8 +53,7 @@ public class DaoHelperRepository {
         query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<Map<String, Object>> result =  query.list();
         if (clazz != null) {
-            List<Object>  entityList = convert(clazz, result);
-            return entityList;
+            return convert(clazz, result);
         }
         return result;
     }
@@ -64,7 +63,7 @@ public class DaoHelperRepository {
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
-        result = new ArrayList<Object>();
+        result = new ArrayList<>();
         try {
             PropertyDescriptor[] props = Introspector.getBeanInfo(clazz).getPropertyDescriptors();
             for (Map<String, Object> map : list) {

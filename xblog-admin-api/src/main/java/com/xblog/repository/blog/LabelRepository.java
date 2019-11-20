@@ -1,8 +1,9 @@
 package com.xblog.repository.blog;
 
 
-import com.xblog.open.entity.blog.Label;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.awt.*;
 
 /**
  * 文章标签

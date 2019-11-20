@@ -1,4 +1,4 @@
-package com.xblog.common.annotation;
+package com.xblog.commons.annotation;
 
 import java.lang.annotation.*;
 

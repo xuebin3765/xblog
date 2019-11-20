@@ -1,7 +1,7 @@
 package com.xblog.repository.blog;
 
 
-import com.xblog.open.entity.blog.Classify;
+import com.xblog.entity.blog.Classify;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

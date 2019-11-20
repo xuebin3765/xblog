@@ -1,8 +1,8 @@
-package com.xblog.model;
+package com.xblog.commons.response;
 /**
  * 分页类
  */
-public class PagingBean {
+public class RespPage {
 
 	private int start; // 每页开始的索引号
 
@@ -11,7 +11,7 @@ public class PagingBean {
 	//总记录数
 	private int totalItems;
 	
-	public PagingBean(int pageIndex, int pageSize){
+	public RespPage(int pageIndex, int pageSize){
 
 		if(pageSize < 1) pageSize = 20;
 		if(pageIndex < 1) pageIndex = 1;
