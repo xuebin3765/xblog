@@ -1,6 +1,12 @@
 {
 	"contentManagement": [
 		{
+			"title": "标签列表",
+			"icon": "icon-text",
+			"href": "page/tags/tagsList.html",
+			"spread": false
+		},
+		{
 			"title": "文章列表",
 			"icon": "icon-text",
 			"href": "page/news/newsList.html",
