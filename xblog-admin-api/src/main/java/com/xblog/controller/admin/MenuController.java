@@ -138,17 +138,15 @@ public class MenuController extends BaseController {
     ){
         logger.debug("step into findAllMenuJson(), menu: {}", parentId);
         RespEntity respEntity = new RespEntity();
-        String respCode;
         List<Menu> menuList = null;
         if (parentId < -1){
-            respCode = MenuRespCode.MENU_PARENT_ID_ERROR;
+            String respCode = MenuRespCode.MENU_PARENT_ID_ERROR;
             logger.debug("parent id Illegal");
+            respEntity.setRespCode(respCode);
         }else {
             logger.debug("get all menu ");
             menuList = menuService.findAllMenu(parentId);
-            respCode = MenuRespCode.success;
         }
-        respEntity.setRespCode(respCode);
         respEntity.setData(menuList);
         logger.debug("step out findAllMenu");
         return respEntity;

@@ -1,10 +1,9 @@
 package com.xblog.service.impl;
 
-import com.xblog.open.common.base.BaseLogs;
-import com.xblog.open.common.utils.MenuTree;
-import com.xblog.open.entity.sys.Menu;
-import com.xblog.open.repository.sys.MenuRepository;
-import com.xblog.open.service.MenuService;
+import com.xblog.common.utils.MenuTree;
+import com.xblog.entity.sys.Menu;
+import com.xblog.repository.sys.MenuRepository;
+import com.xblog.service.MenuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +15,7 @@ import java.util.List;
  * date: 2019/11/15
  */
 @Service
-public class MenuServiceImpl extends BaseLogs implements MenuService {
+public class MenuServiceImpl implements MenuService {
 
     @Resource
     private MenuRepository menuRepository;

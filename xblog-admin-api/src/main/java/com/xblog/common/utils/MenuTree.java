@@ -1,7 +1,7 @@
 package com.xblog.common.utils;
 
 import com.google.common.collect.Lists;
-import com.xblog.open.entity.sys.Menu;
+import com.xblog.entity.sys.Menu;
 
 import java.util.List;
 import java.util.Optional;

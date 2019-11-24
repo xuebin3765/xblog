@@ -1,6 +1,6 @@
 package com.xblog.service;
 
-import com.xblog.open.entity.blog.Article;
+import com.xblog.entity.blog.Article;
 
 /**
  * desc:

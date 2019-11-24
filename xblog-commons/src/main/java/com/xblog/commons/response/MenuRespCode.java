@@ -5,7 +5,7 @@ import com.xblog.commons.annotation.RespMeg;
 /**
  * 菜单操作响应码
  */
-public class MenuRespCode extends RespCode {
+public class MenuRespCode {
     @RespMeg("添加菜单失败")
     public static final String MENU_ADD_ERROR = "101001";
     @RespMeg("添加菜单校验失败")

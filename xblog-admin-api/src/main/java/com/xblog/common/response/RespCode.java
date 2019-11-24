@@ -1,6 +1,6 @@
 package com.xblog.common.response;
 
-import com.xblog.open.common.annotation.RespMeg;
+import com.xblog.commons.annotation.RespMeg;
 
 /**
  * 响应码常量

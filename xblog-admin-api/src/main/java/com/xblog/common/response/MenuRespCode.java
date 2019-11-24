@@ -1,6 +1,7 @@
 package com.xblog.common.response;
 
-import com.xblog.open.common.annotation.RespMeg;
+
+import com.xblog.commons.annotation.RespMeg;
 
 /**
  * 菜单操作响应码

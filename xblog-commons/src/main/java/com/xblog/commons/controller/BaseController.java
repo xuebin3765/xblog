@@ -17,10 +17,6 @@ public class BaseController {
         return RespEntity.success().toString();
     }
 
-    public String success(Object object, String respCode, String respMsg){
-        return RespEntity.success(object).toString();
-    }
-
     public String error(){
         return RespEntity.error().toString();
     }

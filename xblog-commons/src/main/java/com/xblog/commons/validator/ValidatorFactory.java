@@ -1,7 +1,6 @@
 package com.xblog.commons.validator;
-
-import com.commons.validator.annotation.*;
 import com.google.common.collect.Lists;
+import com.xblog.commons.validator.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.xblog.controller.api;
 
-import com.xblog.open.common.base.BaseController;
+import com.xblog.commons.controller.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,6 +1,5 @@
 package com.xblog.controller.blog;
 
-import com.xblog.open.common.base.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/article")
-public class ArticleController extends BaseController {
+public class ArticleController {
 
     private Logger logger = LoggerFactory.getLogger(ArticleController.class);
 

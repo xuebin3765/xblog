@@ -1,7 +1,7 @@
 package com.xblog.service.impl;
 
-import com.xblog.open.entity.blog.Article;
-import com.xblog.open.service.ArticleService;
+import com.xblog.entity.blog.Article;
+import com.xblog.service.ArticleService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
