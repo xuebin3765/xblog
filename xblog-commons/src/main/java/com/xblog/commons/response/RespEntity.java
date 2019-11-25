@@ -17,13 +17,19 @@ import java.util.Map;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class RespEntity {
 
-    private String respCode = "00000";
-    private String respMsg = "success";
+    private int code;
+    private String msg;
+    private int count;
     private Object data;
+
+    public RespEntity() {
+        this.code = 0;
+        this.msg = "success";
+        this.count = 0;
+    }
 
     public static RespEntity success(){
         return new RespEntity.RespEntityBuilder()
@@ -31,35 +37,55 @@ public class RespEntity {
     }
 
     public static RespEntity success(Object object){
-        return new RespEntity.RespEntityBuilder()
+        return new RespEntityBuilder()
                 .data(object)
+                .code(0)
+                .msg("success")
+                .build();
+    }
+
+    public static RespEntity success(Object object, int count){
+        return new RespEntityBuilder()
+                .data(object)
+                .code(0)
+                .count(count)
+                .msg("success")
+                .build();
+    }
+
+    public static RespEntity success(Object object, String message){
+        return new RespEntityBuilder()
+                .data(object)
+                .code(0)
+                .msg(message)
                 .build();
     }
 
     public static RespEntity success(String message){
-        return new RespEntity.RespEntityBuilder()
-                .respMsg(message)
+        return new RespEntityBuilder()
+                .msg(message)
+                .code(0)
                 .build();
     }
 
-    public static RespEntity error(String respCode, String respMsg){
+    public static RespEntity error(int respCode, String respMsg){
         return new RespEntity.RespEntityBuilder()
-                .respCode(respCode)
-                .respMsg(respMsg)
+                .code(respCode)
+                .msg(respMsg)
                 .build();
     }
 
     public static RespEntity error(String message){
-        return new RespEntity.RespEntityBuilder()
-                .respMsg(message)
-                .respCode("99999")
+        return new RespEntityBuilder()
+                .msg(message)
+                .code(99999)
                 .build();
     }
 
     public static RespEntity error(){
         return new RespEntity.RespEntityBuilder()
-                .respMsg("未知错误")
-                .respCode("99999")
+                .msg("未知错误")
+                .code(99999)
                 .build();
     }
 

@@ -6,10 +6,10 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
-    //新闻列表
+    //标签列表列表
     var tableIns = table.render({
-        elem: '#newsList',
-        url : '../../json/newsList.json',
+        elem: '#tagsList',
+        url : serverUrl+'/admin/tag/findAll',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
@@ -18,33 +18,11 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         id : "newsListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'newsId', title: 'ID', width:60, align:"center"},
-            {field: 'newsName', title: '文章标题', width:350},
-            {field: 'newsAuthor', title: '发布者', align:'center'},
-            {field: 'newsStatus', title: '发布状态',  align:'center',templet:"#newsStatus"},
-            {field: 'newsLook', title: '浏览权限', align:'center'},
-            {field: 'newsTop', title: '是否置顶', align:'center', templet:function(d){
-                return '<input type="checkbox" name="newsTop" lay-filter="newsTop" lay-skin="switch" lay-text="是|否" '+d.newsTop+'>'
-            }},
-            {field: 'newsTime', title: '发布时间', align:'center', minWidth:110, templet:function(d){
-                return d.newsTime.substring(0,10);
-            }},
-            {title: '操作', width:170, templet:'#newsListBar',fixed:"right",align:"center"}
+            {field: 'id', title: 'ID', width:60, align:"center"},
+            {field: 'name', title: '标签名称', align:'center'},
+            {title: '操作', width:170, templet:'#tagsListBar',fixed:"right",align:"center"}
         ]]
     });
-
-    //是否置顶
-    form.on('switch(newsTop)', function(data){
-        var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
-        setTimeout(function(){
-            layer.close(index);
-            if(data.elem.checked){
-                layer.msg("置顶成功！");
-            }else{
-                layer.msg("取消置顶成功！");
-            }
-        },500);
-    })
 
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
     $(".search_btn").on("click",function(){
@@ -63,10 +41,10 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
     });
 
     //添加文章
-    function addNews(edit){
+    function addTags(edit){
         var index = layui.layer.open({
             title : "添加文章",
-            type : 2,
+            type : 0,
             content : "newsAdd.html",
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index);
@@ -93,9 +71,49 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             layui.layer.full(index);
         })
     }
-    $(".addNews_btn").click(function(){
-        addNews();
-    })
+
+    $(".addTags_btn").click(function(){
+        layui.layer.open({
+            type: 1,
+            title: "新增标签",
+            area:['30%','30%'],
+            btn: ['确定', '取消'],
+            content: $("#addTagDiv"),
+            yes:function(index,layero){
+
+                params = {'name':$('#tagName').val()};
+                $.ajax({
+                    type: 'POST',
+                    url: serverUrl + '/admin/tag/addTag',
+                    contentType: 'application/json;charset=utf-8',
+                    data: JSON.stringify(params),
+                    dataType: "json",
+                    success:function (message) {
+                        var mesg = message.respMsg;
+                        var icon = 1;
+                        if ('00000' !== message.respCode){
+                            icon = 2;
+                        }
+                        layer.confirm(mesg,{btn:'关闭', icon:icon, title:'提示信息'},function(index){
+                            tableIns.reload();
+                            layer.close(index);
+                            layui.layer.close(index);
+                        });
+                    },
+                    error:function (message) {
+                        layer.confirm(message.respMsg,{btn:'关闭', icon:2, title:'提示信息'},function(index){
+                            tableIns.reload();
+                            layer.close(index);
+                            layui.layer.closeAll();
+                        });
+                    }
+                });
+            }
+            ,btn2: function(){
+                layer.closeAll();
+            }
+        });
+    });
 
     //批量删除
     $(".delAll_btn").click(function(){
@@ -120,7 +138,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
     })
 
     //列表操作
-    table.on('tool(newsList)', function(obj){
+    table.on('tool(tagsList)', function(obj){
         var layEvent = obj.event,
             data = obj.data;
 
@@ -128,12 +146,12 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             addNews(data);
         } else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此文章？',{icon:3, title:'提示信息'},function(index){
-                // $.get("删除文章接口",{
-                //     newsId : data.newsId  //将需要删除的newsId作为参数传入
-                // },function(data){
+                $.get("删除文章接口",{
+                    newsId : data.newsId  //将需要删除的newsId作为参数传入
+                },function(data){
                     tableIns.reload();
                     layer.close(index);
-                // })
+                })
             });
         } else if(layEvent === 'look'){ //预览
             layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问")

@@ -6,6 +6,7 @@ import com.xblog.service.TagService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,15 +26,14 @@ public class TagController {
      * @return RespEntity
      */
     @RequestMapping(value = "/addTag", method = RequestMethod.POST)
-    public RespEntity add(@RequestParam("name") String name){
-        logger.debug("step into TagController add(), name: {}", name);
-        if (StringUtils.isBlank(name)){
+    public RespEntity add(@RequestBody Tag tag){
+        logger.debug("step into TagController addTag(), name: {}", tag);
+        if (StringUtils.isBlank(tag.getName())){
             return RespEntity.error("请输入标签名称");
         }
-        Tag tag = new Tag(name);
         tag = tagService.add(tag);
         if (tag != null){
-            return RespEntity.success(null);
+            return RespEntity.success(tag, "添加成功");
         }else {
             return RespEntity.error("添加标签失败");
         }
@@ -79,11 +79,11 @@ public class TagController {
      */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public RespEntity findAll(
-            @RequestParam("pageNum") int pageNum,
-            @RequestParam("pageSize") int pageSize
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
     ){
-        logger.debug("step into TagController findAll(), pageNum: {}, pageSize: {}", pageNum, pageSize);
-        List<Tag> tagList = tagService.findAll(pageNum, pageSize);
+        logger.debug("step into TagController findAll(), pageNum: {}, pageSize: {}", page, limit);
+        List<Tag> tagList = tagService.findAll(page, limit);
         return RespEntity.success(tagList);
     }
 
@@ -91,7 +91,7 @@ public class TagController {
      * 删除
      * @return RespEntity
      */
-    @RequestMapping(value = "/findAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public RespEntity delete(int id){
         logger.debug("step into TagController delete(), id: {}", id);
         tagService.deleteById(id);

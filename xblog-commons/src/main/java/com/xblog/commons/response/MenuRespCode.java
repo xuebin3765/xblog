@@ -15,5 +15,5 @@ public class MenuRespCode {
     @RespMeg("菜单不存在")
     public static final String MENU_NOT_EXIST = "101004";
     @RespMeg("parentId不能小于0")
-    public static final String MENU_PARENT_ID_ERROR = "101005";
+    public static final int MENU_PARENT_ID_ERROR = 101005;
 }

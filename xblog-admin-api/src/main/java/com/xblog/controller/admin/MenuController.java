@@ -118,7 +118,7 @@ public class MenuController extends BaseController {
         logger.debug("step into update(), menu: {}", parentId);
         if (parentId < -1){
             logger.debug("parent id Illegal");
-            return RespEntity.error(MenuRespCode.MENU_PARENT_ID_ERROR);
+            return RespEntity.error("cuowu");
         }else {
             logger.debug("get all menu ");
             List<Menu> menuList = menuService.findAllMenu(parentId);
@@ -140,9 +140,9 @@ public class MenuController extends BaseController {
         RespEntity respEntity = new RespEntity();
         List<Menu> menuList = null;
         if (parentId < -1){
-            String respCode = MenuRespCode.MENU_PARENT_ID_ERROR;
+            int respCode = MenuRespCode.MENU_PARENT_ID_ERROR;
             logger.debug("parent id Illegal");
-            respEntity.setRespCode(respCode);
+            respEntity.setCode(respCode);
         }else {
             logger.debug("get all menu ");
             menuList = menuService.findAllMenu(parentId);

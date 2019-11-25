@@ -25,7 +25,7 @@ public class BaseController {
         return RespEntity.error(respMsg).toString();
     }
 
-    protected String error(String respCode, String respMsg){
+    protected String error(int respCode, String respMsg){
         return RespEntity.error(respCode, respMsg).toString();
     }
 }
