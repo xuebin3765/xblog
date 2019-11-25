@@ -84,17 +84,32 @@ public class TagController {
     ){
         logger.debug("step into TagController findAll(), pageNum: {}, pageSize: {}", page, limit);
         List<Tag> tagList = tagService.findAll(page, limit);
-        return RespEntity.success(tagList);
+        return RespEntity.success(tagList, tagList !=null ? tagList.size() : 0);
     }
 
     /**
      * 删除
      * @return RespEntity
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public RespEntity delete(int id){
         logger.debug("step into TagController delete(), id: {}", id);
         tagService.deleteById(id);
+        return RespEntity.success("删除成功");
+    }
+
+    /**
+     * 删除
+     * @return RespEntity
+     */
+    @RequestMapping(value = "/deleteBatch", method = RequestMethod.GET)
+    public RespEntity delete(@RequestParam(value = "ids[]") int[] ids){
+        logger.debug("step into TagController delete(), ids: {}", ids);
+        if (ids != null && ids.length > 0){
+            for (int id: ids) {
+                tagService.deleteById(id);
+            }
+        }
         return RespEntity.success("删除成功");
     }
 }

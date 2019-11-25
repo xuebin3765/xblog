@@ -15,7 +15,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         height : "full-125",
         limit : 20,
         limits : [10,15,20,25],
-        id : "newsListTable",
+        id : "tagsListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
             {field: 'id', title: 'ID', width:60, align:"center"},
@@ -27,7 +27,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
     $(".search_btn").on("click",function(){
         if($(".searchVal").val() != ''){
-            table.reload("newsListTable",{
+            table.reload("tagsListTable",{
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },
@@ -117,20 +117,20 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
 
     //批量删除
     $(".delAll_btn").click(function(){
-        var checkStatus = table.checkStatus('newsListTable'),
+        var checkStatus = table.checkStatus('tagsListTable'),
             data = checkStatus.data,
-            newsId = [];
+            ids = [];
         if(data.length > 0) {
             for (var i in data) {
-                newsId.push(data[i].newsId);
+                ids.push(data[i].id);
             }
             layer.confirm('确定删除选中的文章？', {icon: 3, title: '提示信息'}, function (index) {
-                // $.get("删除文章接口",{
-                //     newsId : newsId  //将需要删除的newsId作为参数传入
-                // },function(data){
-                tableIns.reload();
-                layer.close(index);
-                // })
+                $.get(serverUrl+'/admin/tag/deleteBatch',{
+                    ids : ids  //将需要删除的newsId作为参数传入
+                },function(data){
+                    tableIns.reload();
+                    layer.close(index);
+                })
             })
         }else{
             layer.msg("请选择需要删除的文章");
@@ -146,8 +146,8 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             addNews(data);
         } else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此文章？',{icon:3, title:'提示信息'},function(index){
-                $.get("删除文章接口",{
-                    newsId : data.newsId  //将需要删除的newsId作为参数传入
+                $.get(serverUrl+'/admin/tag/delete',{
+                    id : data.id  //将需要删除的newsId作为参数传入
                 },function(data){
                     tableIns.reload();
                     layer.close(index);
