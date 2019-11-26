@@ -20,13 +20,13 @@ public class Article {
     @Column
     private Integer userId;
     @Column
+    private Integer menuId;        // 菜单id
+    @Column
     private String title;          // 标题
     @Column
     private String imgUrl;         // 封面图
     @Column
     private int type;              // 原创，转载，翻译
-    @Column
-    private String label;          // 标签，多个将id拼接起来
     @Column
     private String loadUrl;        // 转载的url
     @Column
