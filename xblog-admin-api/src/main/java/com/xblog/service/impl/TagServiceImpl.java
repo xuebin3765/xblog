@@ -30,7 +30,7 @@ import java.util.List;
 @Service
 @Transactional
 public class TagServiceImpl implements TagService {
-    private Logger logger = LoggerFactory.getLogger(TagController.class);
+    private Logger logger = LoggerFactory.getLogger(TagServiceImpl.class);
 
     @Resource
     private TagRepository tagRepository;

@@ -7,6 +7,12 @@
 			"spread": false
 		},
 		{
+			"title": "导航列表",
+			"icon": "icon-text",
+			"href": "page/navigate/navigateList.html",
+			"spread": false
+		},
+		{
 			"title": "文章列表",
 			"icon": "icon-text",
 			"href": "page/news/newsList.html",
