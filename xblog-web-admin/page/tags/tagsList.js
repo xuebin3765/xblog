@@ -66,7 +66,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         var index = layui.layer.open({
             title : "添加文章",
             type : 0,
-            content : "newsAdd.html",
+            content : "articleAdd.html",
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
@@ -97,7 +97,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         layui.layer.open({
             type: 1,
             title: "新增标签",
-            area:['30%','30%'],
+            area:['30%','50%'],
             btn: ['确定', '取消'],
             content: $("#addTagDiv"),
             yes:function(index,layero){
@@ -110,9 +110,9 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     data: JSON.stringify(params),
                     dataType: "json",
                     success:function (message) {
-                        var mesg = message.respMsg;
+                        var mesg = message.msg;
                         var icon = 1;
-                        if ('00000' !== message.respCode){
+                        if (0 !== message.code){
                             icon = 2;
                         }
                         layer.confirm(mesg,{btn:'关闭', icon:icon, title:'提示信息'},function(index){

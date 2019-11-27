@@ -7,6 +7,33 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         laydate = layui.laydate,
         $ = layui.jquery;
 
+    //给分类 CheckBox赋值
+    $(document).ready(function(){
+        // 加载分类目录
+        $.ajax({
+            type: "GET",
+            url: serverUrl+'/admin/navigate/findAllNavigate',
+            success: function (data) {
+                $.each(data.data, function(index,item) {
+                    $(".navigate_checkbox").append('<p><input id="navigate_item" type="checkbox" value="'+item.id+'" name="'+item.name+'" title="'+item.name+'" lay-skin="primary" /></p>');
+                });
+                form.render();
+            }
+        });
+        // 加载标签
+        $.ajax({
+            type: "GET",
+            url: serverUrl+'/admin/tag/findAllTag',
+            success: function (data) {
+                $.each(data.data, function(index,item) {
+                    $(".tag_checkbox").append('<input id="tag_item" type="checkbox" value="'+item.id+'" name="'+item.name+'" title="'+item.name+'" lay-skin="primary" />');
+                });
+                form.render();
+            }
+        });
+    });
+
+
     //用于同步编辑器内容到textarea
     layedit.sync(editIndex);
 

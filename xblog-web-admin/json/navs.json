@@ -15,7 +15,7 @@
 		{
 			"title": "文章列表",
 			"icon": "icon-text",
-			"href": "page/news/newsList.html",
+			"href": "page/articles/articleList.html",
 			"spread": false
 		},
 		{

@@ -78,6 +78,17 @@ public class TagController {
      * 查询所有标签
      * @return RespEntity
      */
+    @RequestMapping(value = "/findAllTag", method = RequestMethod.GET)
+    public RespEntity findAllTag(){
+        logger.debug("step into TagController findAllTag()");
+        PageResult<Tag> pageResult = tagService.findAll(null, 1, 200);
+        return RespEntity.success(pageResult.getRows(), pageResult.getCount());
+    }
+
+    /**
+     * 查询所有标签
+     * @return RespEntity
+     */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public RespEntity findAll(
             @RequestParam(value = "key", required = false) String key,
