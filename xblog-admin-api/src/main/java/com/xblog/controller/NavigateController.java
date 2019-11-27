@@ -104,6 +104,20 @@ public class NavigateController {
     }
 
     /**
+     * 查询所有标签
+     * @return RespEntity
+     */
+    @RequestMapping(value = "/findAllNavigate", method = RequestMethod.GET)
+    public RespEntity findAllNavigate(){
+        logger.debug("step into NavigateController findAll()");
+        PageResult<Navigate> pageResult = navigateService.findAll(null, 1, 200);
+        List navigateList = Lists.newArrayList();
+        navigateList.add(new Navigate("顶级目录", "#", 0));
+        navigateList.addAll(pageResult.getRows());
+        return RespEntity.success(pageResult.getRows(), pageResult.getCount());
+    }
+
+    /**
      * 删除
      * @return RespEntity
      */

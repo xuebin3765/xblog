@@ -6,6 +6,25 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
+    $.ajax({
+        url:serverUrl+'/admin/navigate/findAllNavigate',
+        type:'get',
+        dataType:'json',
+        success:function(data){
+            if(data.code === 0){
+                $.each(data.data,function(index,item){
+                    //第一个参数是页面显示的值，第二个参数是传递到后台的值
+                    $('#navigate').append(new Option(item.name,item.id));//往下拉菜单里添加元素
+                    //设置默认选中的value（这个值就可以是在更新的时候后台传递到前台的值）
+                    //此时这个dynamicVal是后台动态要设置的默认值，可以先存变量然后再进行赋值
+                    $('#navigate').val(1);
+                    //如果是默认固定值可以直接再括号里填入要设置的数值，如$('#currency').val(1);
+                });
+                form.render();
+            }
+        }
+    });
+
     //标签列表列表
     var tableIns = table.render({
         elem: '#navigateList',
@@ -46,6 +65,25 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                 {title: '操作', width:170, templet:'#navigateListBar',fixed:"right",align:"center"}
             ]]
         });
+
+        $.ajax({
+            url:serverUrl+'/admin/navigate/findAllNavigate',
+            type:'get',
+            dataType:'json',
+            success:function(data){
+                if(data.code === 0){
+                    $.each(data.data,function(index,item){
+                        //第一个参数是页面显示的值，第二个参数是传递到后台的值
+                        $('#navigate').append(new Option(item.name,item.id));//往下拉菜单里添加元素
+                        //设置默认选中的value（这个值就可以是在更新的时候后台传递到前台的值）
+                        //此时这个dynamicVal是后台动态要设置的默认值，可以先存变量然后再进行赋值
+                        $('#navigate').val(1);
+                        //如果是默认固定值可以直接再括号里填入要设置的数值，如$('#currency').val(1);
+                    });
+                    form.render();
+                }
+            }
+        });
     });
 
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
@@ -72,8 +110,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             btn: ['确定', '取消'],
             content: $("#addNavigateDiv"),
             yes:function(index,layero){
-
-                params = {'name':$('#name').val(), 'url': $('#url').val(), 'parentId': $('#parentId').val()};
+                params = {'name':$('#name').val(), 'url': $('#url').val(), 'parentId': $('#navigate').val()};
                 $.ajax({
                     type: 'POST',
                     url: serverUrl + '/admin/navigate/add',

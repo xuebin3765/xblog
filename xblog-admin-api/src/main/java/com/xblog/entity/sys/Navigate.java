@@ -29,4 +29,13 @@ public class Navigate {
 
     @Transient
     private String parentName;
+
+    public Navigate() {
+    }
+
+    public Navigate(String name, String url, int id) {
+        this.name = name;
+        this.url = url;
+        this.id = id;
+    }
 }
