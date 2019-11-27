@@ -1,6 +1,7 @@
 package com.xblog.controller;
 
 import com.google.common.collect.Lists;
+import com.xblog.common.PageResult;
 import com.xblog.commons.response.RespEntity;
 import com.xblog.entity.sys.Navigate;
 import com.xblog.service.NavigateService;
@@ -93,20 +94,13 @@ public class NavigateController {
      */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public RespEntity findAll(
+            @RequestParam(value = "key", required = false) String key,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
     ){
-        logger.debug("step into NavigateController findAll(), pageNum: {}, pageSize: {}", page, limit);
-        List<Navigate> navigates = navigateService.findAll(page, limit);
-        Optional.of(navigates).orElse(Lists.newArrayList())
-                .stream()
-                .forEach(navigate -> {
-                    Navigate navigate1 = navigateService.findById(navigate.getParentId());
-                    if (null != navigate1){
-                        navigate.setParentName(navigate1.getName());
-                    }
-                });
-        return RespEntity.success(navigates, navigates !=null ? navigates.size() : 0);
+        logger.debug("step into NavigateController findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
+        PageResult<Navigate> pageResult = navigateService.findAll(key, page, limit);
+        return RespEntity.success(pageResult.getRows(), pageResult.getCount());
     }
 
     /**

@@ -40,6 +40,27 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         }
     });
 
+    //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
+    $(".resetTags_btn").on("click",function(){
+        //标签列表列表
+        var tableIns = table.render({
+            elem: '#tagsList',
+            url : serverUrl+'/admin/tag/findAll',
+            cellMinWidth : 95,
+            page : true,
+            height : "full-125",
+            limit : 20,
+            limits : [10,15,20,25],
+            id : "tagsListTable",
+            cols : [[
+                {type: "checkbox", fixed:"left", width:50},
+                {field: 'id', title: 'ID', width:60, align:"center"},
+                {field: 'name', title: '标签名称', align:'center'},
+                {title: '操作', width:170, templet:'#tagsListBar',fixed:"right",align:"center"}
+            ]]
+        });
+    });
+
     //添加文章
     function addTags(edit){
         var index = layui.layer.open({

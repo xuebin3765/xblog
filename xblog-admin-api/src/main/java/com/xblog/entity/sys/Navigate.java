@@ -24,6 +24,8 @@ public class Navigate {
     private String url;
     @Column
     private int parentId;
+    @Column
+    private int sort; // 排序字段
 
     @Transient
     private String parentName;

@@ -15,7 +15,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         height : "full-125",
         limit : 20,
         limits : [10,15,20,25],
-        id : "tagsListTable",
+        id : "navigateListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
             {field: 'id', title: 'ID', width:60, align:"center"},
@@ -26,10 +26,32 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         ]]
     });
 
+    //刷新搜索【此功能需要后台配合，所以暂时没有动态效果演示】
+    $(".resetNavigate_btn").on("click",function(){
+        var tableIns = table.render({
+            elem: '#navigateList',
+            url : serverUrl+'/admin/navigate/findAll',
+            cellMinWidth : 95,
+            page : true,
+            height : "full-125",
+            limit : 20,
+            limits : [10,15,20,25],
+            id : "navigateListTable",
+            cols : [[
+                {type: "checkbox", fixed:"left", width:50},
+                {field: 'id', title: 'ID', width:60, align:"center"},
+                {field: 'name', title: '导航名称', align:'center'},
+                {field: 'url', title: '导航地址', align:'center'},
+                {field: 'parentName', title: '上级导航', align:'center'},
+                {title: '操作', width:170, templet:'#navigateListBar',fixed:"right",align:"center"}
+            ]]
+        });
+    });
+
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
     $(".search_btn").on("click",function(){
         if($(".searchVal").val() != ''){
-            table.reload("tagsListTable",{
+            table.reload("navigateListTable",{
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },
@@ -46,7 +68,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         layui.layer.open({
             type: 1,
             title: "新增导航",
-            area:['30%','40%'],
+            area:['50%','65%'],
             btn: ['确定', '取消'],
             content: $("#addNavigateDiv"),
             yes:function(index,layero){

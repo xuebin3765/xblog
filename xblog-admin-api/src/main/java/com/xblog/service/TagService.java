@@ -1,5 +1,6 @@
 package com.xblog.service;
 
+import com.xblog.common.PageResult;
 import com.xblog.entity.sys.Tag;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface TagService {
 
     public Tag findByName(String name);
 
-    public List<Tag> findAll(int pageNum, int pageSize);
+    public PageResult<Tag> findAll(String name, int pageNum, int pageSize);
 
     public void deleteById(int id);
 }

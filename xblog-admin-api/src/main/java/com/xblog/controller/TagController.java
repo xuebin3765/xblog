@@ -1,5 +1,6 @@
 package com.xblog.controller;
 
+import com.xblog.common.PageResult;
 import com.xblog.commons.response.RespEntity;
 import com.xblog.entity.sys.Tag;
 import com.xblog.service.TagService;
@@ -79,12 +80,13 @@ public class TagController {
      */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public RespEntity findAll(
+            @RequestParam(value = "key", required = false) String key,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
     ){
-        logger.debug("step into TagController findAll(), pageNum: {}, pageSize: {}", page, limit);
-        List<Tag> tagList = tagService.findAll(page, limit);
-        return RespEntity.success(tagList, tagList !=null ? tagList.size() : 0);
+        logger.debug("step into TagController findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
+        PageResult<Tag> pageResult = tagService.findAll(key, page, limit);
+        return RespEntity.success(pageResult.getRows(), pageResult.getCount());
     }
 
     /**

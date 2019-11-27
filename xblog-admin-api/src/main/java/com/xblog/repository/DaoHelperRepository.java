@@ -4,6 +4,8 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
@@ -26,6 +28,8 @@ import java.util.Map;
 @Transactional
 @Repository
 public class DaoHelperRepository {
+
+    private static final Logger logger = LoggerFactory.getLogger(DaoHelperRepository.class);
 
     @PersistenceContext
     EntityManager entityManager;
@@ -114,6 +118,11 @@ public class DaoHelperRepository {
      * @return
      */
     public Integer getCountBy(String sql,Map<String, Object> params){
+        if (!sql.contains("count")){
+            logger.debug("sql not exits count key, replace it");
+            sql = "select count(1) "+sql.substring(sql.toLowerCase().indexOf("from"));
+            logger.debug("replaced sql , sql: {}", sql);
+        }
         Query query =  entityManager.createNativeQuery(sql);
         if (params != null) {
             for (String key : params.keySet()) {
@@ -121,11 +130,10 @@ public class DaoHelperRepository {
             }
         }
         try {
-            Integer bigInteger  = (Integer) query.getSingleResult();
-            return bigInteger.intValue();
-        }catch (ClassCastException e){
             BigInteger bigInteger  = (BigInteger) query.getSingleResult();
             return bigInteger.intValue();
+        }catch (ClassCastException e){
+            return  (Integer) query.getSingleResult();
         }
     }
 

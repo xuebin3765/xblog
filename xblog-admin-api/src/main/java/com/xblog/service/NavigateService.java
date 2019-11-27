@@ -1,5 +1,6 @@
 package com.xblog.service;
 
+import com.xblog.common.PageResult;
 import com.xblog.entity.sys.Navigate;
 import com.xblog.entity.sys.Tag;
 
@@ -18,7 +19,7 @@ public interface NavigateService {
 
     public Navigate findByName(String name);
 
-    public List<Navigate> findAll(int pageNum, int pageSize);
+    public PageResult<Navigate> findAll(String name, int pageNum, int pageSize);
 
     public void deleteById(int id);
 }
