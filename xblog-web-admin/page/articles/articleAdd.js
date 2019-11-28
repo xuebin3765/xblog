@@ -94,7 +94,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
     });
 
     form.on("submit(addArticle)",function(data){
-        alert(status);
+        alert(data);
         alert(layedit.getContent(editIndex));
         //截取文章内容中的一部分文字放入文章摘要
         var abstract = layedit.getText(editIndex).substring(0,50);
