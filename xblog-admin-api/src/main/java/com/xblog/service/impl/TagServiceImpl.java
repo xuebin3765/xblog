@@ -2,6 +2,7 @@ package com.xblog.service.impl;
 
 import com.google.common.base.Predicate;
 import com.xblog.common.PageResult;
+import com.xblog.commons.utils.SnowflakeUUIDUtil;
 import com.xblog.controller.TagController;
 import com.xblog.entity.sys.Navigate;
 import com.xblog.entity.sys.Tag;
@@ -45,6 +46,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag add(Tag tag) {
+        tag.setId(SnowflakeUUIDUtil.getInstance().getUuid());
         return tagRepository.save(tag);
     }
 
