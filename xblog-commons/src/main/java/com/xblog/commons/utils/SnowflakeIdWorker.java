@@ -5,7 +5,7 @@ package com.xblog.commons.utils;
  * author: xuebin3765@163.com
  * date: 2019/11/28
  */
-public class SnowflakeIdWorker {
+class SnowflakeIdWorker {
 
     //得到二进制样例 10111100110111110011001010100001100111111100001000000000000
 
@@ -50,7 +50,7 @@ public class SnowflakeIdWorker {
      * @param workerId 工作组
      * @param dataCenterId 数据中心
      */
-    public SnowflakeIdWorker(long workerId, long dataCenterId) {
+    SnowflakeIdWorker(long workerId, long dataCenterId) {
         if (workerId > maxWorkerId || workerId < 0){
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", workerId));
         }
@@ -65,7 +65,7 @@ public class SnowflakeIdWorker {
      * 获取雪花id
      * @return uuid
      */
-    public synchronized long nextId(){
+    synchronized long nextId(){
         // 获取当前毫秒值
         long timestamp = getCurrentTime();
 
@@ -89,7 +89,6 @@ public class SnowflakeIdWorker {
 
         //上次生成ID的时间截
         lastTimestamp = timestamp;
-        System.out.println("timestamp: "+timestamp+","+(timestamp - twepoch));
 
         return ((timestamp - twepoch) << timestampLeftShift) //
                 | (dataCenterId << datacenterIdShift) //
@@ -103,7 +102,7 @@ public class SnowflakeIdWorker {
      * @param lastTimestamp 上次生成ID的时间截
      * @return 当前时间戳
      */
-    protected long tilNextMillis(long lastTimestamp){
+    private long tilNextMillis(long lastTimestamp){
         long timestamp = getCurrentTime();
         while (timestamp <= lastTimestamp){
             timestamp = getCurrentTime();
@@ -115,7 +114,7 @@ public class SnowflakeIdWorker {
      * 获取系统时间戳
      * @return
      */
-    protected long getCurrentTime(){
+    private long getCurrentTime(){
         return System.currentTimeMillis();
     }
 }

@@ -16,4 +16,24 @@ public class SnowflakeUUIDUtil {
     public long getUuid(){
         return snowflakeIdWorker.nextId();
     }
+
+    public static void main(String[] args) {
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+        System.out.println(snowflakeIdWorker.nextId());
+    }
 }
