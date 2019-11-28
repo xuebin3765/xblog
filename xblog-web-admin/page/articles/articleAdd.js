@@ -8,10 +8,6 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         laydate = layui.laydate,
         $ = layui.jquery;
 
-    // layedit.build('news_content', {
-    //     tool: ['left', 'center', 'right', '|', 'face']
-    // });
-
     //给分类 CheckBox赋值
     $(document).ready(function(){
         // 加载分类目录
@@ -38,10 +34,6 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         });
     });
 
-
-    //用于同步编辑器内容到textarea
-    layedit.sync(editIndex);
-
     //上传缩略图
     upload.render({
         elem: '.thumbBox',
@@ -62,6 +54,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
             return val;
         }
     }
+
     //定时发布
     var time = new Date();
     var submitTime = time.getFullYear()+'-'+filterTime(time.getMonth()+1)+'-'+filterTime(time.getDate())+' '+filterTime(time.getHours())+':'+filterTime(time.getMinutes())+':'+filterTime(time.getSeconds());
@@ -73,6 +66,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
             submitTime = value;
         }
     });
+
     form.on("radio(release)",function(data){
         if(data.elem.title === "定时发布"){
             $(".releaseDate").removeClass("layui-hide");
@@ -85,18 +79,23 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
     });
 
     form.verify({
-        newsName : function(val){
+        articleName : function(val){
             if(val === ''){
                 return "文章标题不能为空";
             }
         },
         content : function(val){
+            layedit.sync(editIndex);
+            val = layedit.getContent(editIndex);
             if(val === ''){
                 return "文章内容不能为空";
             }
         }
     });
-    form.on("submit(addNews)",function(data){
+
+    form.on("submit(addArticle)",function(data){
+        alert(status);
+        alert(layedit.getContent(editIndex));
         //截取文章内容中的一部分文字放入文章摘要
         var abstract = layedit.getText(editIndex).substring(0,50);
         //弹出loading
@@ -131,7 +130,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
     });
 
     //创建一个编辑器
-    var editIndex = layedit.build('news_content',{
+    var editIndex = layedit.build('articleContent',{
         height : 535,
         uploadImage : {
             url : "../../json/newsImg.json"
@@ -152,5 +151,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
             ,'code'
         ]
     });
+    //用于同步编辑器内容到textarea
+    layedit.sync(editIndex);
 
 });

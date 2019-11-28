@@ -20,7 +20,7 @@
 				<div class="layui-form-item magt3">
 					<label class="layui-form-label">文章标题</label>
 					<div class="layui-input-block">
-						<input type="text" class="layui-input newsName" lay-verify="newsName" placeholder="请输入文章标题">
+						<input type="text" class="layui-input articleName" lay-verify="articleName" placeholder="请输入文章标题">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -39,7 +39,7 @@
 		<div class="layui-form-item magb0">
 			<label class="layui-form-label">文章内容</label>
 			<div class="layui-input-block">
-				<textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="news_content"></textarea>
+				<textarea placeholder="请输入内容" class="layui-textarea content" lay-verify="content" id="articleContent"></textarea>
 			</div>
 		</div>
 	</div>
@@ -56,11 +56,12 @@
 		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
 		<div class="border">
 			<div class="layui-form-item">
-				<label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 状　态</label>
-				<div class="layui-input-block newsStatus">
-					<select name="status" lay-verify="required">
-						<option value="0">保存草稿</option>
-						<option value="1">等待审核</option>
+				<label class="layui-form-label"><i class="layui-icon">&#xe60e;</i>文章类型</label>
+				<div class="layui-input-block articleType">
+					<select name="articleType" lay-verify="required">
+						<option value="0">原创</option>
+						<option value="1">转载</option>
+						<option value="2">翻译</option>
 					</select>
 				</div>
 			</div>
@@ -92,7 +93,8 @@
 			</div>
 			<hr class="layui-bg-gray" />
 			<div class="layui-right">
-				<a class="layui-btn layui-btn-sm" lay-filter="addNews" lay-submit><i class="layui-icon">&#xe609;</i>发布</a>
+				<a class="layui-btn layui-btn-sm" lay-filter="addArticle" lay-submit><i class="layui-icon">&#xe609;</i>直接发布</a>
+				<a class="layui-btn layui-btn-sm" lay-filter="addArticle" lay-submit><i class="layui-icon">&#xe609;</i>保存草稿</a>
 				<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
 			</div>
 		</div>

@@ -21,7 +21,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             {field: 'newsId', title: 'ID', width:60, align:"center"},
             {field: 'newsName', title: '文章标题', width:350},
             {field: 'newsAuthor', title: '发布者', align:'center'},
-            {field: 'newsStatus', title: '发布状态',  align:'center',templet:"#newsStatus"},
+            {field: 'articleStatus', title: '发布状态',  align:'center',templet:"#articleStatus"},
             {field: 'newsLook', title: '浏览权限', align:'center'},
             {field: 'newsTop', title: '是否置顶', align:'center', templet:function(d){
                 return '<input type="checkbox" name="newsTop" lay-filter="newsTop" lay-skin="switch" lay-text="是|否" '+d.newsTop+'>'
@@ -75,7 +75,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     body.find(".abstract").val(edit.abstract);
                     body.find(".thumbImg").attr("src",edit.newsImg);
                     body.find("#news_content").val(edit.content);
-                    body.find(".newsStatus select").val(edit.newsStatus);
+                    body.find(".articleStatus select").val(edit.articleStatus);
                     body.find(".openness input[name='openness'][title='"+edit.newsLook+"']").prop("checked","checked");
                     body.find(".newsTop input[name='newsTop']").prop("checked",edit.newsTop);
                     form.render();
