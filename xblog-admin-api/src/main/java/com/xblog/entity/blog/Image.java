@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -15,7 +16,10 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Image {
-    private String id;
+    @Id
+    @Column
+    private long id;
+    @Column
     private String url;
 
     public Image() {

@@ -1,4 +1,5 @@
-layui.use(['form','layer','layedit','laydate','upload'],function(){
+layui.use(['form','layer','code','layedit','laydate','upload'],function(){
+
     var form = layui.form
         layer = parent.layer === undefined ? layui.layer : top.layer,
         laypage = layui.laypage,
@@ -6,6 +7,10 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         layedit = layui.layedit,
         laydate = layui.laydate,
         $ = layui.jquery;
+
+    // layedit.build('news_content', {
+    //     tool: ['left', 'center', 'right', '|', 'face']
+    // });
 
     //给分类 CheckBox赋值
     $(document).ready(function(){
@@ -130,7 +135,22 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         height : 535,
         uploadImage : {
             url : "../../json/newsImg.json"
-        }
+        },
+        tool: [
+            'strong' //加粗
+            ,'italic' //斜体
+            ,'underline' //下划线
+            ,'del' //删除线
+            ,'|' //分割线
+            ,'left' //左对齐
+            ,'center' //居中对齐
+            ,'right' //右对齐
+            ,'link' //超链接
+            ,'unlink' //清除链接
+            ,'image' //插入图片
+            ,'help' //帮助
+            ,'code'
+        ]
     });
 
 });
