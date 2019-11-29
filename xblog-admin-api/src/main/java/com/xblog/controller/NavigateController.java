@@ -29,7 +29,7 @@ public class NavigateController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public RespEntity add(@RequestBody Navigate navigate){
-        logger.debug("step into NavigateController add(), Navigate: {}", navigate);
+        logger.info("step into NavigateController add(), Navigate: {}", navigate);
         if (StringUtils.isBlank(navigate.getName())){
             return RespEntity.error("请输导航名称");
         }
@@ -51,7 +51,7 @@ public class NavigateController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public RespEntity update(@RequestBody Navigate navigate){
-        logger.debug("step into NavigateController update(), navigate: {}", navigate);
+        logger.info("step into NavigateController update(), navigate: {}", navigate);
         Navigate navigateOld = navigateService.findById(navigate.getId());
         if (navigateOld == null){
             return RespEntity.error("导航不存在");
@@ -67,7 +67,7 @@ public class NavigateController {
         if (StringUtils.isNotBlank(navigate.getUrl())){
             navigateOld.setUrl(navigate.getUrl());
         }
-        if (navigate.getParentId() > 0){
+        if (StringUtils.isNotBlank(navigate.getParentId())){
             navigateOld.setParentId(navigate.getParentId());
         }
         navigateOld = navigateService.add(navigateOld);
@@ -82,8 +82,8 @@ public class NavigateController {
      * @return RespEntity
      */
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public RespEntity findById(int id){
-        logger.debug("step into NavigateController findById(), id: {}", id);
+    public RespEntity findById(String id){
+        logger.info("step into NavigateController findById(), id: {}", id);
         Navigate navigate = navigateService.findById(id);
         return RespEntity.success(navigate);
     }
@@ -98,7 +98,7 @@ public class NavigateController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
     ){
-        logger.debug("step into NavigateController findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
+        logger.info("step into NavigateController findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
         PageResult<Navigate> pageResult = navigateService.findAll(key, page, limit);
         return RespEntity.success(pageResult.getRows(), pageResult.getCount());
     }
@@ -109,7 +109,7 @@ public class NavigateController {
      */
     @RequestMapping(value = "/findAllNavigate", method = RequestMethod.GET)
     public RespEntity findAllNavigate(){
-        logger.debug("step into NavigateController findAll()");
+        logger.info("step into NavigateController findAll()");
         PageResult<Navigate> pageResult = navigateService.findAll(null, 1, 200);
         return RespEntity.success(pageResult.getRows(), pageResult.getCount());
     }
@@ -119,8 +119,8 @@ public class NavigateController {
      * @return RespEntity
      */
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public RespEntity delete(int id){
-        logger.debug("step into NavigateController delete(), id: {}", id);
+    public RespEntity delete(String id){
+        logger.info("step into NavigateController delete(), id: {}", id);
         navigateService.deleteById(id);
         return RespEntity.success("删除成功");
     }
@@ -130,10 +130,10 @@ public class NavigateController {
      * @return RespEntity
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.GET)
-    public RespEntity deleteBatch(@RequestParam(value = "ids[]") int[] ids){
-        logger.debug("step into NavigateController delete(), ids: {}", ids);
+    public RespEntity deleteBatch(@RequestParam(value = "ids[]") String[] ids){
+        logger.info("step into NavigateController delete(), ids: {}", ids);
         if (ids != null && ids.length > 0){
-            for (int id: ids) {
+            for (String id: ids) {
                 navigateService.deleteById(id);
             }
         }

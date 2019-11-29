@@ -11,7 +11,7 @@ import java.util.List;
  * 角色表
  * Created by lovebin on 2017/4/19.
  */
-public interface NavigateRepository extends JpaRepository<Navigate, Integer> {
+public interface NavigateRepository extends JpaRepository<Navigate, String> {
 
     Navigate findByName(String name);
 }

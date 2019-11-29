@@ -15,11 +15,11 @@ public interface NavigateService {
 
     public Navigate add(Navigate navigate);
 
-    public Navigate findById(int id);
+    public Navigate findById(String id);
 
     public Navigate findByName(String name);
 
     public PageResult<Navigate> findAll(String name, int pageNum, int pageSize);
 
-    public void deleteById(int id);
+    public void deleteById(String id);
 }

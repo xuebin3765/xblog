@@ -16,13 +16,11 @@ import java.lang.annotation.Target;
 public class Tag {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private String id;
     @Column
     private String name;
 
-    public Tag() {
-    }
+    public Tag() { }
 
     public Tag(String name) {
         this.name = name;

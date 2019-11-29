@@ -26,7 +26,7 @@ public class TagController {
      */
     @RequestMapping(value = "/addTag", method = RequestMethod.POST)
     public RespEntity add(@RequestBody Tag tag){
-        logger.debug("step into TagController addTag(), name: {}", tag);
+        logger.info("step into TagController addTag(), name: {}", tag);
         if (StringUtils.isBlank(tag.getName())){
             return RespEntity.error("请输入标签名称");
         }
@@ -43,8 +43,8 @@ public class TagController {
      * @return RespEntity
      */
     @RequestMapping(value = "/updateTag", method = RequestMethod.PUT)
-    public RespEntity updateTag(String name, int id){
-        logger.debug("step into TagController updateTag(), name: {}, id: {}", name, id);
+    public RespEntity updateTag(String name, String id){
+        logger.info("step into TagController updateTag(), name: {}, id: {}", name, id);
         Tag tag = tagService.findById(id);
         if (tag == null){
             return RespEntity.error("标签不存在");
@@ -66,8 +66,8 @@ public class TagController {
      * @return RespEntity
      */
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public RespEntity findById(int id){
-        logger.debug("step into TagController findById(), id: {}", id);
+    public RespEntity findById(String id){
+        logger.info("step into TagController findById(), id: {}", id);
         Tag tag = tagService.findById(id);
         return RespEntity.success(tag);
     }
@@ -78,7 +78,7 @@ public class TagController {
      */
     @RequestMapping(value = "/findAllTag", method = RequestMethod.GET)
     public RespEntity findAllTag(){
-        logger.debug("step into TagController findAllTag()");
+        logger.info("step into TagController findAllTag()");
         PageResult<Tag> pageResult = tagService.findAll(null, 1, 200);
         return RespEntity.success(pageResult.getRows(), pageResult.getCount());
     }
@@ -93,7 +93,7 @@ public class TagController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
     ){
-        logger.debug("step into TagController findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
+        logger.info("step into TagController findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
         PageResult<Tag> pageResult = tagService.findAll(key, page, limit);
         return RespEntity.success(pageResult.getRows(), pageResult.getCount());
     }
@@ -103,8 +103,8 @@ public class TagController {
      * @return RespEntity
      */
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public RespEntity delete(int id){
-        logger.debug("step into TagController delete(), id: {}", id);
+    public RespEntity delete(String id){
+        logger.info("step into TagController delete(), id: {}", id);
         tagService.deleteById(id);
         return RespEntity.success("删除成功");
     }
@@ -114,10 +114,10 @@ public class TagController {
      * @return RespEntity
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.GET)
-    public RespEntity delete(@RequestParam(value = "ids[]") int[] ids){
-        logger.debug("step into TagController delete(), ids: {}", ids);
+    public RespEntity delete(@RequestParam(value = "ids[]") String[] ids){
+        logger.info("step into TagController delete(), ids: {}", ids);
         if (ids != null && ids.length > 0){
-            for (int id: ids) {
+            for (String id: ids) {
                 tagService.deleteById(id);
             }
         }

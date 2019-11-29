@@ -13,8 +13,8 @@ public class SnowflakeUUIDUtil {
         return instance;
     }
 
-    public long getUuid(){
-        return snowflakeIdWorker.nextId();
+    public String getUuid(){
+        return String.valueOf(snowflakeIdWorker.nextId());
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,7 @@
 package com.xblog.service.impl;
 
 import com.xblog.common.PageResult;
+import com.xblog.commons.utils.SnowflakeUUIDUtil;
 import com.xblog.entity.sys.Navigate;
 import com.xblog.repository.DaoHelperRepository;
 import com.xblog.repository.sys.NavigateRepository;
@@ -35,11 +36,12 @@ public class NavigateServiceImpl implements NavigateService {
 
     @Override
     public Navigate add(Navigate navigate) {
+        navigate.setId(SnowflakeUUIDUtil.getInstance().getUuid());
         return navigateRepository.save(navigate);
     }
 
     @Override
-    public Navigate findById(int id) {
+    public Navigate findById(String id) {
         return navigateRepository.findById(id).orElse(null);
     }
 
@@ -76,7 +78,7 @@ public class NavigateServiceImpl implements NavigateService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         navigateRepository.deleteById(id);
     }
 }

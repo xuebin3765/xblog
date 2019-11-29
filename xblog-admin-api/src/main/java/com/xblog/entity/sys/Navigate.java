@@ -16,14 +16,13 @@ import javax.persistence.*;
 public class Navigate {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id;
     @Column
     private String name;
     @Column
     private String url;
     @Column
-    private int parentId;
+    private String parentId;
     @Column
     private int sort; // 排序字段
 
@@ -33,7 +32,7 @@ public class Navigate {
     public Navigate() {
     }
 
-    public Navigate(String name, String url, int id) {
+    public Navigate(String name, String url, String id) {
         this.name = name;
         this.url = url;
         this.id = id;

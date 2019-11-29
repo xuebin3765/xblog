@@ -14,11 +14,11 @@ public interface TagService {
 
     public Tag add(Tag tag);
 
-    public Tag findById(int id);
+    public Tag findById(String id);
 
     public Tag findByName(String name);
 
     public PageResult<Tag> findAll(String name, int pageNum, int pageSize);
 
-    public void deleteById(int id);
+    public void deleteById(String id);
 }

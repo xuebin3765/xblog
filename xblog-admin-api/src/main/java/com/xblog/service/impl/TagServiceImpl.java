@@ -51,7 +51,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag findById(int id) {
+    public Tag findById(String id) {
         return tagRepository.findById(id).orElse(null);
     }
 
@@ -88,7 +88,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         tagRepository.deleteById(id);
     }
 }
