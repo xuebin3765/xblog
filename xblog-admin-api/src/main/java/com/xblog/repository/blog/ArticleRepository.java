@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.Query;
  * Created by lovebin on 2017/4/19.
  */
 
-public interface ArticleRepository extends JpaRepository<Article, Integer> , JpaSpecificationExecutor<Article>{
+public interface ArticleRepository extends JpaRepository<Article, String> , JpaSpecificationExecutor<Article>{
 
     /**
      * 更新文章状态

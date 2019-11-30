@@ -37,7 +37,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         id : "navigateListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'id', title: 'ID', width:60, align:"center"},
+            {field: 'id', title: 'ID', width:200, align:"center"},
             {field: 'name', title: '导航名称', align:'center'},
             {field: 'url', title: '导航地址', align:'center'},
             {field: 'parentName', title: '上级导航', align:'center'},
@@ -58,7 +58,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             id : "navigateListTable",
             cols : [[
                 {type: "checkbox", fixed:"left", width:50},
-                {field: 'id', title: 'ID', width:60, align:"center"},
+                {field: 'id', title: 'ID', width:200, align:"center"},
                 {field: 'name', title: '导航名称', align:'center'},
                 {field: 'url', title: '导航地址', align:'center'},
                 {field: 'parentName', title: '上级导航', align:'center'},

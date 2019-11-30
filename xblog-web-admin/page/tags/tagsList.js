@@ -18,7 +18,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         id : "tagsListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'id', title: 'ID', width:60, align:"center"},
+            {field: 'id', title: 'ID', width:200, align:"center"},
             {field: 'name', title: '标签名称', align:'center'},
             {title: '操作', width:170, templet:'#tagsListBar',fixed:"right",align:"center"}
         ]]
@@ -54,7 +54,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             id : "tagsListTable",
             cols : [[
                 {type: "checkbox", fixed:"left", width:50},
-                {field: 'id', title: 'ID', width:60, align:"center"},
+                {field: 'id', title: 'ID', width:200, align:"center"},
                 {field: 'name', title: '标签名称', align:'center'},
                 {title: '操作', width:170, templet:'#tagsListBar',fixed:"right",align:"center"}
             ]]
@@ -152,7 +152,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     tableIns.reload();
                     layer.close(index);
                 })
-            })
+            });
         }else{
             layer.msg("请选择需要删除的文章");
         }

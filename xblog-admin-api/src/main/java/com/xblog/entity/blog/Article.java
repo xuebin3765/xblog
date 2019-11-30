@@ -34,11 +34,11 @@ public class Article {
     @Column
     private String context;        // 正文
     @Column
-    private Date created;          // 创建时间
+    private long created;          // 创建时间
     @Column
-    private Date modify;           // 修改时间
+    private long modify;           // 修改时间
     @Column
-    private int status;            // 状态
+    private int status;            // 状态 -1，删除； 0，草稿； 1，发布
     @Column
     private boolean stick;         // 文章置顶
     @Column
