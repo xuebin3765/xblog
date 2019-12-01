@@ -3,11 +3,15 @@ package com.xblog.controller;
 import com.xblog.common.enums.ArticleEnum;
 import com.xblog.commons.response.RespEntity;
 import com.xblog.commons.utils.JsonUtil;
+import com.xblog.commons.validator.ValidResult;
+import com.xblog.commons.validator.ValidatorFactory;
 import com.xblog.entity.blog.Article;
 import com.xblog.service.ArticleService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,10 +39,38 @@ public class ArticleController {
         if (article == null){
             return RespEntity.error("提交数据不能为空");
         }
-
         Article articleOld = articleService.findById(article.getImgUrl());
-        if (null == article){
-            return RespEntity.error("add article failed !");
+
+        if (null == articleOld){
+            // 新增，关键参数验证
+            ValidResult validResult = ValidatorFactory.validBean(article);
+            if (validResult.isHasErrors()){
+                return RespEntity.error("参数不合法！", validResult.getErrorMsgs());
+            }
+            article = articleService.add(article);
+            if (null == article){
+                return RespEntity.error("添加文章失败");
+            }
+        }else {
+            // 修改，对某些字段进行验证修改
+
+            // 文章标题
+            if (StringUtils.isNotBlank(article.getTitle())){
+                articleOld.setTitle(article.getTitle());
+            }
+            // 文章摘要
+            if (StringUtils.isNotBlank(article.getDecoration())){
+                articleOld.setDecoration(article.getDecoration());
+            }
+            // 文章内容
+            if (StringUtils.isNotBlank(article.getContext())){
+                articleOld.setContext(article.getContext());
+            }
+            // 文章分类
+            if (article.getNavigateIds() != null && article.getNavigateIds().size() > 0){
+
+            }
+            // 文章标签
         }
         return RespEntity.success(article,"success");
     }

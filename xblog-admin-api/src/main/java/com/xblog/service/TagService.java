@@ -1,7 +1,7 @@
 package com.xblog.service;
 
 import com.xblog.common.PageResult;
-import com.xblog.entity.sys.Tag;
+import com.xblog.entity.blog.Tag;
 
 import java.util.List;
 

@@ -1,10 +1,8 @@
 package com.xblog.repository.sys;
 
 
-import com.xblog.entity.sys.Menu;
-import com.xblog.entity.sys.Tag;
+import com.xblog.entity.blog.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

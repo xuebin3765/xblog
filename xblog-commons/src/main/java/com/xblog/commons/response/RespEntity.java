@@ -68,6 +68,14 @@ public class RespEntity {
                 .build();
     }
 
+    public static RespEntity error(String message, Object object){
+        return new RespEntityBuilder()
+                .msg(message)
+                .data(object)
+                .code(0)
+                .build();
+    }
+
     public static RespEntity error(int respCode, String respMsg){
         return new RespEntity.RespEntityBuilder()
                 .code(respCode)

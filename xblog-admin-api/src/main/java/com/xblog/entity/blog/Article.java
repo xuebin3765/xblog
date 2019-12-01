@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文章
@@ -19,8 +20,6 @@ public class Article {
     private Integer id;
     @Column
     private Integer userId;
-    @Column
-    private Integer menuId;        // 菜单id
     @Column
     private String title;          // 标题
     @Column
@@ -43,4 +42,9 @@ public class Article {
     private boolean stick;         // 文章置顶
     @Column
     private int hot;               // 是否热门推荐。0：默认，1：热门
+
+    @Transient
+    private List<String> navigateIds;
+    @Transient
+    private List<String> tagIds;
 }

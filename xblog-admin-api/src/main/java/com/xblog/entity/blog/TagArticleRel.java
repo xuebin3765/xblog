@@ -14,12 +14,8 @@ import javax.persistence.*;
 @Entity
 @Table
 public class TagArticleRel {
-    @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private String tagId;
     @Column
-    private int tagId;
-    @Column
-    private int articleId;
+    private String articleId;
 }
