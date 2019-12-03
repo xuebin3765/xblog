@@ -36,7 +36,7 @@ public class NavigateServiceImpl implements NavigateService {
 
     @Override
     public Navigate add(Navigate navigate) {
-        navigate.setId(SnowflakeUUIDUtil.getInstance().getUuid());
+        navigate.setId(SnowflakeUUIDUtil.getUuid());
         return navigateRepository.save(navigate);
     }
 

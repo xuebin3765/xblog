@@ -1,7 +1,7 @@
 package com.xblog.repository.sys;
 
 
-import com.xblog.entity.blog.Tag;
+import com.xblog.entity.sys.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

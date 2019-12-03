@@ -14,6 +14,9 @@ import javax.persistence.*;
 @Entity
 @Table
 public class TagArticleRel {
+    @Id
+    @Column
+    private String id;
     @Column
     private String tagId;
     @Column

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -15,6 +16,9 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class ArticleNavigateRel {
+    @Id
+    @Column
+    private String id;
     @Column
     private String articleId;
     @Column

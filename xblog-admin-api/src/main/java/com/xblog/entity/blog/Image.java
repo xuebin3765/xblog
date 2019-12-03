@@ -18,12 +18,11 @@ import javax.persistence.Table;
 public class Image {
     @Id
     @Column
-    private long id;
+    private String id;
     @Column
     private String url;
 
-    public Image() {
-    }
+    public Image() {}
 
     public Image(String url) {
         this.url = url;

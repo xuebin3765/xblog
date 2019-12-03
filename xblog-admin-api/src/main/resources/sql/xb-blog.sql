@@ -98,10 +98,10 @@ CREATE TABLE `comment`  (
 -- ----------------------------
 -- Table structure for hibernate_sequence
 -- ----------------------------
-DROP TABLE IF EXISTS `hibernate_sequence`;
-CREATE TABLE `hibernate_sequence`  (
-  `next_val` bigint(20) NULL DEFAULT NULL
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+-- DROP TABLE IF EXISTS `hibernate_sequence`;
+-- CREATE TABLE `hibernate_sequence`  (
+--   `next_val` bigint(20) NULL DEFAULT NULL
+-- ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of hibernate_sequence
