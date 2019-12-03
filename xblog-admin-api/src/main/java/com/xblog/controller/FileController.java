@@ -1,13 +1,12 @@
 package com.xblog.controller;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.xblog.commons.response.RespEntity;
-import com.xblog.commons.utils.SnowflakeUUIDUtil;
-import com.xblog.service.ImageService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
+import com.xblog.service.FileService;
+import com.xblog.service.impl.FileServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Max;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * desc: 文件上传工具类
@@ -28,41 +25,44 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin/fileUpload")
+@Slf4j
 public class FileController {
-    private Logger logger = LoggerFactory.getLogger(FileController.class);
-
-    @Value("${upload.picture.path}")
-    private String uploadPicturePath;
-
     @Resource
-    private ImageService imageService;
+    private FileService fileService;
 
 
     @RequestMapping(value = "/photo", method = RequestMethod.POST)
+    @ResponseBody
     public RespEntity upload(@RequestParam("file") MultipartFile[] multipartFile){
         if (multipartFile == null || multipartFile.length == 0) {
             return RespEntity.error("文件为空");
         }
-        List<String> filePathList = Lists.newArrayList();
+
+        List<Map<String, String>> filePathList = Lists.newArrayList();
         for (MultipartFile file: multipartFile) {
-            String fileName = file.getOriginalFilename();  // 文件名
-            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-            String uuid = SnowflakeUUIDUtil.getUuid();
-
-            fileName = uuid + suffixName; // 新文件名
-
-            File dest = new File(uploadPicturePath + fileName);
-            if (!dest.getParentFile().exists()) {
-                dest.getParentFile().mkdirs();
+            Map<String, String> map = Maps.newHashMap();
+            String ofName = file.getOriginalFilename();  // 文件名
+            String suffixName = null;
+            // 获取文件后缀名
+            if (StringUtils.isNotBlank(ofName)){
+                map.put("origin", ofName);
+                suffixName = ofName.substring(ofName.lastIndexOf("."));  // 后缀名
             }
-            try {
-                file.transferTo(dest);
-            } catch (IOException e) {
-                logger.error("upload image file, error: {}", e.getMessage());
-                return RespEntity.error("上传文件失败");
+            // 验证文件类型是否合法，验证文件后缀是否在可接受列表中
+            if (fileService.validateFileType(suffixName, FileServiceImpl.TYPE_PHOTO)){
+                String nfFile = fileService.uploadFile(file, suffixName);
+                if (StringUtils.isNotBlank(nfFile)){
+                    map.put("newFile", nfFile);
+                    map.put("status","0");
+                }else {
+                    map.put("status","1");
+                    map.put("message","上传失败，未知错误！");
+                }
+            }else {
+                map.put("status","1");
+                map.put("message","文件类型不合法");
             }
-            filePathList.add(fileName);
-
+            filePathList.add(map);
         }
         return RespEntity.success(filePathList);
     }

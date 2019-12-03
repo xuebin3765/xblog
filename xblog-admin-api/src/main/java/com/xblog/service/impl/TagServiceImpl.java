@@ -6,6 +6,7 @@ import com.xblog.entity.sys.Tag;
 import com.xblog.repository.DaoHelperRepository;
 import com.xblog.repository.sys.TagRepository;
 import com.xblog.service.TagService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,8 @@ import java.util.Map;
  */
 @Service
 @Transactional
+@Slf4j
 public class TagServiceImpl implements TagService {
-
-    private Logger logger = LoggerFactory.getLogger(TagServiceImpl.class);
 
     @Resource
     private TagRepository tagRepository;
@@ -52,7 +52,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public PageResult<Tag> findAll(String name, int pageNum, int pageSize) {
 
-        logger.debug("findAll, name:{}, pageNum:{}, pageSize:{}", name, pageNum, pageSize);
+        log.debug("findAll, name:{}, pageNum:{}, pageSize:{}", name, pageNum, pageSize);
         if (pageNum <= 0){
             pageNum = 1;
         }

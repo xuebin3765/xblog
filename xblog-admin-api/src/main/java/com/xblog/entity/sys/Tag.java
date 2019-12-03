@@ -3,7 +3,6 @@ package com.xblog.entity.sys;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.lang.annotation.Target;
 
 /**
  * Description: 标签
