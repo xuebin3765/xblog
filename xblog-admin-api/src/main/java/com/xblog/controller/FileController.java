@@ -80,33 +80,13 @@ public class FileController {
         // 验证文件类型是否合法，验证文件后缀是否在可接受列表中
         if (fileService.validateFileType(suffixName, FileServiceImpl.TYPE_PHOTO)){
             Map<String, String> map = Maps.newHashMap();
-            String nfFile = fileService.uploadFile(multipartFile, suffixName);
+            String nfFile = fileService.uploadFileToTxCos(multipartFile);
             if (StringUtils.isNotBlank(nfFile)){
-                map.put("src", "https://img.52z.com/upload/news/image/20180621/20180621055651_47663.jpg");
+                map.put("src", nfFile);
 //                map.put("src", fileService.getFilePath(FileServiceImpl.TYPE_PHOTO)+nfFile);
             }
             return RespEntity.success(map);
         }
         return RespEntity.error("上传失败");
-    }
-
-    @RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
-    public Map<String, Object> uploadImage(MultipartFile file) {
-        Map<String, Object> res = new HashMap<>();
-        try {
-            String src = fileService.uploadFile(file, ".jpg");
-            res.put("code", 0);
-            res.put("msg", "上传失败");
-            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("src", fileService.getFilePath(FileServiceImpl.TYPE_PHOTO)+src);
-            jsonObject.put("src", "https://img.52z.com/upload/news/image/20180621/20180621055651_47663.jpg");
-            res.put("data", jsonObject);
-            return res;
-        } catch (Exception e) {
-            e.printStackTrace();
-            res.put("code", -1);
-            res.put("msg", "上传失败");
-            return res;
-        }
     }
 }

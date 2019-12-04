@@ -15,7 +15,16 @@ public interface FileService {
      */
     public String uploadFile(MultipartFile file, String suffixName);
 
+    /**
+     * 上传文件到腾讯对象存储
+     * @param file 文件
+     * @return 文件访问路径
+     */
+    public String uploadFileToTxCos(MultipartFile file);
+
     public String getFilePath(int fileType);
 
     public boolean validateFileType(String suffix, int... type);
+
+    public void createFolder(String path);
 }
