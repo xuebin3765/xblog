@@ -37,11 +37,12 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
     //上传缩略图
     upload.render({
         elem: '.thumbBox',
-        url: '../../json/userface.json',
-        method : "get",  //此处是为了演示之用，实际使用中请将此删除，默认用post方式提交
+        url: serverUrl+'/admin/fileUpload/photo',
+        method : "post",  //此处是为了演示之用，实际使用中请将此删除，默认用post方式提交
         done: function(res, index, upload){
+            alert(res)
             var num = parseInt(4*Math.random());  //生成0-4的随机数，随机显示一个头像信息
-            $('.thumbImg').attr('src',res.data[num].src);
+            $('.thumbImg').attr('src',res.data.src);
             $('.thumbBox').css("background","#fff");
         }
     });
@@ -129,11 +130,26 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         return false;
     });
 
+    // // 上传图片配置
+    // layedit.set({
+    //     uploadImage: {
+    //         url: '' //接口url
+    //         ,type: '' //默认post
+    //     }
+    // });
+
+    layui.layedit.set({
+        uploadImage: {
+            url: serverUrl+'/admin/fileUpload/uploadImage' //接口url
+            ,type: 'post' //默认post
+        }
+    });
+
     //创建一个编辑器
     var editIndex = layedit.build('articleContent',{
         height : 535,
         uploadImage : {
-            url : "../../json/newsImg.json"
+            url : serverUrl+'/admin/fileUpload/photo'
         },
         tool: [
             'strong' //加粗
