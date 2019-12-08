@@ -8,7 +8,7 @@ import com.xblog.entity.blog.Article;
  * date: 2019/08/04
  */
 public interface ArticleService {
-    Article delete(String id);
+    void delete(String id);
 
     Article add(Article article);
 

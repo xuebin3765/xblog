@@ -23,17 +23,6 @@
 						<input type="text" class="layui-input articleName" lay-verify="articleName" placeholder="请输入文章标题">
 					</div>
 				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">内容摘要</label>
-					<div class="layui-input-block">
-						<textarea placeholder="请输入内容摘要" class="layui-textarea abstract"></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="layui-col-md3 layui-col-xs5">
-				<div class="layui-upload-list thumbBox mag0 magt3">
-					<img class="layui-upload-img thumbImg">
-				</div>
 			</div>
 		</div>
 		<div class="layui-form-item magb0">
@@ -44,6 +33,13 @@
 		</div>
 	</div>
 	<div class="layui-col-md3 layui-col-xs12">
+		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 缩略图</blockquote>
+		<div class="border category">
+			<div class="layui-upload-list thumbBox mag0 magt3">
+				<img class="layui-upload-img thumbImg">
+			</div>
+		</div>
+
 		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 分类目录</blockquote>
 		<div class="border category">
 			<div class="navigate_checkbox"></div>
@@ -53,6 +49,7 @@
 		<div class="border category">
 			<div class="tag_checkbox"></div>
 		</div>
+
 		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
 		<div class="border">
 			<div class="layui-form-item">
@@ -66,10 +63,16 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
+				<label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 原　文</label>
+				<div class="layui-input-block loadUrl">
+					<input type="text" class="layui-input loadUrl" lay-verify="loadUrl" placeholder="转载，请填写原文url">
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label"><i class="layui-icon">&#xe609;</i> 发　布</label>
-				<div class="layui-input-block">
-					<input type="radio" name="release" title="立即发布" lay-skin="primary" lay-filter="release" checked />
-					<input type="radio" name="release" title="保存草稿" lay-skin="primary" lay-filter="release"/>
+				<div class="layui-input-block" id="status">
+					<input type="radio" name="release" title="保存草稿" lay-skin="primary" lay-filter="status" value="0" checked/>
+					<input type="radio" name="release" title="立即发布" lay-skin="primary" lay-filter="status" value="1"  />
 <!--					<input type="radio" name="release" title="定时发布" lay-skin="primary" lay-filter="release" />-->
 				</div>
 			</div>
@@ -88,8 +91,9 @@
 <!--			</div>-->
 			<div class="layui-form-item articleTop">
 				<label class="layui-form-label"><i class="seraph icon-zhiding"></i> 置　顶</label>
-				<div class="layui-input-block">
-					<input type="checkbox" name="articleTop" lay-skin="switch" lay-text="是|否">
+				<div class="layui-input-block" id="articleTop">
+					<input type="radio" name="release" title="否" lay-skin="articleTop" lay-filter="articleTop" value="0" checked/>
+					<input type="radio" name="release" title="是" lay-skin="articleTop" lay-filter="articleTop" value="1"  />
 				</div>
 			</div>
 			<hr class="layui-bg-gray" />

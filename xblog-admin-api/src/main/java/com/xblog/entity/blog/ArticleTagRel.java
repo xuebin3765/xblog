@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table
-public class TagArticleRel {
+public class ArticleTagRel {
     @Id
     @Column
     private String id;
@@ -21,4 +21,10 @@ public class TagArticleRel {
     private String tagId;
     @Column
     private String articleId;
+
+    public ArticleTagRel(String id, String tagId, String articleId) {
+        this.id = id;
+        this.tagId = tagId;
+        this.articleId = articleId;
+    }
 }

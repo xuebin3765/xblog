@@ -31,15 +31,16 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public Article delete(String id) {
+    public void delete(String id) {
         logger.info("step delete, id:{}", id);
-
-        return null;
+        Article article = articleRepository.findById(id).orElse(null);
+        if (article != null)
+            articleRepository.delete(article);
     }
 
     @Override
     public Article add(Article article) {
-        return null;
+        return articleRepository.save(article);
     }
 
     @Override

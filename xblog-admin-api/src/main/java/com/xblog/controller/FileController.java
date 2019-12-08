@@ -1,6 +1,5 @@
 package com.xblog.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xblog.commons.response.RespEntity;
@@ -8,12 +7,10 @@ import com.xblog.service.FileService;
 import com.xblog.service.impl.FileServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +25,8 @@ import java.util.Map;
 public class FileController {
     @Resource
     private FileService fileService;
+
+
 
 
     @RequestMapping(value = "/photos", method = RequestMethod.POST)

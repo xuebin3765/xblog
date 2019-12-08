@@ -51,6 +51,8 @@ public class FileServiceImpl implements FileService {
     private String uploadPicturePath;
     @Value("${cos.bucket}")
     private String bucket;
+    @Value("${cos.imagePrefix}")
+    private String imagePrefix;
 
     @Resource
     private Environment env;
@@ -133,17 +135,17 @@ public class FileServiceImpl implements FileService {
         String key = getFilePath(TYPE_PHOTO)+SnowflakeUUIDUtil.getUuid()+suffix;
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
         PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
+        System.out.println(putObjectResult.getRequestId());
         cosClient.shutdown();
 
         // 操作完上的文件 需要删除在根目录下生成的文件
         File f = new File(localFile.toURI());
         if (f.delete()){
-            System.out.println("删除成功");
+            log.info("删除上传文件缓存成功！");
         }else {
-            System.out.println("删除失败");
+            log.info("删除上传文件缓存失败！");
         }
-        String fix = "https://cxyk-blog-1257612703.cos.ap-chengdu.myqcloud.com/";
-        return fix+key;
+        return imagePrefix+key;
     }
 
 

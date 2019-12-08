@@ -6,6 +6,7 @@ import com.xblog.entity.sys.Navigate;
 import com.xblog.repository.DaoHelperRepository;
 import com.xblog.repository.sys.NavigateRepository;
 import com.xblog.service.NavigateService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,8 @@ import java.util.Map;
  */
 @Service
 @Transactional
+@Slf4j
 public class NavigateServiceImpl implements NavigateService {
-
-
-    private Logger logger = LoggerFactory.getLogger(NavigateServiceImpl.class);
 
     @Resource
     private NavigateRepository navigateRepository;
@@ -52,7 +51,7 @@ public class NavigateServiceImpl implements NavigateService {
 
     @Override
     public PageResult<Navigate> findAll(String name, int pageNum, int pageSize) {
-        logger.debug("findAll, name:{}, pageNum:{}, pageSize:{}", name, pageNum, pageSize);
+        log.debug("findAll, name:{}, pageNum:{}, pageSize:{}", name, pageNum, pageSize);
         if (pageNum <= 0){
             pageNum = 1;
         }
@@ -79,6 +78,8 @@ public class NavigateServiceImpl implements NavigateService {
 
     @Override
     public void deleteById(String id) {
-        navigateRepository.deleteById(id);
+        Navigate navigate = navigateRepository.findById(id).orElse(null);
+        if (navigate != null)
+            navigateRepository.deleteById(id);
     }
 }

@@ -3,6 +3,8 @@ package com.xblog.service;
 import com.xblog.common.PageResult;
 import com.xblog.entity.sys.Tag;
 
+import java.util.List;
+
 /**
  * Description:
  * Created by Administrator
@@ -19,4 +21,5 @@ public interface TagService {
     public PageResult<Tag> findAll(String name, int pageNum, int pageSize);
 
     public void deleteById(String id);
+
 }

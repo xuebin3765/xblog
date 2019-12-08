@@ -16,7 +16,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
             url: serverUrl+'/admin/navigate/findAllNavigate',
             success: function (data) {
                 $.each(data.data, function(index,item) {
-                    $(".navigate_checkbox").append('<p><input id="navigate_item" type="checkbox" value="'+item.id+'" name="'+item.name+'" title="'+item.name+'" lay-skin="primary" /></p>');
+                    $(".navigate_checkbox").append('<input id="navigate_item" type="checkbox" value="'+item.id+'" name="'+item.name+'" title="'+item.name+'" lay-skin="primary" />');
                 });
                 form.render();
             }
@@ -40,7 +40,6 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         url: serverUrl+'/admin/fileUpload/photo',
         method : "post",  //此处是为了演示之用，实际使用中请将此删除，默认用post方式提交
         done: function(res, index, upload){
-            alert(res)
             var num = parseInt(4*Math.random());  //生成0-4的随机数，随机显示一个头像信息
             $('.thumbImg').attr('src',res.data.src);
             $('.thumbBox').css("background","#fff");
@@ -95,25 +94,55 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
     });
 
     form.on("submit(addArticle)",function(data){
-        alert(data);
-        alert(layedit.getContent(editIndex));
-        //截取文章内容中的一部分文字放入文章摘要
-        var abstract = layedit.getText(editIndex).substring(0,50);
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-        // 实际使用时的提交信息
-        // $.post("上传路径",{
-        //     newsName : $(".newsName").val(),  //文章标题
-        //     abstract : $(".abstract").val(),  //文章摘要
-        //     content : layedit.getContent(editIndex).split('<audio controls="controls" style="display: none;"></audio>')[0],  //文章内容
-        //     newsImg : $(".thumbImg").attr("src"),  //缩略图
-        //     classify : '1',    //文章分类
-        //     newsStatus : $('.newsStatus select').val(),    //发布状态
-        //     newsTime : submitTime,    //发布时间
-        //     newsTop : data.filed.newsTop == "on" ? "checked" : "",    //是否置顶
-        // },function(res){
-        //
-        // })
+
+        alert( $(".articleName").val());
+        alert( $(".articleTop").val());
+
+        var params = {
+            title: $(".articleName").val(),  //文章标题
+            //文章摘要,截取文章内容中的一部分文字放入文章摘要
+            decoration: layedit.getText(editIndex).substring(0, 50),
+            //文章内容
+            context:
+                layedit.getContent(editIndex).split('<audio controls="controls" style="display: none;"></audio>')[0],
+            imgUrl: $(".thumbImg").attr("src"),  //缩略图
+            navigateIds: '1',    //文章分类
+            tagIds: '1',    //文章标签
+            type: $('.articleType select').val(),    //文章类型
+            loadUrl: $(".loadUrl").val(),    //转载或翻译的原文地址
+            status: $('#status input[checked]').val(),    //发布状态
+            stick: $('#articleTop input[checked]').val() === 1    //是否置顶
+        };
+        $.ajax({
+            type: 'POST',
+            url: serverUrl+'/admin/article/addOrUpdate',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(params),
+            dataType: "json",
+            success:function (message) {
+                var mesg = message.msg;
+                var icon = 1;
+                if (0 !== message.code){
+                    icon = 2;
+                }
+                layer.confirm(mesg,{btn:'关闭', icon:icon, title:'提示信息'},function(index){
+                    tableIns.reload();
+                    layer.close(index);
+                    if (message.code === 0)
+                        layui.layer.closeAll();
+                });
+            },
+            error:function (message) {
+                layer.confirm(message.msg,{btn:'关闭', icon:2, title:'提示信息'},function(index){
+                    tableIns.reload();
+                    layer.close(index);
+                    if (message.code === 0)
+                        layui.layer.closeAll();
+                });
+            }
+        });
         setTimeout(function(){
             top.layer.close(index);
             top.layer.msg("文章添加成功！");
@@ -147,7 +176,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
 
     //创建一个编辑器
     var editIndex = layedit.build('articleContent',{
-        height : 535,
+        height : 600,
         uploadImage : {
             url : serverUrl+'/admin/fileUpload/photo'
         },

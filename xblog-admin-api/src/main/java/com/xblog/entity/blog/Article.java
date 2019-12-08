@@ -1,5 +1,7 @@
 package com.xblog.entity.blog;
 
+import com.xblog.entity.sys.Navigate;
+import com.xblog.entity.sys.Tag;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,8 +18,7 @@ import java.util.List;
 public class Article {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private String id;
     @Column
     private Integer userId;
     @Column
@@ -27,7 +28,7 @@ public class Article {
     @Column
     private int type;              // 原创，转载，翻译
     @Column
-    private String loadUrl;        // 转载的url
+    private String loadUrl;        // 转载的url,原文地址
     @Column
     private String decoration;     // 描述，不填获取正文前半部分内容
     @Column
@@ -40,11 +41,10 @@ public class Article {
     private int status;            // 状态 -1，删除； 0，草稿； 1，发布
     @Column
     private boolean stick;         // 文章置顶
-    @Column
-    private int hot;               // 是否热门推荐。0：默认，1：热门
-
+    // 文章分类id
     @Transient
     private List<String> navigateIds;
+    // 文章标签id
     @Transient
     private List<String> tagIds;
 }

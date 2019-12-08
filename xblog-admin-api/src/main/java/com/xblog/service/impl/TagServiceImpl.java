@@ -2,14 +2,14 @@ package com.xblog.service.impl;
 
 import com.xblog.common.PageResult;
 import com.xblog.commons.utils.SnowflakeUUIDUtil;
+import com.xblog.entity.blog.ArticleTagRel;
 import com.xblog.entity.sys.Tag;
 import com.xblog.repository.DaoHelperRepository;
 import com.xblog.repository.sys.TagRepository;
+import com.xblog.service.ArticleTagRelService;
 import com.xblog.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,6 +30,9 @@ public class TagServiceImpl implements TagService {
 
     @Resource
     private TagRepository tagRepository;
+
+    @Resource
+    private ArticleTagRelService articleTagRelService;
     @Resource
     private DaoHelperRepository daoHelperRepository;
 
