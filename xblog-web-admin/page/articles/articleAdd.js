@@ -1,6 +1,6 @@
 layui.use(['form','layer','code','layedit','laydate','upload'],function(){
 
-    var form = layui.form
+    var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         laypage = layui.laypage,
         upload = layui.upload,
@@ -40,7 +40,6 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         url: serverUrl+'/admin/fileUpload/photo',
         method : "post",  //此处是为了演示之用，实际使用中请将此删除，默认用post方式提交
         done: function(res, index, upload){
-            var num = parseInt(4*Math.random());  //生成0-4的随机数，随机显示一个头像信息
             $('.thumbImg').attr('src',res.data.src);
             $('.thumbBox').css("background","#fff");
         }
@@ -93,10 +92,10 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         }
     });
 
-    var stick = 0;
+    var stick = false;
 
     form.on('switch(articleTop)', function(data){
-        alert(data.elem.checked); //开关value值，也可以通过data.elem.value得到
+        //开关value值，也可以通过data.elem.value得到
         stick = data.elem.checked;
     });
 
@@ -159,13 +158,6 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
                 });
             }
         });
-        // setTimeout(function(){
-        //     top.layer.close(index);
-        //     top.layer.msg("文章添加成功！");
-        //     layer.closeAll("iframe");
-        //     //刷新父页面
-        //     parent.location.reload();
-        // },50000);
         return false;
     });
 
@@ -174,14 +166,6 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
         return false;
     });
-
-    // // 上传图片配置
-    // layedit.set({
-    //     uploadImage: {
-    //         url: '' //接口url
-    //         ,type: '' //默认post
-    //     }
-    // });
 
     layui.layedit.set({
         uploadImage: {
