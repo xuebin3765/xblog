@@ -22,6 +22,9 @@ public class ArticleTagRel {
     @Column
     private String articleId;
 
+    public ArticleTagRel() {
+    }
+
     public ArticleTagRel(String id, String tagId, String articleId) {
         this.id = id;
         this.tagId = tagId;

@@ -28,7 +28,7 @@
 		<div class="layui-form-item magb0">
 			<label class="layui-form-label">文章内容</label>
 			<div class="layui-input-block">
-				<textarea placeholder="请输入内容" class="layui-textarea content" lay-verify="content" id="articleContent"></textarea>
+				<label for="articleContent"></label><textarea placeholder="请输入内容" class="layui-textarea content" lay-verify="content" id="articleContent"></textarea>
 			</div>
 		</div>
 	</div>
@@ -82,18 +82,12 @@
 					<input type="text" class="layui-input" id="release" placeholder="请选择日期和时间" readonly />
 				</div>
 			</div>
-<!--			<div class="layui-form-item openness">-->
-<!--				<label class="layui-form-label"><i class="seraph icon-look"></i> 公开度</label>-->
-<!--				<div class="layui-input-block">-->
-<!--					<input type="radio" name="openness" title="开放浏览" lay-skin="primary" checked />-->
-<!--					<input type="radio" name="openness" title="私密浏览" lay-skin="primary" />-->
-<!--				</div>-->
-<!--			</div>-->
 			<div class="layui-form-item articleTop">
 				<label class="layui-form-label"><i class="seraph icon-zhiding"></i> 置　顶</label>
 				<div class="layui-input-block" id="articleTop">
-					<input type="radio" name="release" title="否" lay-skin="articleTop" lay-filter="articleTop" value="0" checked/>
-					<input type="radio" name="release" title="是" lay-skin="articleTop" lay-filter="articleTop" value="1"  />
+					<input type="checkbox" lay-filter="articleTop" name="articleTop" lay-skin="switch" lay-text="是|否">
+<!--					<input type="radio" name="release" title="否" lay-skin="articleTop" lay-filter="articleTop" value="0" checked/>-->
+<!--					<input type="radio" name="release" title="是" lay-skin="articleTop" lay-filter="articleTop" value="1"  />-->
 				</div>
 			</div>
 			<hr class="layui-bg-gray" />

@@ -93,12 +93,26 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         }
     });
 
+    var stick = 0;
+
+    form.on('switch(articleTop)', function(data){
+        alert(data.elem.checked); //开关value值，也可以通过data.elem.value得到
+        stick = data.elem.checked;
+    });
+
     form.on("submit(addArticle)",function(data){
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        //将页面全部复选框选中的值拼接到一个数组中
+        var navigate_checkbox = [];
+        $('.navigate_checkbox input[type=checkbox]:checked').each(function() {
+            navigate_checkbox.push($(this).val());
+        });
 
-        alert( $(".articleName").val());
-        alert( $(".articleTop").val());
+        var tag_checkbox = [];
+        $('.tag_checkbox input[type=checkbox]:checked').each(function() {
+            tag_checkbox.push($(this).val());
+        });
 
         var params = {
             title: $(".articleName").val(),  //文章标题
@@ -108,12 +122,12 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
             context:
                 layedit.getContent(editIndex).split('<audio controls="controls" style="display: none;"></audio>')[0],
             imgUrl: $(".thumbImg").attr("src"),  //缩略图
-            navigateIds: '1',    //文章分类
-            tagIds: '1',    //文章标签
+            navigateIds: navigate_checkbox,    //文章分类
+            tagIds: tag_checkbox,    //文章标签
             type: $('.articleType select').val(),    //文章类型
-            loadUrl: $(".loadUrl").val(),    //转载或翻译的原文地址
+            loadUrl: $('.loadUrl input[type=text]').val(),    //转载或翻译的原文地址
             status: $('#status input[checked]').val(),    //发布状态
-            stick: $('#articleTop input[checked]').val() === 1    //是否置顶
+            stick: stick    //是否置顶
         };
         $.ajax({
             type: 'POST',
@@ -128,28 +142,30 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
                     icon = 2;
                 }
                 layer.confirm(mesg,{btn:'关闭', icon:icon, title:'提示信息'},function(index){
-                    tableIns.reload();
-                    layer.close(index);
-                    if (message.code === 0)
-                        layui.layer.closeAll();
+                    top.layer.close(index);
+                    top.layer.msg("文章添加成功！");
+                    layer.closeAll("iframe");
+                    //刷新父页面
+                    parent.location.reload();
                 });
             },
             error:function (message) {
                 layer.confirm(message.msg,{btn:'关闭', icon:2, title:'提示信息'},function(index){
-                    tableIns.reload();
-                    layer.close(index);
-                    if (message.code === 0)
-                        layui.layer.closeAll();
+                    top.layer.close(index);
+                    top.layer.msg("文章添加失败！");
+                    layer.closeAll("iframe");
+                    //刷新父页面
+                    parent.location.reload();
                 });
             }
         });
-        setTimeout(function(){
-            top.layer.close(index);
-            top.layer.msg("文章添加成功！");
-            layer.closeAll("iframe");
-            //刷新父页面
-            parent.location.reload();
-        },500);
+        // setTimeout(function(){
+        //     top.layer.close(index);
+        //     top.layer.msg("文章添加成功！");
+        //     layer.closeAll("iframe");
+        //     //刷新父页面
+        //     parent.location.reload();
+        // },50000);
         return false;
     });
 

@@ -1,8 +1,10 @@
 package com.xblog.service.impl;
 
+import com.xblog.commons.utils.SnowflakeUUIDUtil;
 import com.xblog.entity.blog.Article;
 import com.xblog.repository.blog.ArticleRepository;
 import com.xblog.service.ArticleService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -40,11 +42,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article add(Article article) {
+        if (article == null) return null;
+        if (StringUtils.isBlank(article.getId())){
+            article.setId(SnowflakeUUIDUtil.getUuid());
+        }
         return articleRepository.save(article);
     }
 
     @Override
     public Article findById(String id) {
+        if (StringUtils.isBlank(id)) return null;
         logger.info("step findById, id:{}", id);
         return articleRepository.findById(id).orElse(null);
     }

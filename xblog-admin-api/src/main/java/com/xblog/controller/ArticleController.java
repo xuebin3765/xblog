@@ -50,8 +50,8 @@ public class ArticleController {
 //            if (validResult.isHasErrors()){
 //                return RespEntity.error("参数不合法！", validResult.getErrorMsgs());
 //            }
-            article = articleService.add(article);
-            if (null == article){
+            articleOld = articleService.add(article);
+            if (null == articleOld){
                 return RespEntity.error("添加文章失败");
             }
         }else {
@@ -68,9 +68,9 @@ public class ArticleController {
             if (StringUtils.isNotBlank(article.getContext())){
                 articleOld.setContext(article.getContext());
             }
-            article = articleService.add(article);
+            articleOld = articleService.add(article);
         }
-        if (article != null){
+        if (articleOld != null){
             // 文章分类
             if (article.getNavigateIds() != null && article.getNavigateIds().size() > 0){
                 log.info("保存相关关联的分类目录");
