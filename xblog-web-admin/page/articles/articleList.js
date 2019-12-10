@@ -94,13 +94,13 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
-                    body.find(".newsName").val(edit.newsName);
-                    body.find(".abstract").val(edit.abstract);
-                    body.find(".thumbImg").attr("src",edit.newsImg);
-                    body.find("#news_content").val(edit.content);
-                    body.find(".articleStatus select").val(edit.articleStatus);
-                    body.find(".openness input[name='openness'][title='"+edit.newsLook+"']").prop("checked","checked");
-                    body.find(".newsTop input[name='newsTop']").prop("checked",edit.newsTop);
+                    body.find(".articleId").attr('value', edit.id);
+                    body.find(".stick").attr('value', edit.stick);
+                    body.find(".articleName").val(edit.title);
+                    body.find(".thumbImg").attr("src",edit.imgUrl);
+                    body.find(".content").val(edit.content);
+                    body.find(".articleStatus select").val(edit.status);
+                    body.find(".articleTop input[name='articleTop']").prop("checked",(edit.stick?'checked':''));
                     form.render();
                 }
                 setTimeout(function(){

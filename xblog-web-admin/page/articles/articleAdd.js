@@ -91,9 +91,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
             }
         }
     });
-
-    var stick = false;
-
+    var stick = $('.stick').val();
     form.on('switch(articleTop)', function(data){
         //开关value值，也可以通过data.elem.value得到
         stick = data.elem.checked;
@@ -114,6 +112,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         });
 
         var params = {
+            id: $(".articleId").val(),
             title: $(".articleName").val(),  //文章标题
             //文章摘要,截取文章内容中的一部分文字放入文章摘要
             decoration: layedit.getText(editIndex).substring(0, 50),
