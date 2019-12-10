@@ -98,7 +98,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     body.find(".stick").attr('value', edit.stick);
                     body.find(".articleName").val(edit.title);
                     body.find(".thumbImg").attr("src",edit.imgUrl);
-                    body.find(".content").val(edit.content);
+                    body.find(".content").html(edit.content);
                     body.find(".articleStatus select").val(edit.status);
                     body.find(".articleTop input[name='articleTop']").prop("checked",(edit.stick?'checked':''));
                     form.render();
