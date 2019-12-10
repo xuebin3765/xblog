@@ -140,22 +140,18 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
                 if (0 !== message.code){
                     icon = 2;
                 }
-                layer.confirm(mesg,{btn:'关闭', icon:icon, title:'提示信息'},function(index){
-                    top.layer.close(index);
-                    top.layer.msg("文章添加成功！");
-                    layer.closeAll("iframe");
-                    //刷新父页面
-                    parent.location.reload();
-                });
+                top.layer.close(index);
+                top.layer.msg("文章添加成功！");
+                layer.closeAll("iframe");
+                //刷新父页面
+                parent.location.reload();
             },
             error:function (message) {
-                layer.confirm(message.msg,{btn:'关闭', icon:2, title:'提示信息'},function(index){
-                    top.layer.close(index);
-                    top.layer.msg("文章添加失败！");
-                    layer.closeAll("iframe");
-                    //刷新父页面
-                    parent.location.reload();
-                });
+                top.layer.close(index);
+                top.layer.msg("文章添加失败！");
+                layer.closeAll("iframe");
+                //刷新父页面
+                parent.location.reload();
             }
         });
         return false;

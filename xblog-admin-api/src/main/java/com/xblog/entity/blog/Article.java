@@ -47,4 +47,10 @@ public class Article {
     // 文章标签id
     @Transient
     private List<String> tagIds;
+    @Transient
+    private List<Navigate> navigateList;
+    @Transient
+    private List<Tag> tagList;
+    @Transient
+    private String userName;
 }

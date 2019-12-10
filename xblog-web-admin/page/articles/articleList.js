@@ -6,10 +6,30 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
+    /**13位时间戳转换成 年月日 上午 时间  2018-05-23 10:41:08 */
+    function createTime(v){
+        return new Date(parseInt(v)).toLocaleString()
+    }
+    /**重写toLocaleString方法*/
+    Date.prototype.toLocaleString = function() {
+        var y = this.getFullYear();
+        var m = this.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = this.getDate();
+        d = d<10?("0"+d):d;
+        var h = this.getHours();
+        h = h<10?("0"+h):h;
+        var M = this.getMinutes();
+        M = M<10?("0"+M):M;
+        var S=this.getSeconds();
+        S=S<10?("0"+S):S;
+        return y+"-"+m+"-"+d+" "+h+":"+M;
+    };
+
     //新闻列表
     var tableIns = table.render({
         elem: '#articleList',
-        url : '../../json/newsList.json',
+        url : serverUrl+'/admin/article/findAll',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
@@ -18,23 +38,26 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         id : "articleListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'newsId', title: 'ID', width:60, align:"center"},
-            {field: 'newsName', title: '文章标题', width:350},
-            {field: 'newsAuthor', title: '发布者', align:'center'},
-            {field: 'articleStatus', title: '发布状态',  align:'center',templet:"#articleStatus"},
+            {field: 'id', title: 'ID', width:200, align:"center"},
+            {field: 'title', title: '文章标题', width:350},
+            {field: 'userName', title: '发布者', align:'center'},
+            {field: 'status', title: '发布状态',  align:'center',templet:"#articleStatus"},
             {field: 'newsLook', title: '浏览权限', align:'center'},
-            {field: 'newsTop', title: '是否置顶', align:'center', templet:function(d){
-                return '<input type="checkbox" name="newsTop" lay-filter="newsTop" lay-skin="switch" lay-text="是|否" '+d.newsTop+'>'
+            {field: 'stick', title: '是否置顶', align:'center', templet:function(d){
+                return '<input type="checkbox" name="articleTop" lay-filter="articleTop" lay-skin="switch" lay-text="是|否" '+(d.stick?'checked':'')+'>'
             }},
-            {field: 'newsTime', title: '发布时间', align:'center', minWidth:110, templet:function(d){
-                return d.newsTime.substring(0,10);
+            {field: 'created', title: '发布时间', align:'center', minWidth:110, templet:function(d){
+                return createTime(d.created);
+            }},
+            {field: 'modify', title: '发布时间', align:'center', minWidth:110, templet:function(d){
+                return createTime(d.modify);
             }},
             {title: '操作', width:170, templet:'#articleListBar',fixed:"right",align:"center"}
         ]]
     });
 
     //是否置顶
-    form.on('switch(newsTop)', function(data){
+    form.on('switch(articleTop)', function(data){
         var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
         setTimeout(function(){
             layer.close(index);

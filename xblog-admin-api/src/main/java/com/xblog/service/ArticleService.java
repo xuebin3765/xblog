@@ -1,5 +1,6 @@
 package com.xblog.service;
 
+import com.xblog.common.PageResult;
 import com.xblog.entity.blog.Article;
 
 /**
@@ -15,4 +16,6 @@ public interface ArticleService {
     Article findById(String id);
 
     Article update(Article article);
+
+    PageResult<Article> findAll(String key, int page, int limit);
 }

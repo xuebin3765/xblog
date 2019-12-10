@@ -1,5 +1,6 @@
 package com.xblog.controller;
 
+import com.xblog.common.PageResult;
 import com.xblog.common.enums.ArticleEnum;
 import com.xblog.commons.response.RespEntity;
 import com.xblog.commons.utils.JsonUtil;
@@ -34,6 +35,21 @@ public class ArticleController {
     private ArticleNavigateRelService navigateRelService;
     @Resource
     private ArticleTagRelService tagRelService;
+
+    /**
+     * 查询所有标签
+     * @return RespEntity
+     */
+    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
+    public RespEntity findAll(
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
+    ){
+        log.info("step into findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
+        PageResult<Article> pageResult = articleService.findAll(key, page, limit);
+        return RespEntity.success(pageResult.getRows(), pageResult.getCount());
+    }
 
     @ResponseBody
     @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)

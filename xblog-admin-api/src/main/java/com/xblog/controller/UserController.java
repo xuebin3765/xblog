@@ -1,4 +1,4 @@
-package com.xblog.controller.api;
+package com.xblog.controller;
 
 import com.xblog.commons.controller.BaseController;
 import org.slf4j.Logger;
@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Date 2018/9/9 0009 23:20
  */
 @ResponseBody
-@RequestMapping("/api/user")
+@RequestMapping("/admin/user")
 public class UserController extends BaseController {
-
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
 
 //    @Resource
 //    private UsersService usersService;
