@@ -97,6 +97,14 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         stick = data.elem.checked;
     });
 
+    var status = "0";
+    form.on('radio(status)', function (data) {
+        status = data.field.status;
+        // alert(status);
+        $("input:radio[name=status][value='0']").attr("checked", data.value === 0);
+        $("input:radio[name=status][value='1']").attr("checked", data.value === 1);
+    });
+
     form.on("submit(addArticle)",function(data){
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
@@ -110,7 +118,6 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         $('.tag_checkbox input[type=checkbox]:checked').each(function() {
             tag_checkbox.push($(this).val());
         });
-
         var params = {
             id: $(".articleId").val(),
             title: $(".articleName").val(),  //文章标题
@@ -124,7 +131,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
             tagIds: tag_checkbox,    //文章标签
             type: $('.articleType select').val(),    //文章类型
             loadUrl: $('.loadUrl input[type=text]').val(),    //转载或翻译的原文地址
-            status: $('#status input[checked]').val(),    //发布状态
+            status: $('#status input[name=status]:checked').val(),    //发布状态
             stick: stick    //是否置顶
         };
         $.ajax({

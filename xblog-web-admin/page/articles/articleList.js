@@ -97,9 +97,13 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     body.find(".articleId").attr('value', edit.id);
                     body.find(".stick").attr('value', edit.stick);
                     body.find(".articleName").val(edit.title);
+                    body.find(".loadUrl").val(edit.loadUrl);
                     body.find(".thumbImg").attr("src",edit.imgUrl);
-                    body.find(".content").html(edit.content);
-                    body.find(".articleStatus select").val(edit.status);
+                    body.find(".content").html(edit.context);
+                    // alert(edit.status === 0);
+                    body.find("#status input[name=status][value=0]").attr("checked", edit.status === 0);
+                    body.find("#status input[name=status][value=1]").attr("checked", edit.status === 1);
+                    // alert(body.find('#status input[name=status]:checked').val());
                     body.find(".articleTop input[name='articleTop']").prop("checked",(edit.stick?'checked':''));
                     form.render();
                 }
