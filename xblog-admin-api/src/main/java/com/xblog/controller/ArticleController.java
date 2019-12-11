@@ -104,6 +104,55 @@ public class ArticleController {
         }
     }
 
+    /**
+     * 发布文章
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/release", method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE , MediaType.TEXT_PLAIN_VALUE})
+    public RespEntity release(@RequestParam("id") String id){
+        log.info("step into delete, id: {}", id);
+
+        Article article = articleService.findById(id);
+        if (article == null){
+            return RespEntity.error("文章不存在");
+        }
+        // 设置状态为删除状态，即：status = -1
+        article.setStatus(ArticleEnum.PUBLISH.getValue());
+
+        article = articleService.update(article);
+        if (null == article){
+            return RespEntity.error("发布文章失败");
+        }
+        return RespEntity.success(article, "success");
+    }
+
+    /**
+     * 发布文章
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/releaseBatch", method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE , MediaType.TEXT_PLAIN_VALUE})
+    public RespEntity releaseBatch(@RequestParam(value = "ids[]") String[] ids){
+        log.info("step into delete, id: {}", ids);
+
+        if (ids != null && ids.length > 0){
+            for (String id: ids) {
+                Article article = articleService.findById(id);
+                if (article != null){
+                    // 设置状态为删除状态，即：status = -1
+                    article.setStatus(ArticleEnum.PUBLISH.getValue());
+                    articleService.update(article);
+                }
+            }
+        }
+        return RespEntity.success("success");
+    }
+
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE , MediaType.TEXT_PLAIN_VALUE})

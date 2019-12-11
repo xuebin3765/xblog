@@ -25,9 +25,13 @@
 			<div class="layui-inline">
 				<a class="layui-btn layui-btn-normal addArticle_btn">添加文章</a>
 			</div>
-			<div class="layui-inline">
-				<a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
-			</div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
+            </div>
+
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-danger layui-btn-normal delRelease_btn">批量发布</a>
+            </div>
 		</form>
 	</blockquote>
 	<table id="articleList" lay-filter="articleList"></table>
@@ -44,6 +48,7 @@
 
 	<!--操作-->
 	<script type="text/html" id="articleListBar">
+		<a class="layui-btn layui-btn-xs" lay-event="release">发布</a>
 		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
 		<a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="look">预览</a>

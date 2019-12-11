@@ -9,8 +9,8 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
     /** 显示文章状态太 */
     function showStatus(v){
         if (v === -1) return "软删除";
-        if (v === 0) return "已发布";
-        if (v === 1) return "草稿";
+        if (v === 0) return "草稿";
+        if (v === 1) return "已发布";
         return "未知";
     }
 
@@ -61,7 +61,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             {field: 'modify', title: '发布时间', align:'center', minWidth:100, templet:function(d){
                 return createTime(d.modify);
             }},
-            {title: '操作', width:190, templet:'#articleListBar',fixed:"right",align:"center"}
+            {title: '操作', width:240, templet:'#articleListBar',fixed:"right",align:"center"}
         ]]
     });
 
@@ -153,12 +153,43 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         }
     });
 
+    //批量发布
+    $(".delRelease_btn").click(function(){
+        var checkStatus = table.checkStatus('articleListTable'),
+            data = checkStatus.data,
+            ids = [];
+        if(data.length > 0) {
+            for (var i in data) {
+                ids.push(data[i].id);
+            }
+            layer.confirm('确定删除选中的文章？', {icon: 3, title: '提示信息'}, function (index) {
+                $.get(serverUrl+'/admin/article/releaseBatch',{
+                    ids : ids  //将需要删除的newsId作为参数传入
+                },function(data){
+                    tableIns.reload();
+                    layer.close(index);
+                })
+            })
+        }else{
+            layer.msg("请选择需要删除的文章");
+        }
+    });
+
     //列表操作
     table.on('tool(articleList)', function(obj){
         var layEvent = obj.event,
             data = obj.data;
 
-        if(layEvent === 'edit'){ //编辑
+        if (layEvent === 'release'){
+            layer.confirm('确定发布此文章？',{icon:3, title:'提示信息'},function(index){
+                $.get(serverUrl+'/admin/article/release',{
+                    id : data.id  //将需要删除的newsId作为参数传入
+                },function(data){
+                    tableIns.reload();
+                    layer.close(index);
+                })
+            });
+        } else if(layEvent === 'edit'){ //编辑
             addArticles(data);
         } else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此文章？',{icon:3, title:'提示信息'},function(index){
