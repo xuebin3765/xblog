@@ -105,7 +105,7 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delete", method = RequestMethod.POST,
+    @RequestMapping(value = "/delete", method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE , MediaType.TEXT_PLAIN_VALUE})
     public RespEntity delete(@RequestParam("id") String id){
         log.info("step into delete, id: {}", id);
@@ -122,5 +122,25 @@ public class ArticleController {
             return RespEntity.error("删除失败");
         }
         return RespEntity.success(article, "success");
+    }
+
+    /**
+     * 删除
+     * @return RespEntity
+     */
+    @RequestMapping(value = "/deleteBatch", method = RequestMethod.GET)
+    public RespEntity deleteBatch(@RequestParam(value = "ids[]") String[] ids){
+        log.info("step into NavigateController delete(), ids: {}", ids);
+        if (ids != null && ids.length > 0){
+            for (String id: ids) {
+                Article article = articleService.findById(id);
+                if (article != null){
+                    // 设置状态为删除状态，即：status = -1
+                    article.setStatus(ArticleEnum.DELETE.getValue());
+                    articleService.update(article);
+                }
+            }
+        }
+        return RespEntity.success("删除成功");
     }
 }

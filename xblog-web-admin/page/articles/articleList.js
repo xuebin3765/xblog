@@ -6,6 +6,14 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
+    /** 显示文章状态太 */
+    function showStatus(v){
+        if (v === -1) return "软删除";
+        if (v === 0) return "已发布";
+        if (v === 1) return "草稿";
+        return "未知";
+    }
+
     /**13位时间戳转换成 年月日 上午 时间  2018-05-23 10:41:08 */
     function createTime(v){
         return new Date(parseInt(v)).toLocaleString()
@@ -41,18 +49,19 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             {field: 'id', title: 'ID', width:200, align:"center"},
             {field: 'title', title: '文章标题', width:350},
             {field: 'userName', title: '发布者', align:'center'},
-            {field: 'status', title: '发布状态',  align:'center',templet:"#articleStatus"},
-            {field: 'newsLook', title: '浏览权限', align:'center'},
+            {field: 'status', title: '发布状态',  align:'center',templet: function (d) {
+                return showStatus(d.status);
+            }},
             {field: 'stick', title: '是否置顶', align:'center', templet:function(d){
                 return '<input type="checkbox" name="articleTop" lay-filter="articleTop" lay-skin="switch" lay-text="是|否" '+(d.stick?'checked':'')+'>'
             }},
-            {field: 'created', title: '发布时间', align:'center', minWidth:110, templet:function(d){
+            {field: 'created', title: '发布时间', align:'center', minWidth:100, templet:function(d){
                 return createTime(d.created);
             }},
-            {field: 'modify', title: '发布时间', align:'center', minWidth:110, templet:function(d){
+            {field: 'modify', title: '发布时间', align:'center', minWidth:100, templet:function(d){
                 return createTime(d.modify);
             }},
-            {title: '操作', width:170, templet:'#articleListBar',fixed:"right",align:"center"}
+            {title: '操作', width:190, templet:'#articleListBar',fixed:"right",align:"center"}
         ]]
     });
 
@@ -126,18 +135,18 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
     $(".delAll_btn").click(function(){
         var checkStatus = table.checkStatus('articleListTable'),
             data = checkStatus.data,
-            articleIds = [];
+            ids = [];
         if(data.length > 0) {
             for (var i in data) {
-                articleIds.push(data[i].id);
+                ids.push(data[i].id);
             }
             layer.confirm('确定删除选中的文章？', {icon: 3, title: '提示信息'}, function (index) {
-                // $.get("删除文章接口",{
-                //     newsId : newsId  //将需要删除的newsId作为参数传入
-                // },function(data){
-                tableIns.reload();
-                layer.close(index);
-                // })
+                $.get(serverUrl+'/admin/article/deleteBatch',{
+                    ids : ids  //将需要删除的newsId作为参数传入
+                },function(data){
+                    tableIns.reload();
+                    layer.close(index);
+                })
             })
         }else{
             layer.msg("请选择需要删除的文章");
@@ -153,12 +162,12 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             addArticles(data);
         } else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此文章？',{icon:3, title:'提示信息'},function(index){
-                // $.get("删除文章接口",{
-                //     newsId : data.newsId  //将需要删除的newsId作为参数传入
-                // },function(data){
+                $.get(serverUrl+'/admin/article/delete',{
+                    id : data.id  //将需要删除的newsId作为参数传入
+                },function(data){
                     tableIns.reload();
                     layer.close(index);
-                // })
+                })
             });
         } else if(layEvent === 'look'){ //预览
             layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问")

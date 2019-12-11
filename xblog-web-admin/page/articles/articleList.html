@@ -33,9 +33,9 @@
 	<table id="articleList" lay-filter="articleList"></table>
 	<!--审核状态-->
 	<script type="text/html" id="articleStatus">
-		{{#  if(d.articleStatus == "1"){ }}
+		{{#  if(d.status == 1){ }}
 			<span class="layui-red">已发布</span>
-		{{#  } else if(d.articleStatus == "0"){ }}
+		{{#  } else if(d.status == 0){ }}
 			<span class="layui-blue">草稿</span>
 		{{#  } else { }}
 			其他
