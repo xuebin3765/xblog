@@ -1,4 +1,4 @@
-package com.xblog.controller;
+package com.xblog.controller.admin;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

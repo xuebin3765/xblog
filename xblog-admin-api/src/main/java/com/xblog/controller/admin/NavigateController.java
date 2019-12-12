@@ -1,6 +1,5 @@
-package com.xblog.controller;
+package com.xblog.controller.admin;
 
-import com.google.common.collect.Lists;
 import com.xblog.common.PageResult;
 import com.xblog.commons.response.RespEntity;
 import com.xblog.entity.sys.Navigate;
@@ -11,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/navigate")

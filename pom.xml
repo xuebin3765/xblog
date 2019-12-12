@@ -11,6 +11,7 @@
     <module>xblog-web-admin</module>
     <module>xblog-admin-api</module>
     <module>xblog-commons</module>
+      <module>xblog-web-blog</module>
   </modules>
   <packaging>pom</packaging>
 

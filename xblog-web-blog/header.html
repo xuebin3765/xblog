@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>程序员刊</title>
+    <!-- 通过自有函数输出HTML头部信息 -->
+    <!--<link rel="shortcut icon" href="<?php $this->options->themeUrl('img/favicon.png'); ?>">-->
+    <!--<link rel="stylesheet" href="<?php $this->options->themeUrl('layui/css/layui.css'); ?>">-->
+    <!--<link rel="stylesheet" href="<?php $this->options->themeUrl('css/style.css'); ?>?t=<?php echo time(); ?>">-->
+    <!--<script src="<?php $this->options->themeUrl('layui/layui.js'); ?>"></script>-->
+    <!--<script src="<?php $this->options->themeUrl('js/main.js'); ?>"></script>-->
+    <link rel="stylesheet" href="layui/css/layui.css" media="all" />
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+</head>
+<body class="">
+<!--<div class="layui-main">-->
+    <!--<a class="logo" href="https://www.echo.so/">echo '宁采陈';</a>-->
+
+
+<ul class="layui-nav layui-bg-cyan" lay-filter="">
+    <li class="layui-nav-item"><a href="">最新活动</a></li>
+    <li class="layui-nav-item layui-this"><a href="">产品</a></li>
+    <li class="layui-nav-item"><a href="">大数据</a></li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">解决方案</a>
+        <dl class="layui-nav-child"> <!-- 二级菜单 -->
+            <dd><a href="">移动模块</a></dd>
+            <dd><a href="">后台模版</a></dd>
+            <dd><a href="">电商平台</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item"><a href="">社区</a></li>
+</ul>
+<!--</div>-->
+
+<script>
+//注意：导航 依赖 element 模块，否则无法进行功能性操作
+layui.use('element', function(){
+    var element = layui.element;
+
+    //…
+});
+</script>
+
+
+</body>
+</html>

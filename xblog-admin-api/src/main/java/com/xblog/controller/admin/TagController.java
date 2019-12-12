@@ -1,4 +1,4 @@
-package com.xblog.controller;
+package com.xblog.controller.admin;
 
 import com.xblog.common.PageResult;
 import com.xblog.commons.response.RespEntity;
