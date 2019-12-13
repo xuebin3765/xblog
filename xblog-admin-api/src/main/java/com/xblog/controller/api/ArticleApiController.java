@@ -1,17 +1,16 @@
 package com.xblog.controller.api;
 
 import com.xblog.common.PageResult;
-import com.xblog.common.enums.ArticleEnum;
 import com.xblog.commons.response.RespEntity;
-import com.xblog.commons.utils.JsonUtil;
 import com.xblog.entity.blog.Article;
 import com.xblog.service.ArticleNavigateRelService;
 import com.xblog.service.ArticleService;
 import com.xblog.service.ArticleTagRelService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -26,10 +25,6 @@ import javax.annotation.Resource;
 public class ArticleApiController {
     @Resource
     private ArticleService articleService;
-    @Resource
-    private ArticleNavigateRelService navigateRelService;
-    @Resource
-    private ArticleTagRelService tagRelService;
 
     /**
      * 查询所有文章
@@ -44,5 +39,20 @@ public class ArticleApiController {
         log.info("step into findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
         PageResult<Article> pageResult = articleService.findAll(key, page, limit);
         return RespEntity.success(pageResult.getRows(), pageResult.getCount());
+    }
+
+    /**
+     * 查询所有文章
+     * @return RespEntity
+     */
+    @RequestMapping(value = "/findById", method = RequestMethod.GET)
+    public RespEntity findById( String id){
+        log.info("step into findById(), id: {}", id);
+        Article article = articleService.findById(id);
+        if (article != null){
+            return RespEntity.success(article);
+        }else {
+            return RespEntity.error("文章不存在或已删除");
+        }
     }
 }

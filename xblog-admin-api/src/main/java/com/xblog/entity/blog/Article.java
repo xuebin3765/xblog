@@ -53,4 +53,10 @@ public class Article {
     private List<Tag> tagList;
     @Transient
     private String userName;
+    @Transient
+    private int pageView; // 阅读量
+    @Transient
+    private int commentNumber; // 阅读量
+    @Transient
+    private String typeName = "热点资讯";
 }

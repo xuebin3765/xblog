@@ -14,7 +14,7 @@ layui.use(['element', 'layer','laypage'],  function () {
 
     // 分页组件渲染
     function pages(count, typeId) {
-        layui.laypage.render({
+        laypage.render({
             elem: 'page-navigator'
             , count: count
             , theme: '#4A90E2'
@@ -32,25 +32,46 @@ layui.use(['element', 'layer','laypage'],  function () {
         })
     }
 
+    /**13位时间戳转换成 年月日 上午 时间  2018-05-23 10:41:08 */
+    function createTime(v){
+        return new Date(parseInt(v)).toLocaleString()
+    }
+    /**重写toLocaleString方法*/
+    Date.prototype.toLocaleString = function() {
+        var y = this.getFullYear();
+        var m = this.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = this.getDate();
+        d = d<10?("0"+d):d;
+        var h = this.getHours();
+        h = h<10?("0"+h):h;
+        var M = this.getMinutes();
+        M = M<10?("0"+M):M;
+        var S=this.getSeconds();
+        S=S<10?("0"+S):S;
+        return y+"-"+m+"-"+d;
+    };
+
     // 页面样式渲染
     function setHtmlType(data) {
         var strHtml = "";
         $.each(data, function (index, item) {
-            strHtml += '<div class="title-article list-card">'+
+            var time = createTime(item.created);
+            strHtml += '<div class="title-article list-card" lay-filter="article">'+
                 '<div class="list-pic">'+
-                '<a href="https://www.echo.so/technique/49.html" title='+item.title+'>'+
+                '<a href="view/article/articleDetail.html#id='+item.id+'" target="_blank" title='+item.title+'>'+
                 '<img src='+item.imgUrl+' alt='+item.title+' class="img-full">'+
                 '</a>'+
                 '</div>'+
-                '<a href="https://www.echo.so/technique/49.html">'+
+                '<a href="view/article/articleDetail.html#id='+item.id+'" target="_blank">'+
                 '<h1>'+item.title+'</h1>'+
                 '<p>'+item.decoration+'</p>'+
                 '</a>'+
                 '<div class="title-msg">'+
-                '<span><i class="layui-icon">&#xe705;</i> <a href="https://www.echo.so/category/technique/">技术杂谈</a></span>'+
-                '<span><i class="layui-icon">&#xe60e;</i>2019-08-21 PM </span>'+
-                '<span class="layui-hide-xs"><i class="layui-icon">&#xe62c;</i> 1333℃</span>'+
-                '<span class="layui-hide-xs"><i class="layui-icon">&#xe63a;</i> 14条</span>'+
+                '<span><i class="layui-icon">&#xe705;</i> <a href="https://www.echo.so/category/technique/">'+item.typeName+'</a></span>'+
+                '<span><i class="layui-icon">&#xe637;</i> '+time+'</span>'+
+                '<span class="layui-hide-xs"><i class="layui-icon">&#xe63a;</i> '+item.typeName+'条</span>'+
+                '<span class="layui-hide-xs"><i class="layui-icon">&#xe60e;</i> '+item.pageView+'</span>'+
                 '</div>'+
                 '</div>';
         });
