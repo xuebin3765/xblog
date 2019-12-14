@@ -5,293 +5,169 @@
     <meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>打造高效小团队 &#8211; 团队代码提交流程 &amp;&amp; 规范 &#8211; Android开发中文站</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
     <link rel='stylesheet' id='style-css2' href='../../css/style.css' type='text/css' media='all' />
-<!--    <link rel='stylesheet' id='style-css1'  href='../../css/style-old.css' type='text/css' media='all' />-->
-<!--    <link rel='stylesheet' id='style-css'  href='http://www.androidchina.net/wp-content/themes/d8/style.css?ver=3.0' type='text/css' media='all' />-->
-    <link rel='stylesheet' id='smartideo_css-css'  href='http://www.androidchina.net/wp-content/plugins/smartideo/static/smartideo.css?ver=2.7.0' type='text/css' media='screen' />
-<!--    <link rel='prev' title='Android APK资源加载流程' href='http://www.androidchina.net/10197.html' />-->
-    <link rel='canonical' href='http://www.androidchina.net/10200.html' />
-    <link rel='shortlink' href='http://www.androidchina.net/?p=10200' />
-    <meta name="keywords" content="热点资讯">
-    <meta name="description" content="代码提交规范 &amp;&amp; 升级调整 本系列想跟大家分享一下我近一年的管理经验，分享一下我们团队的一年走来的优化之路「非技术」，让大家少踩坑，以及如何协作，管理者容易遇到的问题，以及技术上，工作上，如何与同事沟通、跨部门如何沟通有效率、如何分组、站会有没有用？ 等等，一年到头，想和大家交流一下经验。 背景 项目早期 不管前端还是后端，项目早期，我们是有 master 被保护分支，以及 dev 测试分支的，我们的提交流程是：所有人">
-    <style type="text/css" id="syntaxhighlighteranchor"></style>
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?f441af5674f99d161fca17571d33f730";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script><!--[if lt IE 9]><script src="http://www.androidchina.net/wp-content/themes/d8/js/html5.js"></script><![endif]-->
 </head>
 <body class="single single-post postid-10200 single-format-standard">
 <header class="header">
     <div class="navbar">
-        <div class="logo" style="width:280px"><a href="http://www.androidchina.net" title="Android开发中文站---关注Android，关注开发者">Android开发中文站</a></div>
+        <h1 class="logo" style="width:280px"><a href="http://www.androidchina.net"
+                                                title="Android开发中文站---关注Android，关注开发者">Android开发中文站</a></h1>
         <ul class="nav">
-            <li id="menu-item-4" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-4"><a href="http://www.androidchina.net">首页</a></li>
-            <li id="menu-item-14" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-14"><a href="http://www.androidchina.net/category/info">热点资讯</a></li>
-            <li id="menu-item-6" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-6"><a href="http://www.androidchina.net/category/dev">Android开发</a>
+            <li id="menu-item-4"
+                class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-4">
+                <a href="http://www.androidchina.net">首页</a></li>
+            <li id="menu-item-14" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14"><a
+                    href="http://www.androidchina.net/category/info">热点资讯</a></li>
+            <li id="menu-item-6"
+                class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-6">
+                <a href="http://www.androidchina.net/category/dev">Android开发</a>
                 <ul class="sub-menu">
-                    <li id="menu-item-380" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-380"><a href="http://www.androidchina.net/category/java">Java基础</a></li>
-                    <li id="menu-item-36" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-36"><a href="http://www.androidchina.net/dev/beginner">新手入门</a></li>
-                    <li id="menu-item-13" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a href="http://www.androidchina.net/dev/advance">开发进阶</a></li>
-                    <li id="menu-item-12" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12"><a href="http://www.androidchina.net/dev/android_source">源码下载</a></li>
+                    <li id="menu-item-380"
+                        class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-380"><a
+                            href="http://www.androidchina.net/category/java">Java基础</a></li>
+                    <li id="menu-item-36"
+                        class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-36"><a
+                            href="http://www.androidchina.net/dev/beginner">新手入门</a></li>
+                    <li id="menu-item-13"
+                        class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a
+                            href="http://www.androidchina.net/dev/advance">开发进阶</a></li>
+                    <li id="menu-item-12"
+                        class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12"><a
+                            href="http://www.androidchina.net/dev/android_source">源码下载</a></li>
                 </ul>
             </li>
-            <li id="menu-item-9230" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9230"><a href="http://www.androidchina.net/category/jobs">求职招聘</a>
+            <li id="menu-item-9230"
+                class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9230">
+                <a href="http://www.androidchina.net/category/jobs">求职招聘</a>
                 <ul class="sub-menu">
-                    <li id="menu-item-9804" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9804"><a href="http://www.androidchina.net/9797.html">Android 高级开发工程师/专家 &#8211; 高德</a></li>
+                    <li id="menu-item-9804"
+                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9804"><a
+                            href="http://www.androidchina.net/9797.html">Android 高级开发工程师/专家 &#8211; 高德</a></li>
                 </ul>
             </li>
-            <li id="menu-item-7" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7"><a href="http://www.androidchina.net/category/profit">盈利指导</a></li>
-            <li id="menu-item-202" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-202"><a href="http://www.androidchina.net/aboutus">关于AndroidChina</a></li>
+            <li id="menu-item-7" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7"><a
+                    href="http://www.androidchina.net/category/profit">盈利指导</a></li>
+            <li id="menu-item-202" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-202"><a
+                    href="http://www.androidchina.net/aboutus">关于AndroidChina</a></li>
         </ul>
         <div class="menu pull-right">
-            <form method="get" class="dropdown search-form" action="http://www.androidchina.net/" >
-                <input class="search-input" name="s" type="text" placeholder="输入关键字搜索" autofocus="" x-webkit-speech=""><input class="btn btn-success search-submit" type="submit" value="搜索">
+            <form method="get" class="dropdown search-form" action="http://www.androidchina.net/">
+                <input class="search-input" name="s" type="text" placeholder="输入关键字搜索" autofocus=""
+                       x-webkit-speech=""><input class="btn btn-success search-submit" type="submit" value="搜索">
                 <ul class="dropdown-menu search-suggest"></ul>
             </form>
             <div class="btn-group pull-left">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#feed">订阅</button>
                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">关注 <i class="caret"></i></button>
                 <ul class="dropdown-menu pull-right">
-                    <li><a href="http://weibo.com/itmanual" target="_blank">新浪微博</a></li>														</ul>
+                    <li><a href="http://weibo.com/itmanual" target="_blank">新浪微博</a></li>
+                </ul>
             </div>
         </div>
     </div>
     <div class="speedbar">
         <div class="pull-right">
-            <i class="icon-user icon12"></i> <a href="http://www.androidchina.net/wp-login.php">登录</a>			</div>
+            <i class="icon-user icon12"></i> <a href="http://www.androidchina.net/wp-login.php">登录</a></div>
         <div class="toptip"><strong class="text-success">最新消息：</strong>欢迎访问Android开发中文站！商务联系微信：loading_in</div>
     </div>
 </header>
-<section class="container">
-    <div class="content-wrap">
-        <div class="content">
-            <div class="breadcrumbs">你的位置：<a href="http://www.androidchina.net">Android开发中文站</a> <small>></small> <a href="http://www.androidchina.net/category/info" title="查看热点资讯中的全部文章">热点资讯</a> <small>></small> <span class="muted">打造高效小团队 &#8211; 团队代码提交流程 &#038;&#038; 规范</span></div>
-            <header class="article-header">
-                <h1 class="article-title"><a href="http://www.androidchina.net/10200.html">打造高效小团队 &#8211; 团队代码提交流程 &#038;&#038; 规范</a></h1>
-                <div class="meta">
-                    <span class="muted"><a href="http://www.androidchina.net/category/info"><i class="icon-list-alt icon12"></i> 热点资讯</a></span>				<span class="muted"><i class="icon-user icon12"></i> <a href="http://www.androidchina.net/author/loading">loading</a></span>
-                    <time class="muted"><i class="ico icon-time icon12"></i> 2天前</time>
-                    <span class="muted"><i class="ico icon-eye-open icon12"></i> 39浏览</span>
-                    <span class="muted"><i class="icon-comment icon12"></i> <a href="http://www.androidchina.net/10200.html#comments">0评论</a></span>							</div>
-            </header>
+<div class="layui-container" style="width: 80%; padding: 0;">
 
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md9">
+            <div id="articleContent">
+                <!--       文章标题         -->
+                <div class="breadcrumbs">
+                    你的位置：<a href="http://www.androidchina.net">Android开发中文站</a> <small>></small> <a href="http://www.androidchina.net/category/dev" title="查看Android开发中的全部文章">Android开发</a> <small>></small> <span class="muted">「Android10源码分析」为什么复杂布局会产生卡顿？&#8211; LayoutInflater详解</span>
+                </div>
+                <header class="article-header">
+                    <h1 class="article-title"></h1>
+                    <div class="article-meta"></div>
+                </header>
 
-            <article class="article-content">
-                <section id="output_wrapper_id">
-                    <h5 id="h">代码提交规范 &amp;&amp; 升级调整</h5>
-                    <p>本系列想跟大家分享一下我近一年的管理经验，分享一下我们团队的一年走来的优化之路「非技术」，让大家少踩坑，以及如何协作，管理者容易遇到的问题，以及技术上，工作上，如何与同事沟通、跨部门如何沟通有效率、如何分组、站会有没有用？ 等等，一年到头，想和大家交流一下经验。</p>
-                    <h4 id="h-1">背景</h4>
-                    <h5 id="h-2">项目早期</h5>
-                    <p>不管前端还是后端，项目早期，我们是有 master 被保护分支，以及 dev 测试分支的，我们的提交流程是：所有人往 dev 合并代码，进行测试封版，测试通过直接把 dev 合并到 master 进行升级。随之而来发现了问题：</p>
-                    <h5 id="h-3">项目中期</h5>
-                    <p>我们不能保证 dev 上的代码全部测试通过，因为没有充足的测试时间，而且不断有新的提交涌入，dev 直接合并到 master 肯定是不够稳妥的，这样的 dev 没有任何意义，随着研发任务强度越来越高，索性废弃了 dev ，直接合并到 master ， master 分支做持续集成到测试环境，每周二升级生产环境。每周三打 TAG，期间有迭代直接提交，直到下周二继续升级，如果非常紧急，那就基于 git tag 基础上修改，提交，升级生产。</p>
-                    <h5 id="h-4">反思</h5>
-                    <p>好景不长，随着研发任务的进一步提升，问题接踵而来，新业务测试不熟悉，测试时间长，每周二11点还没测试完毕，甚至每周二晚9点多才发现某某功能需求有问题，还会有其他小组影响另外小组的进度（关于小组以后单独讲）。这让研发叫苦不迭。每周二的 升级日 变成了 “加班日” ，虽然每周只有一天，且第二天可以晚点来上班，但是连续两周下来，还是有个别同事出现了严重的负面情绪，怕影响其他人，所以需要迅速解决这个问题。大刀阔斧的调整流程！</p>
-                    <h4 id="h-5">参考资料</h4>
-                    <ul>
-                        <li><a href="https://yq.aliyun.com/articles/616714">闲鱼技术</a></li>
-                        <li><a href="https://www.jianshu.com/p/527e34f53b51?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">流程规范</a></li>
-                    </ul>
-                    <p>上文资料请大家简单看一看,我们经过讨论做了调整，但是基本原理不变。</p>
-                    <h4 id="h-6">调整</h4>
-                    <p>研发 随写随提，测试 随提随测，运维 随测随更。随时测试，随时更新，随时升级生产环境。<br />
-                        协商一个时间点，比如每天 19:30，过了 19:30 的需求、bug，明天在调整，尽早回家休息。</p>
-                    <h4 id="h-7">研发职责</h4>
-                    <p>研发负责人还是像以前一样，多建立一个 dev 分支，用于测试，这里对 dev 的功能做下说明:</p>
-                    <h5 id="hdev">dev 分支</h5>
-                    <p>dev 分支就是测试环境，我们把 CI 从 master 换成 dev</p>
-                    <p>这个分支，不需要有权限控制，研发根据 禅道 或者 card 上的任务，从 master check 出一份分支</p>
-                    <p>以 禅道 bug http://xx.104.96.233:60888/zentao/bug-view-11568.html 为例</p>
-                    <ul>
-                        <li>我们为分支命名为： fix-bug-11568</li>
-                        <li>修复 BUG</li>
-                        <li>commit 代码写好 msg:fix xxx ， merge 到 dev 「fix-bug-11568 分支此时不要删除」</li>
-                        <li>通知相关人士进行测试</li>
-                        <li>测试失败「打回重新提交」，测试成功点击「关闭」通知研发可以了。</li>
-                        <li>研发发起 PR 从「 fix-bug-11568 分支 （注意！不是 dev）」到 Master 后 「 fix-bug-11568 」由管理员合并并删除</li>
-                        <li>此时 Master 随时可以升级到生产。</li>
-                    </ul>
-                    <p>这样会比较麻烦，于是参考 闲鱼技术 我们也自研了一套流程工具，具体下次专门出篇文章讲讲。</p>
-                    <h5 id="h-8">研发禁止的</h5>
-                    <ul>
-                        <li>禁止从 dev 分支 check 代码，因为你要保证合并到 master 的只有你自己的，没有其他人没测试的，如果从 dev check 代码，合并到 master 相当于 dev 合并到 master。</li>
-                        <li>禁止 merge dev 到 master ，这样 dev 分支没意义。</li>
-                    </ul>
-                    <h5 id="h-9">一些问题</h5>
-                    <p>大家可能觉得极为繁琐，比如：</p>
-                    <ul>
-                        <li>需要根据 ISSUES 创建分支名称</li>
-                        <li>需要通知测试测试</li>
-                        <li>测试需要通知研发成功/驳回 等等。</li>
-                    </ul>
-                    <p>研发会写 devops 工具确保大家能逐渐自动化，只是需要一些时间。可以通过一些 CLI + git 钩子/ 禅道 发送邮件等等，达到减少沟通成本。</p>
-                    <h4 id="h-10">测试职测</h4>
-                    <p>目前测试的同事需要收到解决的问题快速进行测试，快速通知研发结果。等待之后的邮件提醒。</p>
-                    <h4 id="h-11">运维职测</h4>
-                    <p>原有的 CI 脚本有小调整 (dev)，生产升级也有小调整 (不能从 qmenhu 直接拽包)</p>
-                    <p>调整服务器 Git hooks ，当有 push 或 merge 请求，查询 BUG 编号，是否已经关闭，关闭的 bug 或 feature 才可以 review -&gt; merge，否则 服务器直接驳回。</p>
-                    <h4 id="h-12">总结</h4>
-                    <p>一切为了团队更高效的解决问题，有充分的的个人时间。</p>
-                    <h4 id="h-13">后续任务</h4>
-                    <blockquote><p>&#8212; git hooks 详情 &#8212;</p></blockquote>
-                    <ul>
-                        <li>cli 程序「详情看：<a href="https://yq.aliyun.com/articles/616714">闲鱼技术</a>」</li>
-                        <li>git hook 「详情看：<a href="https://www.jianshu.com/p/527e34f53b51?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">流程规范</a>」</li>
-                        <li>邮件通知 「减少沟通成本」</li>
-                        <li>ISSUES 平台的自动化管理</li>
-                    </ul>
-                    <h4 id="h-14">工具</h4>
-                    <p><a href="https://www.npmjs.com/package/zing-git">https://www.npmjs.com/package/zing-git</a></p>
-                    <p>我把工具发布在 npm 上了，没有开源，需要的可以借鉴一下，下次讲的时候，我会抽出一些通用的开源，现在先让内部 “打磨一下”</p>
-                    <h5 id="h-15">预览</h5>
-                    <p>以后单独抽一章讲下，代码很简单（5个小时工作量），主讲思路，以及如何才能做好简单的 devops，节省所有人的时间。</p>
-                    <blockquote><p>作者：庄文达<br />
-                        链接：https://juejin.im/post/5df098fa518825122a2abcd0</p></blockquote>
-                </section>
-                <p>转载请注明：<a href="http://www.androidchina.net">Android开发中文站</a> &raquo; <a href="http://www.androidchina.net/10200.html">打造高效小团队 &#8211; 团队代码提交流程 &#038;&#038; 规范</a></p>		</article>
-
-
-            <footer class="article-footer">
-            </footer>
-
-            <nav class="article-nav">
-                <span class="article-nav-prev">上一篇 <a href="http://www.androidchina.net/10197.html" rel="prev">Android APK资源加载流程</a></span>
-                <span class="article-nav-next"></span>
-            </nav>
-
-            <div class="relates">
-                <h3>与本文相关的文章</h3>
-                <ul>
-                    <li><a href="http://www.androidchina.net/10197.html">Android APK资源加载流程</a></li><li><a href="http://www.androidchina.net/10194.html">Android网络架构演进</a></li><li><a href="http://www.androidchina.net/10186.html">Android中关于Context的三言两语</a></li><li><a href="http://www.androidchina.net/10183.html">Android10填坑适配指南，实际经验代码，拒绝翻译</a></li><li><a href="http://www.androidchina.net/10179.html">ViewStub你真的了解吗</a></li><li><a href="http://www.androidchina.net/10175.html">高可用架构之《一致性Hash算法》</a></li><li><a href="http://www.androidchina.net/10171.html">战五渣程序员的五项必备技能</a></li><li><a href="http://www.androidchina.net/10151.html">极客时间双十一优惠活动！！</a></li><li><a href="http://www.androidchina.net/10148.html">Android 子线程更新UI了解吗？</a></li><li><a href="http://www.androidchina.net/10146.html">Android 开发：apk文件的安装6.0，7.0，8.0踩坑笔记</a></li><li><a href="http://www.androidchina.net/10142.html">Kotlin修炼指南</a></li><li><a href="http://www.androidchina.net/10130.html">进程间通信的7种方式你都了解吗</a></li></ul>		</div>
-
-
-            <div id="respond" class="no_webshot">
-                <h3 class="queryinfo">
-                    您必须 <a href="http://www.androidchina.net/wp-login.php?redirect_to=http%3A%2F%2Fwww.androidchina.net%2F10200.html">登录</a> 才能发表评论！	</h3>
+                <!--    文章正文        -->
+                <article class="article-content">
+                    <section id="output_wrapper_id"></section>
+                    <div class="article-author"></div>
+                </article>
             </div>
-
-
         </div>
-    </div>
-    <aside class="sidebar">
-        <div class="widget d_textbanner"><a class="style04" href="http://devclub.cc/app/app-devclub-release.apk" target="_blank"><strong>特别推荐</strong><h2>我是开发者APP</h2><p><b>广大开发者首选APP，提供最新的资讯，覆盖内容全，满足不同开发者的需求</b><br><br><b>点击下载安装包</b><br>
+        <div class="layui-col-md3">
 
-            2019年8月21日 v1.2.8 版本更新：<br>
-            1，商城图片及文字调整<br>
-            2，频道列表优化显示<br>
-            3，其他bug修复及优化<br></p></a></div><div class="widget d_textbanner"><a class="style01" href="http://devclub.cc/app/AndroidChina_v1.0.1.apk"><strong>特别推荐</strong><h2>Android开发中文站客户端</h2><p><b>网站的Android客户端，可以通过手机查看网站内容啦！
-        欢迎大家下载使用。</b><br><br>
-        <b>Andriod开发中文站，关注Andriod开发，更关注开发者！</b></p></a></div><div class="widget d_textbanner"><a class="style05" href="http://www.androidchina.net/contributor" target="_blank"><strong>特别推荐</strong><h2>投稿人招募</h2><p>想让自己的文章发表在Android开发中文站？快快联系站长提升账号权限就能发表啦！可以转载文章，更鼓励原创文章！联系QQ：1304524325</p></a></div><div class="widget widget_text"><h3 class="widget_tit">微信公众号：AndroidChinaNet</h3>			<div class="textwidget"><html>
-    <body align="center">
-    <div align="center">
-        <img src="http://www.androidchina.net/wp-content/uploads/2015/07/qrcode_for_gh_749c150c6d1d_258.jpg"  width="216" height="216"/>
-    </div>
-    </body>
-    </html></div>
-    </div><div class="widget d_postlist"><h3 class="widget_tit">猜你喜欢</h3><ul><li><a href="http://www.androidchina.net/8718.html"><span class="thumbnail"><img src="http://www.androidchina.net/wp-content/themes/d8/img/thumbnail.png" alt="Google I/O 2018 之后， Android 工程师将何去何从？" /></span><span class="text">Google I/O 2018 之后， Android 工程师将何去何从？</span><span class="muted">2018-05-21</span><span class="muted"></span></a></li>
-        <li><a href="http://www.androidchina.net/5613.html"><span class="thumbnail"><img src="http://www.androidchina.net/wp-content/uploads/2016/02/1009160959a1ce9687665ec582-220x150.jpg" alt="让程序员跳槽的非钱原因" /></span><span class="text">让程序员跳槽的非钱原因</span><span class="muted">2016-10-15</span><span class="muted"></span></a></li>
-        <li><a href="http://www.androidchina.net/4532.html"><span class="thumbnail"><img src="http://img.blog.csdn.net/20160223105242523" alt="Android性能优化之Bitmap的内存优化" /></span><span class="text">Android性能优化之Bitmap的内存优化</span><span class="muted">2016-03-26</span><span class="muted"></span></a></li>
-        <li><a href="http://www.androidchina.net/2913.html"><span class="thumbnail"><img src="http://www.23code.com/wp-content/uploads/2015/07/demo.gif" alt="WaterDropListView" /></span><span class="text">WaterDropListView</span><span class="muted">2015-08-28</span><span class="muted"></span></a></li>
-        <li><a href="http://www.androidchina.net/8610.html"><span class="thumbnail"><img src="https://ss.csdn.net/p?http://mmbiz.qpic.cn/mmbiz_jpg/ZVXOoa3Dyr7VPCLUsIdn08e8obVwgJF5ZulWen2SzPMjNUgTVCwYYlZc1T5nkYAlKHPvxmproZKF8CZibCPkAIA/640?" alt="有个厉害的程序员女朋友是什么体验？" /></span><span class="text">有个厉害的程序员女朋友是什么体验？</span><span class="muted">2018-05-20</span><span class="muted"></span></a></li>
-        <li><a href="http://www.androidchina.net/5136.html"><span class="thumbnail"><img src="http://img.spotty.com.cn/1466875948388.jpg" alt="Java 8会给你的代码带来什么：一个实际的例子" /></span><span class="text">Java 8会给你的代码带来什么：一个实际的例子</span><span class="muted">2016-07-19</span><span class="muted"></span></a></li>
-        <li><a href="http://www.androidchina.net/2190.html"><span class="thumbnail"><img src="http://www.aiyingli.com/wp-content/uploads/2014/11/53.jpg" alt="APP泡沫化，HTML5会成救世主？" /></span><span class="text">APP泡沫化，HTML5会成救世主？</span><span class="muted">2015-04-14</span><span class="muted"></span></a></li>
-        <li><a href="http://www.androidchina.net/1998.html"><span class="thumbnail"><img src="http://img.blog.csdn.net/20150322120815789" alt="一张图让你彻底搞清Android线程间通信机制" /></span><span class="text">一张图让你彻底搞清Android线程间通信机制</span><span class="muted">2015-04-18</span><span class="muted"></span></a></li>
-    </ul></div><div class="widget d_tag"><h3 class="widget_tit">标签云</h3><div class="d_tags"><a href="http://www.androidchina.net/tag/%e7%a8%8b%e5%ba%8f%e5%91%98">程序员 (38)</a><a href="http://www.androidchina.net/tag/app">APP (31)</a><a href="http://www.androidchina.net/tag/gradle">Gradle (24)</a><a href="http://www.androidchina.net/tag/app%e6%8e%a8%e5%b9%bf">App推广 (23)</a><a href="http://www.androidchina.net/tag/android-studio">Android Studio (21)</a><a href="http://www.androidchina.net/tag/%e5%88%9b%e4%b8%9a">创业 (20)</a><a href="http://www.androidchina.net/tag/webview">WebView (12)</a><a href="http://www.androidchina.net/tag/%e4%ba%a7%e5%93%81%e7%bb%8f%e7%90%86">产品经理 (12)</a><a href="http://www.androidchina.net/tag/android%e5%bc%80%e5%8f%91">Android开发 (11)</a><a href="http://www.androidchina.net/tag/html5">HTML5 (11)</a><a href="http://www.androidchina.net/tag/%e5%be%ae%e4%bf%a1">微信 (11)</a><a href="http://www.androidchina.net/tag/kotlin">Kotlin (11)</a><a href="http://www.androidchina.net/tag/%e4%ba%92%e8%81%94%e7%bd%91">互联网 (9)</a><a href="http://www.androidchina.net/tag/%e5%b8%82%e5%9c%ba">市场 (8)</a><a href="http://www.androidchina.net/tag/android">Android (8)</a><a href="http://www.androidchina.net/tag/%e4%ba%a7%e5%93%81">产品 (8)</a><a href="http://www.androidchina.net/tag/%e6%8e%a8%e5%b9%bf">推广 (8)</a><a href="http://www.androidchina.net/tag/git">Git (8)</a><a href="http://www.androidchina.net/tag/linux">Linux (8)</a><a href="http://www.androidchina.net/tag/google-play">Google Play (7)</a><a href="http://www.androidchina.net/tag/%e7%94%a8%e6%88%b7%e4%bd%93%e9%aa%8c">用户体验 (7)</a><a href="http://www.androidchina.net/tag/%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f">内存泄漏 (7)</a><a href="http://www.androidchina.net/tag/listview">ListView (7)</a><a href="http://www.androidchina.net/tag/app%e8%ae%be%e8%ae%a1">APP设计 (7)</a><a href="http://www.androidchina.net/tag/edittext">EditText (7)</a><a href="http://www.androidchina.net/tag/mvp">MVP (7)</a><a href="http://www.androidchina.net/tag/%e6%96%b0%e6%89%8b%e5%85%a5%e9%97%a8">新手入门 (6)</a><a href="http://www.androidchina.net/tag/%e8%b0%b7%e6%ad%8c">谷歌 (6)</a><a href="http://www.androidchina.net/tag/%e5%bc%80%e5%8f%91%e5%b7%a5%e5%85%b7">开发工具 (6)</a><a href="http://www.androidchina.net/tag/fragment">Fragment (6)</a></div></div><div class="widget widget_links"><h3 class="widget_tit">Android开发者服务</h3>
-        <ul class='xoxo blogroll'>
-            <li><a href="http://developer.android.com/index.html" target="_blank">Android Developers</a></li>
-            <li><a href="http://www.android-studio.org/" target="_blank">Android Studio 中文社区</a></li>
-            <li><a href="http://www.androiddevtools.cn/" target="_blank">AndroidDevTools</a></li>
-            <li><a href="https://www.dropbox.com/developers" target="_blank">Dropbox云存储</a></li>
-            <li><a href="http://www.eoeandroid.com/portal.php" target="_blank">eoe Android</a></li>
-            <li><a href="http://www.faceplusplus.com.cn/" target="_blank">Face++</a></li>
-            <li><a href="http://sharesdk.cn/" target="_blank">ShareSDK</a></li>
-            <li><a href="http://www.testbird.com/" target="_blank">TestBird手游测试</a></li>
-            <li><a href="http://www.qiniu.com/" target="_blank">七牛云存储</a></li>
-            <li><a href="http://dev.igetui.com/login.htm" target="_blank">个推开放平台</a></li>
-            <li><a href="http://dev.10086.cn/iap?from=zlkiap02" target="_blank">中国移动应用内计费</a></li>
-            <li><a href="http://www.testin.cn/portal.action?op=Portal.index" target="_blank">云测 Testin</a></li>
-            <li><a href="http://dev.hivoice.cn/usc.jsp" target="_blank">云知声语音云平台</a></li>
-            <li><a href="https://www.kiwisec.com/" target="_blank">几维安全</a></li>
-            <li><a href="http://www.umeng.com/" target="_blank">友盟</a></li>
-            <li><a href="http://www.apkbus.com/" target="_blank">安卓巴士</a></li>
-            <li><a href="https://openhome.alipay.com/doc/docIndex.htm" target="_blank">支付宝（移动快捷支付）</a></li>
-            <li><a href="http://fanyi.youdao.com/openapi" target="_blank">有道翻译API</a></li>
-            <li><a href="https://www.jpush.cn/" target="_blank">极光推送</a></li>
-            <li><a href="http://www.bangcle.com/" target="_blank">棒棒加固</a></li>
-            <li><a href="http://www.ijiami.cn/" target="_blank">爱加密</a></li>
-            <li><a href="http://developer.baidu.com/map/" target="_blank">百度地图</a></li>
-            <li><a href="http://open.voicecloud.cn/speechservice" target="_blank">科大讯飞语音平台</a></li>
-            <li><a href="http://wiki.connect.qq.com/sdk%E4%B8%8B%E8%BD%BD" target="_blank">腾讯QQ互联平台</a></li>
-            <li><a href="http://yaq.qq.com/" target="_blank">腾讯御安全</a></li>
-            <li><a href="https://developers.google.com/" target="_blank">谷歌地图</a></li>
-            <li><a href="http://developer.amap.com/">高德地图</a></li>
+            <div class="widget d_textbanner">
+                <a class="style04" href="http://devclub.cc/app/app-devclub-release.apk" target="_blank">
+                    <strong>特别推荐</strong>
+                    <h2>我是开发者APP</h2>
+                    <p>
+                        <b>广大开发者首选APP，提供最新的资讯，覆盖内容全，满足不同开发者的需求</b>
+                        <br><br>
+                        <b>点击下载安装包</b><br>
 
-        </ul>
-    </div>
-        <div class="widget widget_links"><h3 class="widget_tit">友情链接</h3>
-            <ul class='xoxo blogroll'>
-                <li><a href="http://www.android-doc.com/" target="_blank">android中文api</a></li>
-                <li><a href="http://www.apicloud.com" target="_blank">APICloud</a></li>
-                <li><a href="http://www.csobtk.cn/" target="_blank">app开发公司</a></li>
-                <li><a href="http://www.appxcode.com/" target="_blank">app源码站</a></li>
-                <li><a href="http://www.javaapk.com/" target="_blank">JavaApk</a></li>
-                <li><a href="http://www.mobiletrain.org/sxh/" target="_blank">java学员就业</a></li>
-                <li><a href="http://www.mobiletrain.org/java/" target="_blank">java程序员培训</a></li>
-                <li><a href="https://www.lineageos.org.cn/" target="_blank">LineageOS中文论坛</a></li>
-                <li><a href="http://mplus.tech/" target="_blank">M+</a></li>
-                <li><a href="http://video.mobiletrain.org/python/" target="_blank">python视频教程</a></li>
-                <li><a href="http://www.bayescom.com/" target="_blank">倍业科技</a></li>
-                <li><a href="http://nj.mobiletrain.org/java/" target="_blank">南京java开发培训</a></li>
-                <li><a href="http://bigdata.mobiletrain.org/" target="_blank">大数据培训</a></li>
-                <li><a href="https://anzhuoq.com/" target="_blank">安卓Q</a></li>
-                <li><a href="http://www.epubit.com.cn" target="_blank">异步社区</a></li>
-                <li><a href="http://bbs.windever.com" target="_blank">微信小程序开发社区</a></li>
-                <li><a href="http://cd.mobiletrain.org/info/" target="_blank">成都Python开发动态</a></li>
-                <li><a href="http://www.gxaedu.com/" target="_blank">成都软件测试培训</a></li>
-                <li><a href="http://bbs.jiandaima.com/" target="_blank">手机游戏源码分享</a></li>
-                <li><a href="http://www.365huifu.com" target="_blank">数据恢复软件</a></li>
-                <li><a href="https://www.okcoin.cn/" target="_blank">比特币价格</a></li>
-                <li><a href="http://www.mydll.com.cn/" target="_blank">浏览器哪个好</a></li>
-                <li><a href="http://www.juanyunkeji.com/" target="_blank">石家庄手机APP开发</a></li>
-                <li><a href="http://www.90159.com/" target="_blank">程序员头条</a></li>
-                <li><a href="http://www.chuntianxueyuan.com/" target="_blank">美牙培训</a></li>
-                <li><a href="http://www.newbiefly.com" target="_blank">菜鸟要飞</a></li>
-                <li><a href="http://www.mobiletrain.org/page/software/" target="_blank">软件测试培训</a></li>
-                <li><a href="http://www.dakaruanwen.com" target="_blank">软文发布</a></li>
-                <li><a href="http://qd.mobiletrain.org/news/" target="_blank">青岛java培训动态</a></li>
-
-            </ul>
+                        2019年8月21日 v1.2.8 版本更新：<br>
+                        1，商城图片及文字调整<br>
+                        2，频道列表优化显示<br>
+                        3，其他bug修复及优化<br></p></a></div>
+            <div class="widget d_textbanner"><a class="style01"
+                                                href="http://devclub.cc/app/AndroidChina_v1.0.1.apk"><strong>特别推荐</strong>
+                <h2>Android开发中文站客户端</h2>
+                <p><b>网站的Android客户端，可以通过手机查看网站内容啦！
+                    欢迎大家下载使用。</b><br><br>
+                    <b>Andriod开发中文站，关注Andriod开发，更关注开发者！</b></p></a></div>
+            <div class="widget d_textbanner"><a class="style05" href="http://www.androidchina.net/contributor"
+                                                target="_blank"><strong>特别推荐</strong>
+                <h2>投稿人招募</h2>
+                <p>想让自己的文章发表在Android开发中文站？快快联系站长提升账号权限就能发表啦！可以转载文章，更鼓励原创文章！联系QQ：1304524325</p></a></div>
+            <div class="widget widget_text"><h3 class="widget_tit">微信公众号：AndroidChinaNet</h3>
+                <div class="textwidget">
+                    <div class="grid-demo">3/12</div>
+                </div>
+            </div>
+            <div class="widget widget_links"><h3 class="widget_tit">友情链接</h3>
+                <ul class='xoxo blogroll'>
+                    <li><a href="http://www.android-doc.com/" target="_blank">android中文api</a></li>
+                    <li><a href="http://www.apicloud.com" target="_blank">APICloud</a></li>
+                    <li><a href="http://www.csobtk.cn/" target="_blank">app开发公司</a></li>
+                    <li><a href="http://www.appxcode.com/" target="_blank">app源码站</a></li>
+                    <li><a href="http://www.javaapk.com/" target="_blank">JavaApk</a></li>
+                    <li><a href="http://www.mobiletrain.org/sxh/" target="_blank">java学员就业</a></li>
+                    <li><a href="http://www.mobiletrain.org/java/" target="_blank">java程序员培训</a></li>
+                    <li><a href="https://www.lineageos.org.cn/" target="_blank">LineageOS中文论坛</a></li>
+                    <li><a href="http://mplus.tech/" target="_blank">M+</a></li>
+                    <li><a href="http://video.mobiletrain.org/python/" target="_blank">python视频教程</a></li>
+                    <li><a href="http://www.bayescom.com/" target="_blank">倍业科技</a></li>
+                    <li><a href="http://nj.mobiletrain.org/java/" target="_blank">南京java开发培训</a></li>
+                    <li><a href="http://bigdata.mobiletrain.org/" target="_blank">大数据培训</a></li>
+                    <li><a href="https://anzhuoq.com/" target="_blank">安卓Q</a></li>
+                    <li><a href="http://www.epubit.com.cn" target="_blank">异步社区</a></li>
+                    <li><a href="http://bbs.windever.com" target="_blank">微信小程序开发社区</a></li>
+                    <li><a href="http://cd.mobiletrain.org/info/" target="_blank">成都Python开发动态</a></li>
+                    <li><a href="http://www.gxaedu.com/" target="_blank">成都软件测试培训</a></li>
+                    <li><a href="http://bbs.jiandaima.com/" target="_blank">手机游戏源码分享</a></li>
+                    <li><a href="http://www.365huifu.com" target="_blank">数据恢复软件</a></li>
+                    <li><a href="https://www.okcoin.cn/" target="_blank">比特币价格</a></li>
+                    <li><a href="http://www.mydll.com.cn/" target="_blank">浏览器哪个好</a></li>
+                    <li><a href="http://www.juanyunkeji.com/" target="_blank">石家庄手机APP开发</a></li>
+                    <li><a href="http://www.90159.com/" target="_blank">程序员头条</a></li>
+                    <li><a href="http://www.chuntianxueyuan.com/" target="_blank">美牙培训</a></li>
+                    <li><a href="http://www.newbiefly.com" target="_blank">菜鸟要飞</a></li>
+                    <li><a href="http://www.mobiletrain.org/page/software/" target="_blank">软件测试培训</a></li>
+                    <li><a href="http://www.dakaruanwen.com" target="_blank">软文发布</a></li>
+                    <li><a href="http://qd.mobiletrain.org/news/" target="_blank">青岛java培训动态</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="widget widget_text">			<div class="textwidget"><html>
-        <body align="center">
-        <a href="http://baichuan.taobao.com/" target="_blank">
-            <img src="http://www.androidchina.net/wp-content/uploads/2016/10/alibaichuan1.jpg"  width="360" height="135"/>
-        </a>
-        </body>
-        </html></div>
-        </div><div class="widget widget_text">			<div class="textwidget"><html>
-    <body align="center">
-    <a href="http://devclub.cc/" target="_blank">
-        <img src="http://www.androidchina.net/wp-content/uploads/2016/11/logo_135.jpg"  width="360" height="135"/>
-    </a>
-    </body>
-    </html></div>
-    </div></aside></section>
-<div class="footer">
-    <div class="layui-col-md12 t-copy">
-        <span class="layui-breadcrumb">
-            <span>&copy; 2019 <a href="https://www.echo.so/">程序员刊</a></span>
-            <span class="layui-hide-xs">Server by <a href="#" target="_blank" rel="nofollow">Spring Boot</a></span>
-            <span>Theme by <a href="#" target="_blank">LayUI</a></span>
-        </span>
     </div>
 </div>
-<script type='text/javascript' src='http://www.androidchina.net/wp-content/themes/d8/js/jquery.js?ver=3.0'></script>
-<script type='text/javascript' src='http://www.androidchina.net/wp-content/plugins/smartideo/static/smartideo.js?ver=2.7.0'></script>
+<div class="footer">
+    <div class="footer-inner">
+        <div class="copyright" style="text-align: center">
+            版权所有，保留一切权利！ &copy; 2019 <a href="http://www.androidchina.net">Android开发中文站</a>　Theme <a href="http://www.daqianduan.com/" target="_blank">D8</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/config.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="articleDetail.js"></script>
 </body>
 </html>

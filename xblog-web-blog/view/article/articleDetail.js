@@ -5,34 +5,10 @@ layui.use(['element', 'layer','laypage'],  function () {
     var laypage = layui.laypage;
     var layer = layui.layer;
     var limit = 10;
-    // 加载文章数据
-    $.get(serverUrl + '/api/article/findAll?page=1&limit='+limit, function (result) {
-        res = result.data;
-        setHtmlType(res); // 设置文章显示的列表样式
-        pages(result.count)//切换分类时候，调用页码，重新渲染
-    });
 
-    // 分页组件渲染
-    function pages(count, typeId) {
-        laypage.render({
-            elem: 'page-navigator'
-            , count: count
-            , theme: '#4A90E2'
-            , layout: [ 'prev', 'page', 'next', 'limit']
-            , limit: limit
-            , jump: function (obj, first) {
-                limit = obj.limit;
-                if (!first) {
-                    $.get(serverUrl + '/api/article/findAll?page='+obj.curr+'&limit='+obj.limit
-                        , function (result) {
-                            setHtmlType(result.data);
-                        });
-                }
-            }
-        })
-    }
+    var router = layui.router();
 
-    /**13位时间戳转换成 年月日 上午 时间  2018-05-23 10:41:08 */
+    // /**13位时间戳转换成 年月日 上午 时间  2018-05-23 */
     function createTime(v){
         return new Date(parseInt(v)).toLocaleString()
     }
@@ -52,29 +28,25 @@ layui.use(['element', 'layer','laypage'],  function () {
         return y+"-"+m+"-"+d;
     };
 
-    // 页面样式渲染
-    function setHtmlType(data) {
+    // 加载文章数据
+    $.get(serverUrl + '/api/article/findById?id='+router.search.id, function (result) {
+        res = result.data;
+        var time = createTime(res.created);
+        // 渲染页面内容
+        var address = "";
+        var articleTitle = '<a href="http://www.androidchina.net/10191.html">'+res.title+'</a>';
+        var articleMeta = '' +
+            '<span class="muted"><a href="http://www.androidchina.net/category/dev"><i class="icon-list-alt icon12"></i> '+res.typeName+'</a></span>' +
+            '<span class="muted"><i class="icon-user icon12"></i> <a href="http://www.androidchina.net/author/loading">'+res.userName+'</a></span><time class="muted"><i class="ico icon-time icon12"></i> '+time+'</time>\n' +
+            '<span class="muted"><i class="ico icon-eye-open icon12"></i> '+res.pageView+'</span>\n' +
+            '<span class="muted"><i class="icon-comment icon12"></i> <a href="http://www.androidchina.net/10191.html#comments">'+res.commentNumber+'评论</a></span>';
+        var article_author = '<p>转载请注明：<a href=\"http://www.androidchina.net\">程序员刊</a> &raquo; <a href=\"http://www.androidchina.net/10200.html\">打造高效小团队 &#8211; 团队代码提交流程 &#038;&#038; 规范</a></p>';
+        $(".article-title").html(articleTitle);
+        $(".article-meta").html(articleMeta);
+        $("#output_wrapper_id").html(res.context);
+        // 转载说明
+        $(".article-author").html(article_author);
         var strHtml = "";
-        $.each(data, function (index, item) {
-            var time = createTime(item.created);
-            strHtml += '<div class="title-article list-card" lay-filter="article">'+
-                '<div class="list-pic">'+
-                '<a href="view/article/articleDetail.html#id='+item.id+'" target="_blank" title='+item.title+'>'+
-                '<img src='+item.imgUrl+' alt='+item.title+' class="img-full">'+
-                '</a>'+
-                '</div>'+
-                '<a href="view/article/articleDetail.html#id='+item.id+'" target="_blank">'+
-                '<h1>'+item.title+'</h1>'+
-                '<p>'+item.decoration+'</p>'+
-                '</a>'+
-                '<div class="title-msg">'+
-                '<span><i class="layui-icon">&#xe705;</i> <a href="https://www.echo.so/category/technique/">'+item.typeName+'</a></span>'+
-                '<span><i class="layui-icon">&#xe637;</i> '+time+'</span>'+
-                '<span class="layui-hide-xs"><i class="layui-icon">&#xe63a;</i> '+item.typeName+'条</span>'+
-                '<span class="layui-hide-xs"><i class="layui-icon">&#xe60e;</i> '+item.pageView+'</span>'+
-                '</div>'+
-                '</div>';
-        });
-        $("#articleList").html(strHtml);
-    }
+        // 添加文章标题信息
+    });
 });
