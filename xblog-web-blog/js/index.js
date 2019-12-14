@@ -8,7 +8,7 @@ layui.use(['element', 'layer','laypage'],  function () {
     // 加载文章数据
     $.get(serverUrl + '/api/article/findAll?page=1&limit='+limit, function (result) {
         res = result.data;
-        setHtmlType(res); // 设置文章显示的列表样式
+        setHtmlType2(res); // 设置文章显示的列表样式
         pages(result.count)//切换分类时候，调用页码，重新渲染
     });
 
@@ -25,7 +25,7 @@ layui.use(['element', 'layer','laypage'],  function () {
                 if (!first) {
                     $.get(serverUrl + '/api/article/findAll?page='+obj.curr+'&limit='+obj.limit
                         , function (result) {
-                            setHtmlType(result.data);
+                            setHtmlType2(result.data);
                         });
                 }
             }
@@ -74,6 +74,36 @@ layui.use(['element', 'layer','laypage'],  function () {
                 '<span class="layui-hide-xs"><i class="layui-icon">&#xe60e;</i> '+item.pageView+'</span>'+
                 '</div>'+
                 '</div>';
+        });
+        $("#articleList").html(strHtml);
+    }
+
+    // 页面样式渲染
+    function setHtmlType2(data) {
+        // alert("===========")
+        var strHtml = "";
+        $.each(data, function (index, item) {
+            var time = createTime(item.created);
+            strHtml += '<article class="excerpt">'+
+                '    <div class="focus">'+
+                '        <a href="http://www.androidchina.net/10186.html" class="thumbnail">'+
+                '            <img src='+item.imgUrl+' alt='+item.title+'/>'+
+                '        </a>'+
+                '    </div>'+
+                '   <header>'+
+            '       <a class="label label-important" href="http://www.androidchina.net/category/info">'+item.typeName+'<i class="label-arrow"></i></a>' +
+            '       <h2>' +
+            '           <a href="view/article/articleDetail.html#id='+item.id+'" title='+item.title+' target="_blank">'+item.title+'</a>' +
+            '       </h2>' +
+            '   </header>' +
+            '   <p>' +
+            '       <span class="muted"><i class="icon-user icon12"></i> <a href="http://www.androidchina.net/author/loading">'+item.userName+'</a></span>' +
+            '       <span class="muted"><i class="icon-time icon12"></i> '+time+'</span> ' +
+            '       <span class="muted"><i class="icon-eye-open icon12"></i> '+item.pageView+'</span> ' +
+            '       <span class="muted"><i class="icon-comment icon12"></i><a href="http://www.androidchina.net/10186.html#comments">'+item.commentNumber+'评论</a></span>' +
+            '   </p>' +
+            '   <p class="note">' + item.decoration+ '</p>' +
+            '</article>';
         });
         $("#articleList").html(strHtml);
     }
