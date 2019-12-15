@@ -9,6 +9,7 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../wangEditor-3.1.1/release/wangEditor.css" media="all" />
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="../../css/public.css" media="all" />
 </head>
@@ -17,7 +18,7 @@
 	<div class="layui-col-md9 layui-col-xs12">
 		<label>
 			<input type="text" class="layui-input articleId" lay-verify="articleId" style="display:none">
-			<input type="text" class="layui-input stick" lay-verify="articleId" style="display:none">
+			<input type="text" class="layui-input stick" lay-verify="stick" style="display:none">
 		</label>
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-md9 layui-col-xs7">
@@ -32,7 +33,8 @@
 		<div class="layui-form-item magb0">
 			<label class="layui-form-label">文章内容</label>
 			<div class="layui-input-block">
-				<label for="articleContent"></label><textarea placeholder="请输入内容" class="layui-textarea content" lay-verify="content" id="articleContent"></textarea>
+				<label for="articleContent"></label>
+				<div id="articleContent"></div>
 			</div>
 		</div>
 	</div>
@@ -100,6 +102,7 @@
 	</div>
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../wangEditor-3.1.1/release/wangEditor.js"></script>
 <script type="text/javascript" src="articleAdd.js"></script>
 <script type="text/javascript" src="../../js/config.js"></script>
 </body>

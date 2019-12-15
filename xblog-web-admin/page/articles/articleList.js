@@ -103,12 +103,17 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
+                    body.find(".articleContent").innerHTML = edit.context;
                     body.find(".articleId").attr('value', edit.id);
                     body.find(".stick").attr('value', edit.stick);
                     body.find(".articleName").val(edit.title);
                     body.find(".loadUrl").val(edit.loadUrl);
                     body.find(".thumbImg").attr("src",edit.imgUrl);
-                    body.find(".content").html(edit.context);
+                    //获取子窗口的函数
+                    // layero.find('iframe')[0].contentWindow.test();
+                    // var iframeWin = window[layero.find('iframe')[0]['name']];
+                    // iframeWin.test();
+                    body.find("#articleContent").html(edit.context);
                     body.find("#status input[name=status][value=0]").attr("checked", edit.status === 0);
                     body.find("#status input[name=status][value=1]").attr("checked", edit.status === 1);
                     body.find(".articleTop input[name='articleTop']").prop("checked",(edit.stick?'checked':''));
@@ -118,9 +123,9 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
                         tips: 3
                     });
-                },500)
+                },500);
             }
-        })
+        });
         layui.layer.full(index);
         //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
         $(window).on("resize",function(){

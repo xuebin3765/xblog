@@ -7,6 +7,48 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         layedit = layui.layedit,
         laydate = layui.laydate,
         $ = layui.jquery;
+    var E = window.wangEditor;
+
+    var editor = new E('#articleContent');
+    editor.customConfig.uploadImgServer = serverUrl+'/admin/fileUpload/photos';
+    // 关闭粘贴内容中的样式
+    editor.customConfig.pasteFilterStyle = false
+    // 忽略粘贴内容中的图片
+    editor.customConfig.pasteIgnoreImg = true
+    // 使用 base64 保存图片
+    //editor.customConfig.uploadImgShowBase64 = true
+    // 上传图片到服务器
+    editor.customConfig.uploadFileName = 'file'; //设置文件上传的参数名称
+    editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024; // 将图片大小限制为 3M
+    editor.customConfig.uploadImgMaxLength = 5;
+    editor.customConfig.uploadImgHooks = {
+
+        success: function (xhr, editor, result) {
+            // 图片上传并返回结果，图片插入成功之后触发
+            // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+        },
+        fail: function (xhr, editor, result) {
+            // 图片上传并返回结果，但图片插入错误时触发
+            // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+        },
+        error: function (xhr, editor) {
+            // 图片上传出错时触发
+            // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+        },
+        customInsert: function (insertImg, result, editor) {
+            // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+            // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+            // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+            var data = result.data;
+            for (var i = 0; i < data.length; i++){
+                insertImg(data[i].newFile);
+            }
+            // result 必须是一个 JSON 格式字符串！！！否则报错
+        }
+
+    };
+    editor.create();
+
 
     //给分类 CheckBox赋值
     $(document).ready(function(){
@@ -84,8 +126,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
             }
         },
         content : function(val){
-            layedit.sync(editIndex);
-            val = layedit.getContent(editIndex);
+            val = editor.txt.html();
             if(val === ''){
                 return "文章内容不能为空";
             }
@@ -107,6 +148,7 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
 
     form.on("submit(addArticle)",function(data){
         //弹出loading
+        ;
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         //将页面全部复选框选中的值拼接到一个数组中
         var navigate_checkbox = [];
@@ -118,14 +160,14 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         $('.tag_checkbox input[type=checkbox]:checked').each(function() {
             tag_checkbox.push($(this).val());
         });
+        var content = editor.txt.html();
         var params = {
             id: $(".articleId").val(),
             title: $(".articleName").val(),  //文章标题
             //文章摘要,截取文章内容中的一部分文字放入文章摘要
-            decoration: layedit.getText(editIndex).substring(0, 50),
+            decoration: content.substring(0, 200),
             //文章内容
-            context:
-                layedit.getContent(editIndex).split('<audio controls="controls" style="display: none;"></audio>')[0],
+            context: content,
             imgUrl: $(".thumbImg").attr("src"),  //缩略图
             navigateIds: navigate_checkbox,    //文章分类
             tagIds: tag_checkbox,    //文章标签
@@ -169,36 +211,38 @@ layui.use(['form','layer','code','layedit','laydate','upload'],function(){
         return false;
     });
 
-    layui.layedit.set({
-        uploadImage: {
-            url: serverUrl+'/admin/fileUpload/uploadImage' //接口url
-            ,type: 'post' //默认post
-        }
-    });
 
-    //创建一个编辑器
-    var editIndex = layedit.build('articleContent',{
-        height : 600,
-        uploadImage : {
-            url : serverUrl+'/admin/fileUpload/photo'
-        },
-        tool: [
-            'strong' //加粗
-            ,'italic' //斜体
-            ,'underline' //下划线
-            ,'del' //删除线
-            ,'|' //分割线
-            ,'left' //左对齐
-            ,'center' //居中对齐
-            ,'right' //右对齐
-            ,'link' //超链接
-            ,'unlink' //清除链接
-            ,'image' //插入图片
-            ,'help' //帮助
-            ,'code'
-        ]
-    });
-    //用于同步编辑器内容到textarea
-    layedit.sync(editIndex);
+
+    // layui.layedit.set({
+    //     uploadImage: {
+    //         url: serverUrl+'/admin/fileUpload/uploadImage' //接口url
+    //         ,type: 'post' //默认post
+    //     }
+    // });
+    //
+    // //创建一个编辑器
+    // var editIndex = layedit.build('articleContent',{
+    //     height : 600,
+    //     uploadImage : {
+    //         url : serverUrl+'/admin/fileUpload/photo'
+    //     },
+    //     tool: [
+    //         'strong' //加粗
+    //         ,'italic' //斜体
+    //         ,'underline' //下划线
+    //         ,'del' //删除线
+    //         ,'|' //分割线
+    //         ,'left' //左对齐
+    //         ,'center' //居中对齐
+    //         ,'right' //右对齐
+    //         ,'link' //超链接
+    //         ,'unlink' //清除链接
+    //         ,'image' //插入图片
+    //         ,'help' //帮助
+    //         ,'code'
+    //     ]
+    // });
+    // //用于同步编辑器内容到textarea
+    // layedit.sync(editIndex);
 
 });
