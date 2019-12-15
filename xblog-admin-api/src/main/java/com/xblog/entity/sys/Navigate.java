@@ -32,6 +32,8 @@ public class Navigate {
 
     @Transient
     private List<Navigate> navigateList;
+    @Transient
+    private Navigate parentNavigate;
 
     public Navigate() {
     }

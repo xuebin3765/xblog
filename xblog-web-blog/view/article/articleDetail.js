@@ -7,7 +7,6 @@ layui.use(['element', 'layer','laypage'],  function () {
     var limit = 10;
 
     var router = layui.router();
-
     // /**13位时间戳转换成 年月日 上午 时间  2018-05-23 */
     function createTime(v){
         return new Date(parseInt(v)).toLocaleString()
@@ -28,13 +27,81 @@ layui.use(['element', 'layer','laypage'],  function () {
         return y+"-"+m+"-"+d;
     };
 
+    // 加载标题数据
+    $.get(serverUrl + '/api/navigate/findAllNavigate', function (result) {
+        res = result.data;
+        // 渲染导航样式
+        setHtmlNavigate(res);
+    });
+
+    // 导航样式渲染
+    var setHtmlNavigate = function (res) {
+        var html = [];
+        html.push('<ul class="nav">');
+        // 遍历加载所有导航
+        if (res.length > 0) {
+            for (var i = 0; i < res.length; i++) {
+                var navigate = res[i];
+                var url;
+                if ("#" === navigate.url){
+                    url = netUrl;
+                }else {
+                    url = navigate.url+'#/navId='+navigate.id;
+                }
+                html.push('<li id="menu-item-14" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14">');
+                html.push('<a href="'+url+'">'+navigate.name+'</a>');
+                var navigateSons = navigate.navigateList;
+                if (navigateSons != null && navigateSons.length){
+                    html.push('<ul class="sub-menu">');
+                    for (var j = 0; j < navigateSons.length; j++) {
+                        var navigateSon = navigateSons[j];
+                        var urlSon;
+                        if ("#" === navigateSon.url){
+                            urlSon = netUrl;
+                        }else {
+                            urlSon = navigateSon.url+'#/navId='+navigateSon.id;
+                        }
+                        html.push('<li id="menu-item-13" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a href="'+urlSon+'">'+navigateSon.name+'</a></li>');
+                    }
+                    html.push('</ul>');
+                }
+                html.push('</li>')
+            }
+        }
+        html.push('</ul>');
+        $(".navigateList").html(html.join(""));
+    };
+    var getUrl = function(url, id) {
+        if ("#" === url){
+            return netUrl;
+        }else {
+            return url+'#/navId='+id
+        }
+    }
+
+
     // 加载文章数据
     $.get(serverUrl + '/api/article/findById?id='+router.search.id, function (result) {
+        if (result.code !== 0){
+            layer.alert(result.msg);
+            return;
+        }
         res = result.data;
+        var address = [];
+        address.push('你的位置：<a href="http://www.androidchina.net" target="_blank">程序员刊</a> <small>></small> ');
+        var navigate = res.navigate;
+        if (typeof navigate != "undefined" && navigate != null && navigate !== ""){
+            var navigateParent = navigate.parentNavigate;
+            if (typeof navigateParent != "undefined" && navigateParent != null && navigateParent !== ""){
+                address.push('<a href="'+getUrl(navigateParent.url, navigateParent.id)+'" title="'+navigateParent.name+'" target="_blank">'+navigateParent.title+'</a> ')
+            }
+            address.push('<a href="'+getUrl(navigate.url, navigate.id)+'" title="'+navigate.name+'" target="_blank">'+navigate.name+'</a> <small>></small> ')
+        }
+        address.push('<a href="articleDetail.html#/id='+res.id+'" title="'+res.title+'" target="_blank">'+res.title+'</a>')
         var time = createTime(res.created);
         // 渲染页面内容
-        var breadcrumbs = '你的位置：<a href="http://www.androidchina.net">程序员刊</a> <small>></small> <a href="http://www.androidchina.net/category/dev" title="查看Android开发中的全部文章">Android开发</a> <small>></small> <span class="muted">「Android10源码分析」为什么复杂布局会产生卡顿？&#8211; LayoutInflater详解</span>';
-        var articleTitle = '<a href="http://www.androidchina.net/10191.html">'+res.title+'</a>';
+        var breadcrumbs = address.join("");
+        var articleTitle = '<a href="articleDetail.html#/id='+res.id+'" target="_blank">'+res.title+'</a>';
         var articleMeta = '' +
             '<span class="muted"><a href="http://www.androidchina.net/category/dev"><i class="icon-list-alt icon12"></i> '+res.typeName+'</a></span>' +
             '<span class="muted"><i class="icon-user icon12"></i> <a href="http://www.androidchina.net/author/loading">'+res.userName+'</a></span><time class="muted"><i class="ico icon-time icon12"></i> '+time+'</time>\n' +

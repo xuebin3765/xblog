@@ -68,7 +68,21 @@ public class ArticleServiceImpl implements ArticleService {
     public Article findById(String id) {
         if (StringUtils.isBlank(id)) return null;
         log.info("step findById, id:{}", id);
-        return articleRepository.findById(id).orElse(null);
+        Article article = articleRepository.findById(id).orElse(null);
+        if (article != null){
+            List<Navigate> navigateList = navigateService.findallByArticleId(article.getId());
+            if (navigateList != null && navigateList.size() > 0){
+                Navigate navigate = navigateList.get(0);
+                if (StringUtils.isNotBlank(navigate.getParentId())){
+                    Navigate navigateParent = navigateService.findById(navigate.getParentId());
+                    if (navigateParent != null){
+                        navigate.setParentNavigate(navigateParent);
+                    }
+                }
+                article.setNavigate(navigate);
+            }
+        }
+        return article;
     }
 
     /**

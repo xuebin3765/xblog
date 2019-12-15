@@ -16,8 +16,8 @@ layui.use(['element', 'layer', 'laypage'], function () {
         // 需要设置文章列表title
         $.get(serverUrl + '/api/navigate/findNavigateById?id='+navId, function (result) {
             res = result.data;
-            // 渲染导航样式
-            $('#listTitle').html("当前位置："+res.name) ;
+            // 渲染位置
+            $('#listTitle').html("当前位置："+res.name);
         });
     }
 

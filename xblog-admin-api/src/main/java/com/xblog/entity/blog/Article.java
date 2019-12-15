@@ -59,4 +59,6 @@ public class Article {
     private int commentNumber; // 阅读量
     @Transient
     private String typeName = "热点资讯";
+    @Transient
+    private Navigate navigate;
 }
