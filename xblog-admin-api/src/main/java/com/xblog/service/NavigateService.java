@@ -21,4 +21,6 @@ public interface NavigateService {
     public PageResult<Navigate> findAll(String name, int pageNum, int pageSize);
 
     public void deleteById(String id);
+
+    List<Navigate> findAllNavigate();
 }

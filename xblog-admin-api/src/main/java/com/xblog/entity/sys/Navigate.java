@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Description: 页面导航
@@ -28,6 +29,9 @@ public class Navigate {
 
     @Transient
     private String parentName;
+
+    @Transient
+    private List<Navigate> navigateList;
 
     public Navigate() {
     }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/navigate")
@@ -28,7 +29,7 @@ public class NavigateApiController {
     @RequestMapping(value = "/findAllNavigate", method = RequestMethod.GET)
     public RespEntity findAllNavigate(){
         logger.info("step into NavigateController findAll()");
-        PageResult<Navigate> pageResult = navigateService.findAll(null, 1, 200);
-        return RespEntity.success(pageResult.getRows(), pageResult.getCount());
+        List<Navigate> navigateList = navigateService.findAllNavigate();
+        return RespEntity.success(navigateList);
     }
 }
