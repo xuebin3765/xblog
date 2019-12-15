@@ -4,21 +4,14 @@ import com.xblog.common.PageResult;
 import com.xblog.common.enums.ArticleEnum;
 import com.xblog.commons.response.RespEntity;
 import com.xblog.commons.utils.JsonUtil;
-import com.xblog.commons.validator.ValidResult;
-import com.xblog.commons.validator.ValidatorFactory;
 import com.xblog.entity.blog.Article;
 import com.xblog.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.validation.Validator;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * author xuebin@si-tech.com.cn
@@ -47,7 +40,7 @@ public class ArticleController {
             @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
     ){
         log.info("step into findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
-        PageResult<Article> pageResult = articleService.findAll(key, page, limit);
+        PageResult<Article> pageResult = articleService.findAll(null, key, page, limit);
         return RespEntity.success(pageResult.getRows(), pageResult.getCount());
     }
 
@@ -131,7 +124,7 @@ public class ArticleController {
 
     /**
      * 发布文章
-     * @param id
+     * @param ids
      * @return
      */
     @ResponseBody

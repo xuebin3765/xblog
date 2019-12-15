@@ -42,6 +42,7 @@ public class NavigateServiceImpl implements NavigateService {
 
     @Override
     public Navigate findById(String id) {
+        if (StringUtils.isBlank(id)) return null;
         return navigateRepository.findById(id).orElse(null);
     }
 
@@ -117,5 +118,13 @@ public class NavigateServiceImpl implements NavigateService {
         List<Navigate> navigates = Lists.newArrayList(map.values());
         navigates.sort(Comparator.comparingInt(Navigate::getSort));
         return navigates;
+    }
+
+    @Override
+    public List<Navigate> findallByArticleId(String articleId) {
+        String sql = "SELECT * from navigate where id in (SELECT navigate_id from article_navigate_rel where article_id = :articleId);";
+        Map<String, Object> params = new HashMap<>();
+        params.put("articleId", articleId);
+        return  (List<Navigate>)daoHelperRepository.queryListEntity(sql.toString(), params, Navigate.class);
     }
 }

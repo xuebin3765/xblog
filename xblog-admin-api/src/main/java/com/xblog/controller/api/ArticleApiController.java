@@ -32,12 +32,13 @@ public class ArticleApiController {
      */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public RespEntity findAll(
+            @RequestParam(value = "navId", required = false) String navId,
             @RequestParam(value = "key", required = false) String key,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
     ){
         log.info("step into findAll(), pageNum: {}, pageSize: {}, key: {}", page, limit, key);
-        PageResult<Article> pageResult = articleService.findAll(key, page, limit);
+        PageResult<Article> pageResult = articleService.findAll(navId, key, page, limit);
         return RespEntity.success(pageResult.getRows(), pageResult.getCount());
     }
 

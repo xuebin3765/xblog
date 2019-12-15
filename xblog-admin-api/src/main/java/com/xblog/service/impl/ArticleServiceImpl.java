@@ -5,7 +5,6 @@ import com.xblog.common.PageResult;
 import com.xblog.commons.utils.SnowflakeUUIDUtil;
 import com.xblog.entity.blog.Article;
 import com.xblog.entity.sys.Navigate;
-import com.xblog.entity.sys.Tag;
 import com.xblog.repository.DaoHelperRepository;
 import com.xblog.repository.blog.ArticleRepository;
 import com.xblog.service.ArticleService;
@@ -13,10 +12,7 @@ import com.xblog.service.NavigateService;
 import com.xblog.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -88,7 +84,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageResult<Article> findAll(String key, int page, int limit) {
+    public PageResult<Article> findAll(String navId, String key, int page, int limit) {
         log.debug("findAll, name:{}, pageNum:{}, pageSize:{}", key, page, limit);
         if (page <= 0){
             page = 1;
@@ -99,27 +95,44 @@ public class ArticleServiceImpl implements ArticleService {
         }
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
-        sql.append("SELECT * FROM article where 1=1 ");
+        sql.append("select * from article where 1 = 1");
+
         if (StringUtils.isNotBlank(key)){
-            sql.append(" and ( title like :key or content like :key ) ");
+            sql.append(" and ( a.title like :key or a.content like :key ) ");
             params.put("key", "%"+key+"%");
         }
+
+        if (StringUtils.isNotBlank(navId) && !"undefined".equals(navId)){
+            sql.append(" and id in(SELECT article_id from article_navigate_rel where navigate_id in (SELECT id from navigate WHERE id = :navId OR parent_id = :navId ) GROUP BY article_id)");
+            params.put("navId", navId);
+        }
+
         String countSql = sql.toString().replace("*", "count(*)");
         int count = daoHelperRepository.getCountBy(countSql, params);
+
         sql.append(" ORDER BY id desc");
         sql.append(" limit :pageNum, :pageSize");
         params.put("pageNum", (page-1)*limit);
         params.put("pageSize", limit);
         List<Article> articleList = (List<Article>)daoHelperRepository.queryListEntity(sql.toString(), params, Article.class);
 
-        Optional.of(articleList).orElse(Lists.newArrayList())
+        Optional.ofNullable(articleList).orElse(Lists.newArrayList())
                 .forEach(article -> {
-
-//                    // 设置标题
-//                    List<Navigate> navigateList = navigateService.findallByArticleId(article.getId());
-//                    if (navigateList != null){
-//                        article.setNavigateList(navigateList);
-//                    }
+                    // 设置标题
+                    List<Navigate> navigateList = navigateService.findallByArticleId(article.getId());
+                    if (navigateList != null && navigateList.size() > 0){
+                        article.setNavigateList(navigateList);
+                        String type = null;
+                        for (Navigate nav: navigateList) {
+                            if (StringUtils.isNotBlank(nav.getParentId())){
+                                type = nav.getName();
+                                break;
+                            }
+                        }
+                        if (StringUtils.isBlank(type))
+                            type = navigateList.get(0).getName();
+                        article.setTypeName(type);
+                    }
 //                    // 设置标签
 //                    List<Tag> tagList = tagService.findallByArticleId(article.getId());
 //                    if (tagList != null){

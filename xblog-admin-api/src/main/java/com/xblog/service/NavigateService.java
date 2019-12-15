@@ -23,4 +23,6 @@ public interface NavigateService {
     public void deleteById(String id);
 
     List<Navigate> findAllNavigate();
+
+    List<Navigate> findallByArticleId(String articleId);
 }

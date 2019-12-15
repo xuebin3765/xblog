@@ -6,6 +6,21 @@ layui.use(['element', 'layer', 'laypage'], function () {
     var layer = layui.layer;
     var limit = 10;
 
+    var router = layui.router();
+    var navId = router.search.navId;
+    console.log(navId);
+    if (typeof navId == "undefined" || navId == null || navId === ""){
+        $('.sticky').show();
+    }else {
+        $('.sticky').hide();
+        // 需要设置文章列表title
+        $.get(serverUrl + '/api/navigate/findNavigateById?id='+navId, function (result) {
+            res = result.data;
+            // 渲染导航样式
+            $('#listTitle').html("当前位置："+res.name) ;
+        });
+    }
+
     // 导航样式渲染
     var setHtmlNavigate = function (res) {
         var html = [];
@@ -14,14 +29,26 @@ layui.use(['element', 'layer', 'laypage'], function () {
         if (res.length > 0) {
             for (var i = 0; i < res.length; i++) {
                 var navigate = res[i];
+                var url;
+                if ("#" === navigate.url){
+                    url = netUrl;
+                }else {
+                    url = navigate.url+'#/navId='+navigate.id;
+                }
                 html.push('<li id="menu-item-14" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14">');
-                html.push('<a href="'+navigate.url+'">'+navigate.name+'</a>');
+                html.push('<a href="'+url+'">'+navigate.name+'</a>');
                 var navigateSons = navigate.navigateList;
                 if (navigateSons != null && navigateSons.length){
                     html.push('<ul class="sub-menu">');
                     for (var j = 0; j < navigateSons.length; j++) {
                         var navigateSon = navigateSons[j];
-                        html.push('<li id="menu-item-13" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a href="'+navigate.url+'">'+navigateSon.name+'</a></li>');
+                        var urlSon;
+                        if ("#" === navigateSon.url){
+                            urlSon = netUrl;
+                        }else {
+                            urlSon = navigateSon.url+'#/navId='+navigateSon.id;
+                        }
+                        html.push('<li id="menu-item-13" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a href="'+urlSon+'">'+navigateSon.name+'</a></li>');
                     }
                     html.push('</ul>');
                 }
@@ -39,7 +66,7 @@ layui.use(['element', 'layer', 'laypage'], function () {
         setHtmlNavigate(res);
     });
     // 加载文章列表数据
-    $.get(serverUrl + '/api/article/findAll?page=1&limit=' + limit, function (result) {
+    $.get(serverUrl + '/api/article/findAll?navId='+navId+'&page=1&limit=' + limit, function (result) {
         res = result.data;
         setHtmlArticleList(res); // 设置文章显示的列表样式
         pages(result.count)//切换分类时候，调用页码，重新渲染
@@ -56,7 +83,7 @@ layui.use(['element', 'layer', 'laypage'], function () {
             , jump: function (obj, first) {
                 limit = obj.limit;
                 if (!first) {
-                    $.get(serverUrl + '/api/article/findAll?page=' + obj.curr + '&limit=' + obj.limit
+                    $.get(serverUrl + '/api/article/findAll?navId='+navId+'&page=' + obj.curr + '&limit=' + obj.limit
                         , function (result) {
                             setHtmlArticleList(result.data);
                         });

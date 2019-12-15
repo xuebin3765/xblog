@@ -17,5 +17,5 @@ public interface ArticleService {
 
     Article update(Article article);
 
-    PageResult<Article> findAll(String key, int page, int limit);
+    PageResult<Article> findAll(String navId, String key, int page, int limit);
 }
