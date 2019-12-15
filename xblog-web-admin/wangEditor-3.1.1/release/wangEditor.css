@@ -172,7 +172,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 0 5px;
+  padding: 5px;
   /* flex-wrap: wrap; */
   /* 单个菜单 */
 }
