@@ -10,12 +10,14 @@ import com.xblog.entity.blog.Image;
  */
 public interface ImageService {
 
-    public Image add(Image image);
+    Image add(Image image);
 
-    public Image findById(String id);
+    Image findById(String id);
 
-    public PageResult<Image> findAll(int pageNum, int pageSize);
+    PageResult<Image> findAll(int pageNum, int pageSize);
 
-    public void deleteById(String id);
+    void deleteById(String id);
+
+    Image findAllByUrl(String url);
 
 }

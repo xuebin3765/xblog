@@ -26,9 +26,6 @@ public class FileController {
     @Resource
     private FileService fileService;
 
-
-
-
     @RequestMapping(value = "/photos", method = RequestMethod.POST)
     @ResponseBody
     public RespEntity uploadPhotos(@RequestParam("file") MultipartFile[] multipartFile){
@@ -47,7 +44,7 @@ public class FileController {
             }
             // 验证文件类型是否合法，验证文件后缀是否在可接受列表中
             if (fileService.validateFileType(suffixName, FileServiceImpl.TYPE_PHOTO)){
-                String nfFile = fileService.uploadFile(file, suffixName);
+                String nfFile = fileService.uploadFileToTxCos(file);
                 if (StringUtils.isNotBlank(nfFile)){
                     map.put("newFile", nfFile);
                     map.put("status","0");

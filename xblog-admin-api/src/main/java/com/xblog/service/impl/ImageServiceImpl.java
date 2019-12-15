@@ -1,6 +1,8 @@
 package com.xblog.service.impl;
 
 import com.xblog.common.PageResult;
+import com.xblog.commons.utils.JsonUtil;
+import com.xblog.commons.utils.SnowflakeUUIDUtil;
 import com.xblog.entity.blog.Image;
 import com.xblog.repository.blog.ImageRepository;
 import com.xblog.service.ImageService;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.beans.Transient;
+import java.util.List;
 
 /**
  * desc:
@@ -26,9 +29,14 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image add(Image image) {
-
-        log.error(",,, {}", "sss");
-        return null;
+        log.info("step into add image, image: {}", JsonUtil.toString(image));
+        if (image == null){
+            return null;
+        }
+        Image imageOld = findAllByUrl(image.getUrl());
+        if ( imageOld != null) return imageOld;
+        image.setId(SnowflakeUUIDUtil.getUuid());
+        return imageRepository.save(image);
     }
 
     @Override
@@ -44,5 +52,13 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void deleteById(String id) {
 
+    }
+
+    @Override
+    public Image findAllByUrl(String url) {
+        List<Image> imageList = imageRepository.findAllByUrl(url);
+        if (imageList != null && imageList.size() > 0)
+            return imageList.get(0);
+        return null;
     }
 }

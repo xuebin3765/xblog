@@ -7,7 +7,9 @@ import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
 import com.xblog.commons.utils.DataUtil;
 import com.xblog.commons.utils.SnowflakeUUIDUtil;
+import com.xblog.entity.blog.Image;
 import com.xblog.service.FileService;
+import com.xblog.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,6 +60,8 @@ public class FileServiceImpl implements FileService {
     private Environment env;
     @Resource
     private COSClient cosClient;
+    @Resource
+    private ImageService imageService;
 
 
     @PostConstruct
@@ -110,7 +114,6 @@ public class FileServiceImpl implements FileService {
         OutputStream out = null;
         try{
             //获取文件流，以文件流的方式输出到新文件
-            //    InputStream in = multipartFile.getInputStream();
             out = new FileOutputStream(localFile);
             byte[] ss = file.getBytes();
             for(int i = 0; i < ss.length; i++){
@@ -145,7 +148,12 @@ public class FileServiceImpl implements FileService {
         }else {
             log.info("删除上传文件缓存失败！");
         }
-        return imagePrefix+key;
+        String imgPath = imagePrefix+key;
+        log.info("upload image success, step into add image url");
+        Image image = new Image(imgPath);
+        imageService.add(image);
+        log.info("step out upload image. success!");
+        return imgPath;
     }
 
 

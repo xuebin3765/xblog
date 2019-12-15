@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 /**
  * 文章
  * Created by lovebin on 2017/4/19.
@@ -15,14 +17,18 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ImageRepository extends JpaRepository<Image, String> , JpaSpecificationExecutor<Article>{
 
-    /**
-     * 更新文章状态
-     * @param id
-     * @param status
-     * @return
-     */
-    @Modifying
-    @Query(value = " update Article set state=?2 where id=?1 ")
-    Article updateStatus(Integer id, int status);
+//    /**
+//     * 更新文章状态
+//     * @param id
+//     * @param status
+//     * @return
+//     */
+//    @Modifying
+//    @Query(value = " update Article set state=?2 where id=?1 ")
+//    Article updateStatus(Integer id, int status);
+
+    List<Image> findAllByUrl(String url);
+
+
 
 }
