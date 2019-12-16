@@ -12,6 +12,6 @@ import java.util.List;
  * Created by lovebin on 2017/4/19.
  */
 
-public interface BannerRepository extends JpaRepository<Banner, Integer> , JpaSpecificationExecutor<Banner>{
-    List<Banner> findBannersByAppIdAndTypeOrderByIdDesc(int appId, int type);
+public interface BannerRepository extends JpaRepository<Banner, String> , JpaSpecificationExecutor<Banner>{
+    List<Banner> findAllByStatusOrderBySortAsc(int status);
 }

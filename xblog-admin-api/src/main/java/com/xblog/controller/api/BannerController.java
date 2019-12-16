@@ -1,47 +1,44 @@
 package com.xblog.controller.api;
 
+import com.xblog.commons.response.RespEntity;
+import com.xblog.entity.blog.Banner;
+import com.xblog.service.BannerService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 滚动图
  * Created by Administrator on 2017/10/10.
  */
-@Controller
+@RestController
 @RequestMapping("/api/banner")
+@Slf4j
 public class BannerController {
-
-    private Logger logger = LoggerFactory.getLogger(BannerController.class);
 
     @Resource
     private HttpServletRequest request;
 
-//    @Resource
-//    private BannerService bannerService;
-//    /**
-//     *
-//     * @param type
-//     * @return
-//     */
-//    @RequestMapping(value = {"/public/v1/banners"}, method = {RequestMethod.POST, RequestMethod.GET} , produces = {MediaType.APPLICATION_JSON_VALUE , MediaType.TEXT_PLAIN_VALUE})
-//    @ResponseBody
-//    public String banners(
-//            @RequestParam(value = "appId") int appId,
-//            @RequestParam(value = "type") int type
-//    ){
-//        logger.info(String.format("request_log_param=%s", RequestUtil.getRequestBodyParam(request)));
-//        JsonResult result = new JsonResult();
-//        result.setStatus(StatusCode.CODE_SUCCESS);
-//        List<Banner> bannerList = bannerService.banners(appId , type);
-//        result.setMessage("获取布成功");
-//        result.setStatus(StatusCode.CODE_SUCCESS);
-//        result.setData(bannerList);
-//        return result.toJson();
-//    }
+    @Resource
+    private BannerService bannerService;
+    /**
+     * 获取所有banner图信息
+     * @return
+     */
+    @RequestMapping(value = {"/banners"}, method = {RequestMethod.POST, RequestMethod.GET} , produces = {MediaType.APPLICATION_JSON_VALUE , MediaType.TEXT_PLAIN_VALUE})
+    public RespEntity banners(){
+        log.info(" step into get banners, method: banners");
+        List<Banner> bannerList = bannerService.banners();
+        return RespEntity.success(bannerList);
+    }
 
 }
