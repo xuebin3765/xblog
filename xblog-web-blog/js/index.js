@@ -1,14 +1,25 @@
 //注意：导航 依赖 element 模块，否则无法进行功能性操作
-layui.use(['element', 'layer', 'laypage'], function () {
+layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
     var element = layui.element;
     var $ = layui.jquery;
     var laypage = layui.laypage;
     var layer = layui.layer;
     var limit = 10;
 
+
     var router = layui.router();
     var navId = router.search.navId;
     console.log(navId);
+
+    var carousel = layui.carousel;
+    //建造实例
+    carousel.render({
+        elem: '#test1'
+        ,width: '100%' //设置容器宽度
+        ,arrow: 'always' //始终显示箭头
+        //,anim: 'updown' //切换动画方式
+    });
+
     if (typeof navId == "undefined" || navId == null || navId === ""){
         $('.sticky').show();
     }else {
@@ -58,6 +69,21 @@ layui.use(['element', 'layer', 'laypage'], function () {
         html.push('</ul>');
         $(".navigateList").html(html.join(""));
     };
+
+    var setHtmlBanner = function (res) {
+
+    };
+    // 加载轮播图数据
+    $.get(serverUrl + '/api/banner/banners', function (result) {
+        // res = result.data;
+        // if (res == null || res.length === 0) {
+        //     $('.sticky').hide();
+        // }else {
+        //     $('.sticky').show();
+        // }
+        // // 渲染导航样式
+        // setHtmlBanner(res);
+    });
 
     // 加载标题数据
     $.get(serverUrl + '/api/navigate/findAllNavigate', function (result) {
