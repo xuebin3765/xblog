@@ -1,18 +1,12 @@
 package com.xblog.service.impl;
 
 import com.google.common.collect.Lists;
-import com.qcloud.cos.COSClient;
-import com.qcloud.cos.model.ObjectMetadata;
-import com.qcloud.cos.model.PutObjectRequest;
-import com.qcloud.cos.model.PutObjectResult;
-import com.xblog.commons.utils.DataUtil;
-import com.xblog.commons.utils.SnowflakeUUIDUtil;
+import com.xblog.commons.utils.QnFileUploadUtil;
 import com.xblog.entity.blog.Image;
 import com.xblog.service.FileService;
 import com.xblog.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,8 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-import java.io.*;
-import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -49,17 +42,8 @@ public class FileServiceImpl implements FileService {
     private List<String> araTypes = Lists.newArrayList(".rar", ".zip");
     private List<String> shellTypes = Lists.newArrayList(".sh");
 
-    @Value("${upload.picture.path}")
-    private String uploadPicturePath;
-    @Value("${cos.bucket}")
-    private String bucket;
-    @Value("${cos.imagePrefix}")
-    private String imagePrefix;
-
     @Resource
     private Environment env;
-    @Resource
-    private COSClient cosClient;
     @Resource
     private ImageService imageService;
 
@@ -89,105 +73,24 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String uploadFile(MultipartFile file, String suffixName) {
-        // 文件类型合法
-        String nfName = SnowflakeUUIDUtil.getUuid() + suffixName; // 新文件名
-        File dest = new File(getFilePath(FileServiceImpl.TYPE_PHOTO) + nfName);
-        try {
-            if (!dest.getParentFile().mkdirs())
-                file.transferTo(dest);
-            return nfName;
-        } catch (IOException e) {
-            log.error("upload image file, error: {}", e.getMessage());
-            return null;
-        }
-    }
-
-    @Override
     public String uploadFileToTxCos(MultipartFile file) {
 
-        String originName = file.getOriginalFilename();
-        if (StringUtils.isBlank(originName))
-            return null;
-        // 指定要上传的文件
-        File localFile = new File(originName);
-        OutputStream out = null;
-        try{
-            //获取文件流，以文件流的方式输出到新文件
-            out = new FileOutputStream(localFile);
-            byte[] ss = file.getBytes();
-            for(int i = 0; i < ss.length; i++){
-                out.write(ss[i]);
-            }
-        }catch(IOException e){
+        try {
+            if (null == file) return null;
+            String originName = file.getOriginalFilename();
+            if (StringUtils.isBlank(originName)) return null;
+            String imagePath = QnFileUploadUtil.upload(file.getBytes(), originName);
+            log.info("upload image success, step into add image url");
+            Image image = new Image(imagePath);
+            imageService.add(image);
+            log.info("step out upload image. success!");
+            String url = "http://q2nthlenq.bkt.clouddn.com/";
+            return url+imagePath;
+        } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (out != null){
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            return null;
         }
-        // 指定要上传到的存储桶
 
-        String bucketName = bucket;
-        // 指定要上传到 COS 上对象键
-        String suffix = originName.substring(originName.lastIndexOf("."));
-        String key = getFilePath(TYPE_PHOTO)+SnowflakeUUIDUtil.getUuid()+suffix;
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
-        PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-        System.out.println(putObjectResult.getRequestId());
-        cosClient.shutdown();
-
-        // 操作完上的文件 需要删除在根目录下生成的文件
-        File f = new File(localFile.toURI());
-        if (f.delete()){
-            log.info("删除上传文件缓存成功！");
-        }else {
-            log.info("删除上传文件缓存失败！");
-        }
-        String imgPath = imagePrefix+key;
-        log.info("upload image success, step into add image url");
-        Image image = new Image(imgPath);
-        imageService.add(image);
-        log.info("step out upload image. success!");
-        return imgPath;
-    }
-
-
-    /**
-     * 生成文件目录地址
-     * @param fileType 文件类型
-     * @return 文件目录地址
-     */
-    @Override
-    public String getFilePath(int fileType) {
-        // 构建文件路径
-        StringBuilder filePath = new StringBuilder();
-        switch (fileType){
-            case 0:
-                filePath.append("all");
-                break;
-            case 1:
-                filePath.append("image");
-                break;
-            case 2:
-                filePath.append("office");
-                break;
-            case 3:
-                filePath.append("pdf");
-                break;
-            case 4:
-                filePath.append("rar");
-                break;
-            case 5:
-                filePath.append("shell");
-                break;
-        }
-        filePath.append("/").append(DataUtil.gitToDayStr()).append("/");
-        return filePath.toString();
     }
 
     @Override
@@ -212,23 +115,5 @@ public class FileServiceImpl implements FileService {
             }
         }
         return false;
-    }
-
-    @Override
-    public void createFolder(String path) {
-        if (StringUtils.isNotBlank(path) && path.endsWith("/")){
-            log.error("创建文件夹失败，路径不合法, path: {}", path);
-            return;
-        }
-        // 目录对象即是一个/结尾的空文件，上传一个长度为 0 的 byte 流
-        InputStream input = new ByteArrayInputStream(new byte[0]);
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(0);
-
-        PutObjectRequest putObjectRequest =
-                new PutObjectRequest(bucket, path, input, objectMetadata);
-        PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-        System.err.println("执行静态定时任务时间: " + LocalDateTime.now());
-        System.err.println("创建文件: " + putObjectRequest.getFixedEndpointAddr());
     }
 }
