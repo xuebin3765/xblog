@@ -1,5 +1,6 @@
 package com.xblog.controller.api;
 
+import com.google.common.collect.Lists;
 import com.xblog.commons.response.RespEntity;
 import com.xblog.entity.blog.Banner;
 import com.xblog.service.BannerService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 滚动图
@@ -38,6 +40,11 @@ public class BannerController {
     public RespEntity banners(){
         log.info(" step into get banners, method: banners");
         List<Banner> bannerList = bannerService.banners();
+        String url = "http://q2nthlenq.bkt.clouddn.com/";
+        Optional.ofNullable(bannerList).orElse(Lists.newArrayList())
+                .forEach(banner -> {
+                    banner.setImageUrl(url + banner.getImageUrl());
+                });
         return RespEntity.success(bannerList);
     }
 

@@ -6,19 +6,13 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
     var layer = layui.layer;
     var limit = 10;
 
+    var carousel = layui.carousel;
 
     var router = layui.router();
     var navId = router.search.navId;
     console.log(navId);
 
-    var carousel = layui.carousel;
-    //建造实例
-    carousel.render({
-        elem: '#test1'
-        ,width: '100%' //设置容器宽度
-        ,arrow: 'always' //始终显示箭头
-        //,anim: 'updown' //切换动画方式
-    });
+
 
     if (typeof navId == "undefined" || navId == null || navId === ""){
         $('.sticky').show();
@@ -69,21 +63,40 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
         html.push('</ul>');
         $(".navigateList").html(html.join(""));
     };
-
+    // 轮播图
     var setHtmlBanner = function (res) {
-
+        var strHtml = "<div carousel-item>";
+        $.each(res, function (index, item) {
+            strHtml += '<div>' +
+                '            <a href="'+item.url+'" target="_blank">' +
+                '                 <img src="'+item.imageUrl+'">' +
+                '            </a>' +
+                '       </div>';
+        });
+        strHtml += '</div>';
+        $("#layui-carousel").html(strHtml);
     };
     // 加载轮播图数据
     $.get(serverUrl + '/api/banner/banners', function (result) {
-        // res = result.data;
-        // if (res == null || res.length === 0) {
-        //     $('.sticky').hide();
-        // }else {
-        //     $('.sticky').show();
-        // }
-        // // 渲染导航样式
-        // setHtmlBanner(res);
+        res = result.data;
+        console.log(res);
+        if (res == null || res.length === 0) {
+            $('.top-banner').hide();
+        }else {
+            $('.top-banner').show();
+        }
+        // 渲染导航样式
+        setHtmlBanner(res);
+
+        //建造实例
+        carousel.render({
+            elem: '#layui-carousel'
+            ,width: '100%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
     });
+
 
     // 加载标题数据
     $.get(serverUrl + '/api/navigate/findAllNavigate', function (result) {
@@ -168,6 +181,7 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
         });
         $("#articleList").html(strHtml);
     }
+
 
 
 });
