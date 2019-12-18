@@ -86,11 +86,13 @@ layui.use(['element', 'layer','laypage'],  function () {
             layer.alert(result.msg);
             return;
         }
+
         res = result.data;
         var address = [];
         address.push('你的位置：<a href="http://www.androidchina.net" target="_blank">程序员刊</a> <small>></small> ');
         var navigate = res.navigate;
         if (typeof navigate != "undefined" && navigate != null && navigate !== ""){
+
             var navigateParent = navigate.parentNavigate;
             if (typeof navigateParent != "undefined" && navigateParent != null && navigateParent !== ""){
                 address.push('<a href="'+getUrl(navigateParent.url, navigateParent.id)+'" title="'+navigateParent.name+'" target="_blank">'+navigateParent.title+'</a> ')
@@ -101,6 +103,7 @@ layui.use(['element', 'layer','laypage'],  function () {
         var time = createTime(res.created);
         // 渲染页面内容
         var breadcrumbs = address.join("");
+        document.title = res.title;
         var articleTitle = '<a href="articleDetail.html#/id='+res.id+'" target="_blank">'+res.title+'</a>';
         var articleMeta = '' +
             '<span class="muted"><a href="http://www.androidchina.net/category/dev"><i class="icon-list-alt icon12"></i> '+res.typeName+'</a></span>' +
