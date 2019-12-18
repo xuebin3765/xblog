@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>程序员刊</title>
+
+    <!-- 通过自有函数输出HTML头部信息 -->
+    <meta name="description" content="程序员刊~个人博客"/>
+    <meta name="keywords" content="程序员刊,个人博客,SpringBoot,LayUI,blog"/>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/style.css?t=1576233006">
+    <script src="../layui/layui.js"></script>
+</head>
+<body>
+<!--[if lt IE 8]>
+<div class="browsehappy" role="dialog">当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a
+        href="http://browsehappy.com/">升级你的浏览器</a>.
+</div>
+<![endif]-->
+
+<header class="header">
+    <div class="navbar">
+        <!--   logo     -->
+        <h1 class="logo" style="width:280px">
+            <a href="http://www.androidchina.net" title="程序员刊">
+                <img src="logo.png">
+            </a>
+        </h1>
+        <!--   导航     -->
+        <div class="navigateList"></div>
+
+        <div class="menu pull-right">
+            <form method="get" class="dropdown search-form" action="http://www.androidchina.net/">
+                <input class="search-input" name="s" type="text" placeholder="输入关键字搜索" autofocus=""
+                       x-webkit-speech=""><input class="btn btn-success search-submit" type="submit" value="搜索">
+                <ul class="dropdown-menu search-suggest"></ul>
+            </form>
+        </div>
+    </div>
+    <div class="speedbar">
+        <div class="pull-right">
+            <i class="icon-user icon12"></i> <a href="http://www.androidchina.net/wp-login.php">登录</a></div>
+        <div class="toptip"><strong class="text-success">最新消息：</strong>欢迎访问Android开发中文站！商务联系微信：loading_in</div>
+    </div>
+</header>
+
+
+<div class="layui-container" style="width: 80%; padding: 0;">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md9">
+
+            <!-- 推荐轮播图-->
+            <div class="top-banner">
+                <div class="layui-carousel" id="layui-carousel">
+                    <div carousel-item>
+                        <div>
+                            <a href="http://www.baidu.com">
+                                <img src="http://q2nthlenq.bkt.clouddn.com/">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sticky">
+                <h2 class="title">置顶推荐</h2>
+                <ul>
+                    <li class="item"><a href="http://www.androidchina.net/10065.html"><img
+                            src="http://www.androidchina.net/wp-content/uploads/2019/07/1-1024x474.jpg"
+                            alt="大部分996只能怪自己？我是如何把修改bug时间降到10％"/>
+                        <h3>大部分996只能怪自己？我是如何把修改bug时间降到10％</h3>
+                        <p class="muted">先打个招呼，这期推文我要介绍一个老朋友——熊节。
+                            推荐他的重要原因是，从“大学肄业”到Thoug...</p></a></li>
+                    <li class="item"><a href="http://www.androidchina.net/9941.html"><img
+                            src="http://www.androidchina.net/wp-content/uploads/2019/06/0-220x150.jpeg"
+                            alt="最新Android框架排行榜，上百项资源汇总不容错过"/>
+                        <h3>最新Android框架排行榜，上百项资源汇总不容错过</h3>
+                        <p class="muted">
+
+                            Android框架排行榜
+                            1.Retrofit
+                            一句话介绍：Retrofit是一款类型安全的...</p></a></li>
+                    <li class="item"><a href="http://www.androidchina.net/9351.html"><img
+                            src="http://www.androidchina.net/wp-content/uploads/2017/03/Fotografie_Iarna-large-220x150.jpg"
+                            alt="一份程序员知识清单，感谢这一年"/>
+                        <h3>一份程序员知识清单，感谢这一年</h3>
+                        <p class="muted">马上就要到年底了，在这个时候，我们似乎总是要感谢很多人，是不是唯独忘了感谢一下自己。
+                            回顾我自己...</p></a></li>
+                    <li class="item"><a href="http://www.androidchina.net/7016.html"><img
+                            src="http://www.androidchina.net/wp-content/uploads/2017/06/11-152x150.png"
+                            alt="Kotlin 资源大全 - 学 Kotlin 看这一篇教程就够了"/>
+                        <h3>Kotlin 资源大全 &#8211; 学 Kotlin 看这一篇教程就够了</h3>
+                        <p class="muted">目录
+
+                            介绍
+                            官网及文档
+                            中文社区
+                            教程 &amp; 文章
+                            开源库和框架
+                            Demo
+                            其他
+
+
+                            介...</p></a></li>
+                </ul>
+            </div>
+            <h2 id="listTitle" class="title">最新发布</h2>
+            <!--    文章正文        -->
+            <div id="articleList"></div>
+            <div id="page-navigator" class="page-navigator" style="text-align:center"></div>
+        </div>
+        <div class="layui-col-md3">
+
+            <div class="widget d_textbanner">
+                <a class="style04" href="http://devclub.cc/app/app-devclub-release.apk" target="_blank">
+                    <strong>特别推荐</strong>
+                    <h2>我是开发者APP</h2>
+                    <p>
+                        <b>广大开发者首选APP，提供最新的资讯，覆盖内容全，满足不同开发者的需求</b>
+                        <br><br>
+                        <b>点击下载安装包</b><br>
+
+                        2019年8月21日 v1.2.8 版本更新：<br>
+                        1，商城图片及文字调整<br>
+                        2，频道列表优化显示<br>
+                        3，其他bug修复及优化<br></p></a>
+            </div>
+            <div class="widget d_textbanner">
+                <a class="style01" href="http://devclub.cc/app/AndroidChina_v1.0.1.apk"><strong>特别推荐</strong>
+                    <h2>Android开发中文站客户端</h2>
+                    <p>
+                        <b>网站的Android客户端，可以通过手机查看网站内容啦！ 欢迎大家下载使用。</b><br><br>
+                        <b>Andriod开发中文站，关注Andriod开发，更关注开发者！</b>
+                    </p>
+                </a>
+            </div>
+            <div class="widget d_textbanner"><a class="style05" href="http://www.androidchina.net/contributor"
+                                                target="_blank"><strong>特别推荐</strong>
+                <h2>投稿人招募</h2>
+                <p>想让自己的文章发表在Android开发中文站？快快联系站长提升账号权限就能发表啦！可以转载文章，更鼓励原创文章！联系QQ：1304524325</p></a></div>
+            <div class="widget widget_text"><h3 class="widget_tit">微信公众号：AndroidChinaNet</h3>
+                <div class="textwidget">
+                    <div class="grid-demo">3/12</div>
+                </div>
+            </div>
+
+            <div class="widget widget_links"><h3 class="widget_tit">友情链接</h3>
+                <ul class='xoxo blogroll'>
+                    <li><a href="http://www.android-doc.com/" target="_blank">android中文api</a></li>
+                    <li><a href="http://www.apicloud.com" target="_blank">APICloud</a></li>
+                    <li><a href="http://www.csobtk.cn/" target="_blank">app开发公司</a></li>
+                    <li><a href="http://www.appxcode.com/" target="_blank">app源码站</a></li>
+                    <li><a href="http://www.javaapk.com/" target="_blank">JavaApk</a></li>
+                    <li><a href="http://www.mobiletrain.org/sxh/" target="_blank">java学员就业</a></li>
+                    <li><a href="http://www.mobiletrain.org/java/" target="_blank">java程序员培训</a></li>
+                    <li><a href="https://www.lineageos.org.cn/" target="_blank">LineageOS中文论坛</a></li>
+                    <li><a href="http://mplus.tech/" target="_blank">M+</a></li>
+                    <li><a href="http://video.mobiletrain.org/python/" target="_blank">python视频教程</a></li>
+                    <li><a href="http://www.bayescom.com/" target="_blank">倍业科技</a></li>
+                    <li><a href="http://nj.mobiletrain.org/java/" target="_blank">南京java开发培训</a></li>
+                    <li><a href="http://bigdata.mobiletrain.org/" target="_blank">大数据培训</a></li>
+                    <li><a href="https://anzhuoq.com/" target="_blank">安卓Q</a></li>
+                    <li><a href="http://www.epubit.com.cn" target="_blank">异步社区</a></li>
+                    <li><a href="http://bbs.windever.com" target="_blank">微信小程序开发社区</a></li>
+                    <li><a href="http://cd.mobiletrain.org/info/" target="_blank">成都Python开发动态</a></li>
+                    <li><a href="http://www.gxaedu.com/" target="_blank">成都软件测试培训</a></li>
+                    <li><a href="http://bbs.jiandaima.com/" target="_blank">手机游戏源码分享</a></li>
+                    <li><a href="http://www.365huifu.com" target="_blank">数据恢复软件</a></li>
+                    <li><a href="https://www.okcoin.cn/" target="_blank">比特币价格</a></li>
+                    <li><a href="http://www.mydll.com.cn/" target="_blank">浏览器哪个好</a></li>
+                    <li><a href="http://www.juanyunkeji.com/" target="_blank">石家庄手机APP开发</a></li>
+                    <li><a href="http://www.90159.com/" target="_blank">程序员头条</a></li>
+                    <li><a href="http://www.chuntianxueyuan.com/" target="_blank">美牙培训</a></li>
+                    <li><a href="http://www.newbiefly.com" target="_blank">菜鸟要飞</a></li>
+                    <li><a href="http://www.mobiletrain.org/page/software/" target="_blank">软件测试培训</a></li>
+                    <li><a href="http://www.dakaruanwen.com" target="_blank">软文发布</a></li>
+                    <li><a href="http://qd.mobiletrain.org/news/" target="_blank">青岛java培训动态</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer" style="">
+    <div class="footer-inner">
+        <div class="copyright" style="text-align: center">
+            版权所有，保留一切权利！ &copy; 2019 <a href="http://www.androidchina.net">Android开发中文站</a>　Theme <a
+                href="http://www.daqianduan.com/" target="_blank">D8</a>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="js/config.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+</body>
+</html>
