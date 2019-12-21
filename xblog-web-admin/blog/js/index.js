@@ -13,16 +13,15 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
     console.log(navId);
 
 
-
-    if (typeof navId == "undefined" || navId == null || navId === ""){
+    if (typeof navId == "undefined" || navId == null || navId === "") {
         $('.sticky').show();
-    }else {
+    } else {
         $('.sticky').hide();
         // 需要设置文章列表title
-        $.get(serverUrl + '/api/navigate/findNavigateById?id='+navId, function (result) {
+        $.get(serverUrl + '/api/navigate/findNavigateById?id=' + navId, function (result) {
             res = result.data;
             // 渲染位置
-            $('#listTitle').html("当前位置："+res.name);
+            $('#listTitle').html("当前位置：" + res.name);
         });
     }
 
@@ -35,25 +34,25 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
             for (var i = 0; i < res.length; i++) {
                 var navigate = res[i];
                 var url;
-                if ("#" === navigate.url){
+                if ("#" === navigate.url) {
                     url = netUrl;
-                }else {
-                    url = navigate.url+'#/navId='+navigate.id;
+                } else {
+                    url = navigate.url + '#/navId=' + navigate.id;
                 }
                 html.push('<li id="menu-item-14" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14">');
-                html.push('<a href="'+url+'">'+navigate.name+'</a>');
+                html.push('<a href="' + url + '">' + navigate.name + '</a>');
                 var navigateSons = navigate.navigateList;
-                if (navigateSons != null && navigateSons.length){
+                if (navigateSons != null && navigateSons.length) {
                     html.push('<ul class="sub-menu">');
                     for (var j = 0; j < navigateSons.length; j++) {
                         var navigateSon = navigateSons[j];
                         var urlSon;
-                        if ("#" === navigateSon.url){
+                        if ("#" === navigateSon.url) {
                             urlSon = netUrl;
-                        }else {
-                            urlSon = navigateSon.url+'#/navId='+navigateSon.id;
+                        } else {
+                            urlSon = navigateSon.url + '#/navId=' + navigateSon.id;
                         }
-                        html.push('<li id="menu-item-13" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a href="'+urlSon+'">'+navigateSon.name+'</a></li>');
+                        html.push('<li id="menu-item-13" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a href="' + urlSon + '">' + navigateSon.name + '</a></li>');
                     }
                     html.push('</ul>');
                 }
@@ -68,8 +67,8 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
         var strHtml = "<div carousel-item>";
         $.each(res, function (index, item) {
             strHtml += '<div>' +
-                '            <a href="'+item.url+'" target="_blank">' +
-                '                 <img src="'+item.imageUrl+'">' +
+                '            <a href="' + item.url + '" target="_blank">' +
+                '                 <img src="' + item.imageUrl + '">' +
                 '            </a>' +
                 '       </div>';
         });
@@ -82,7 +81,7 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
         console.log(res);
         if (res == null || res.length === 0) {
             $('.top-banner').hide();
-        }else {
+        } else {
             $('.top-banner').show();
         }
         // 渲染导航样式
@@ -91,8 +90,8 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
         //建造实例
         carousel.render({
             elem: '#layui-carousel'
-            ,width: '100%' //设置容器宽度
-            ,arrow: 'always' //始终显示箭头
+            , width: '100%' //设置容器宽度
+            , arrow: 'always' //始终显示箭头
             //,anim: 'updown' //切换动画方式
         });
     });
@@ -104,8 +103,23 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
         // 渲染导航样式
         setHtmlNavigate(res);
     });
+    // 加载标签数据
+    $.get(serverUrl + '/api/tag/findAll', function (result) {
+        res = result.data;
+        // 渲染导航样式
+        var html = [];
+        // 遍历加载所有导航
+        if (res.length > 0) {
+            for (var i = 0; i < res.length; i++) {
+                var tag = res[i];
+                var url = "http://www.baidu.com/#/tagId=" + tag.id;
+                html.push('<a href="' + url + '" target="_blank">' + tag.name + ' (' + tag.articleNum + ')</a>');
+            }
+        }
+        $(".d_tags").html(html.join(""));
+    });
     // 加载文章列表数据
-    $.get(serverUrl + '/api/article/findAll?navId='+navId+'&page=1&limit=' + limit, function (result) {
+    $.get(serverUrl + '/api/article/findAll?navId=' + navId + '&page=1&limit=' + limit, function (result) {
         res = result.data;
         setHtmlArticleList(res); // 设置文章显示的列表样式
         pages(result.count)//切换分类时候，调用页码，重新渲染
@@ -122,7 +136,7 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
             , jump: function (obj, first) {
                 limit = obj.limit;
                 if (!first) {
-                    $.get(serverUrl + '/api/article/findAll?navId='+navId+'&page=' + obj.curr + '&limit=' + obj.limit
+                    $.get(serverUrl + '/api/article/findAll?navId=' + navId + '&page=' + obj.curr + '&limit=' + obj.limit
                         , function (result) {
                             setHtmlArticleList(result.data);
                         });
@@ -181,7 +195,6 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
         });
         $("#articleList").html(strHtml);
     }
-
 
 
 });

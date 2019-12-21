@@ -20,6 +20,8 @@ public interface TagService {
 
     public PageResult<Tag> findAll(String name, int pageNum, int pageSize);
 
+    public List<Tag> findAll();
+
     public void deleteById(String id);
 
 }

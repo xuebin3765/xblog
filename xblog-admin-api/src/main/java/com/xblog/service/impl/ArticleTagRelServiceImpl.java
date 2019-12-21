@@ -48,7 +48,7 @@ public class ArticleTagRelServiceImpl implements ArticleTagRelService {
         // 构造新的分类标签和文章关联对象
         List<ArticleTagRel> newRelList = Lists.newArrayList();
         articleTagRelList.forEach(s -> {
-            ArticleTagRel tagRel = new ArticleTagRel(SnowflakeUUIDUtil.getUuid(), articleId, s);
+            ArticleTagRel tagRel = new ArticleTagRel(SnowflakeUUIDUtil.getUuid(), s, articleId);
             if (!newRelList.contains(tagRel)) newRelList.add(tagRel);
         });
 

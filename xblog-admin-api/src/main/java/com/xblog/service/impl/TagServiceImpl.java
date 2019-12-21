@@ -2,7 +2,6 @@ package com.xblog.service.impl;
 
 import com.xblog.common.PageResult;
 import com.xblog.commons.utils.SnowflakeUUIDUtil;
-import com.xblog.entity.blog.ArticleTagRel;
 import com.xblog.entity.sys.Tag;
 import com.xblog.repository.DaoHelperRepository;
 import com.xblog.repository.sys.TagRepository;
@@ -77,6 +76,12 @@ public class TagServiceImpl implements TagService {
         params.put("pageSize", pageSize);
         List list = daoHelperRepository.queryListEntity(sql.toString(), params, Tag.class);
         return new PageResult<>(list, count);
+    }
+
+    @Override
+    public List<Tag> findAll() {
+        String sql = "SELECT tag.*, count(*) article_num from tag tag inner JOIN article_tag_rel atr on tag.id = atr.tag_id GROUP BY name";
+        return (List<Tag>) daoHelperRepository.queryListEntity(sql, null, Tag.class);
     }
 
     @Override
