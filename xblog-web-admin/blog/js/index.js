@@ -184,7 +184,7 @@ layui.use(['element', 'layer', 'laypage', 'carousel'], function () {
                 '           <a href="view/article/articleDetail.html#/id=' + item.id + '" title=' + item.title + ' target="_blank">' + item.title + '</a>' +
                 '       </h2>' +
                 '   </header>' +
-                '   <p class="note">' + item.decoration + '</p>' +
+                '   <p class="note">' + item.description + '</p>' +
                 '   <p>' +
                 '       <span class="muted"><i class="icon-user icon12"></i> <a href="http://www.androidchina.net/author/loading">' + item.userName + '</a></span>' +
                 '       <span class="muted"><i class="icon-time icon12"></i> ' + time + '</span> ' +

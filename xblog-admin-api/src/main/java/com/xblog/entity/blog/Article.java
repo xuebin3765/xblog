@@ -30,7 +30,7 @@ public class Article {
     @Column
     private String loadUrl;        // 转载的url,原文地址
     @Column
-    private String decoration;     // 描述，不填获取正文前半部分内容
+    private String description;     // 描述，不填获取正文前半部分内容
     @Column
     private String context;        // 正文
     @Column

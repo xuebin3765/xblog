@@ -107,6 +107,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     body.find(".articleId").attr('value', edit.id);
                     body.find(".stick").attr('value', edit.stick);
                     body.find(".articleName").val(edit.title);
+                    body.find(".abstract").html(edit.description);
                     body.find(".loadUrl").val(edit.loadUrl);
                     body.find(".thumbImg").attr("src",edit.imgUrl);
                     //获取子窗口的函数

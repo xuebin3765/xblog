@@ -70,8 +70,8 @@ public class ArticleController {
                 articleOld.setTitle(article.getTitle());
             }
             // 文章摘要
-            if (StringUtils.isNotBlank(article.getDecoration())){
-                articleOld.setDecoration(article.getDecoration());
+            if (StringUtils.isNotBlank(article.getDescription())){
+                articleOld.setDescription(article.getDescription());
             }
             // 文章内容
             if (StringUtils.isNotBlank(article.getContext())){

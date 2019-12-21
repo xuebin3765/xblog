@@ -147,7 +147,7 @@ layui.use(['form', 'layer', 'code', 'layedit', 'laydate', 'upload'], function ()
 
     form.on("submit(addArticle)", function (data) {
         //弹出loading
-        ;
+        console.log("摘要："+$(".abstract").val());
         var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
         //将页面全部复选框选中的值拼接到一个数组中
         var navigate_checkbox = [];
@@ -164,7 +164,7 @@ layui.use(['form', 'layer', 'code', 'layedit', 'laydate', 'upload'], function ()
             id: $(".articleId").val(),
             title: $(".articleName").val(),  //文章标题
             //文章摘要,截取文章内容中的一部分文字放入文章摘要
-            decoration: content.substring(0, 200),
+            description: $(".abstract").val(),
             //文章内容
             context: content,
             imgUrl: $(".thumbImg").attr("src"),  //缩略图
