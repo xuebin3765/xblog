@@ -1,6 +1,6 @@
 package com.xblog.repository.sys;
 
-import com.xblog.entity.sys.Users;
+import com.xblog.entity.sys.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by lovebin on 2017/4/19.
  */
 
-public interface UsersRepository extends JpaRepository<Users, Integer> {
+public interface UsersRepository extends JpaRepository<User, Integer> {
 
-    Users findUsersByUsername(String username);
+    User findUsersByUsername(String username);
 }

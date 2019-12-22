@@ -28,7 +28,7 @@ public class UserController extends BaseController {
 //    public ResponseBean register(@RequestBody @Valid RegisterUserDTO userDTO){
 //        logger.info(" into UserController , register ; userDTO : {} " , userDTO);
 //        try {
-//            Users users = usersService.register(userDTO);
+//            User users = usersService.register(userDTO);
 //            return successReq("注册成功" , users);
 //        }catch (OperateException e){
 //            return failureReq("注册失败" , e.getMessage());

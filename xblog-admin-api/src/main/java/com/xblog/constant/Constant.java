@@ -10,5 +10,5 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("")
 public class Constant {
-
+    public final static String SESSION_USER = "session_users_";
 }
