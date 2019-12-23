@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
  * Created by Administrator on 2017/9/27.
  */
 @Component
-@PropertySource("")
 public class Constant {
     public final static String SESSION_USER = "session_users_";
 }

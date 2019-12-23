@@ -18,6 +18,7 @@ import java.net.InetAddress;
 public class ApplicationOpen {
 
     public static void main(String[] args) throws Exception{
+
         SpringApplication app = new SpringApplication(ApplicationOpen.class);
         Environment env = app.run(args).getEnvironment();
         String port = env.getProperty("server.port");
