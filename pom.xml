@@ -8,10 +8,9 @@
   <artifactId>xblog</artifactId>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>xblog-web-admin</module>
     <module>xblog-admin-api</module>
     <module>xblog-commons</module>
-      <module>xblog-web-blog</module>
+      <module>xblog-web</module>
   </modules>
   <packaging>pom</packaging>
 
