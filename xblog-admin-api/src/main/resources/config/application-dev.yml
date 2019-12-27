@@ -14,3 +14,7 @@ spring:
       enabled: true
       file-size-threshold: 0
       max-file-size: 1000000
+  thymeleaf:
+    cache: false
+  mvc:
+    static-path-pattern: /**

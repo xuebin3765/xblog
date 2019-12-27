@@ -2,6 +2,6 @@ server:
   port: 9001
 spring:
   profiles:
-    active: prod
+    active: dev
   application:
     name: xb-blog

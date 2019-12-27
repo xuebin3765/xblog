@@ -9,7 +9,7 @@ import com.xblog.entity.sys.User;
  */
 public interface UserService {
 
-    public User login(String username, String password);
+    public User login(User user);
 
     public User register(User user);
 }

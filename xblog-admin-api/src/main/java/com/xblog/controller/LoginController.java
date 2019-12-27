@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  */
 @Slf4j
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/public")
 public class LoginController {
 
     @Resource
@@ -31,7 +31,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public RespEntity login(@RequestBody User user){
-        User users = userService.login(null, null);
+        User users = userService.login(user);
         if (users != null){
             httpSession.setAttribute(Constant.SESSION_USER, users);
             return RespEntity.success(user, "登录成功");

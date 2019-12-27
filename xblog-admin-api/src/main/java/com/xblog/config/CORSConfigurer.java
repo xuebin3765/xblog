@@ -32,6 +32,21 @@ public class CORSConfigurer extends WebMvcConfigurationSupport {
             }
         }).addPathPatterns("/**");
     }
+
+    /**
+     * 这里有个坑，SpringBoot2 必须重写该方法，否则静态资源无法访问
+     * @param registry 静态资源注册
+     */
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/META-INF/resources/")
+                .addResourceLocations("classpath:/resources/")
+                .addResourceLocations("classpath:/static/")
+                .addResourceLocations("classpath:/public/");
+        super.addResourceHandlers(registry);
+    }
+
     /**
      * 消息内容转换配置
      * 配置fastJson返回json转换
